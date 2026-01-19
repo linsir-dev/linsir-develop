@@ -1,0 +1,11 @@
+server:
+  port: 9000
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.55.181.141:3306/linsir-spring-springmvc?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: yu@2023
+    type: com.alibaba.druid.pool.DruidDataSource

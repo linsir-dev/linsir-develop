@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <script type="text/javascript">
+         /*   var a = 19;
+            alert(a);
+            a = "hello world";
+            alert(a);
+            function Person(name,age){
+                this.name = name;
+                this.age = age;
+            }
+            var p1 = new Person("zhangsan",23);
+            alert(p1.age +"," + p1.name);
+            alert(p1["name"] + ","+p1["age"]);
+            for (var a in p1){
+                alert(a + ":" + p1[a] );
+            }
+        */
+         /*   var d = new Date();
+            document.write(d);
+            document.write(d.getFullYear() + "年" + d.getMonth() + "月" + d.getDate() + "日"+ "星期" +d.getDay());*/
+           /* var str1 = new String("abc");
+            str2 = "abc";
+            alert(str1 == str2);
+            s = "text.txt";
+            alert(s.substr((s.lastIndexOf(".") + 1 )));*/
+
+            /*var as = new Array();
+            as = [1,2,3,4,5,6];
+            //在索引为2的前面增加两个元素 23 24 删除0个元素
+            as.splice(2,0,23,24);
+            alert(as);*/
+            document.write("aaa<br/>")
+            with(document){
+                write("bbb<br/>");
+                write("ccc<br/>");
+                write("ddd<br/>");
+            }
+            function clickD(obj){
+                alert("obj.innerHTML");
+            }
+            function mouseD(obj){
+                //设置这个对象的颜色，在JS 中设置文本样式均通过××.style.样式名称
+                obj.style.color = "#f00";
+                obj.style.fontSize = "18px";
+            }
+            function outP(obj){
+                obj.style.color = "#000";
+                obj.style.fontSize = "14px";
+            }
+            var big = false;
+            function bigger(obj){
+                var cs = parseInt(obj.style.fontSize);
+                if(cs){
+                    if(cs >=30){
+                        big = false;
+                        obj.innerHTML = "点击变小";
+                    }
+                    if(cs <= 5){
+                        big = true;
+                        obj.innerHTML = "点击变大";
+                    }
+                    if(big){
+                        cs+=2;
+                    }else{
+                        cs-=2;
+                    }
+                    obj.style.fontSize= cs +"px";
+                }else{
+                    obj.style.fontSize = "14px";
+            }
+            }
+        </script>
+    </head>
+    <body>
+        <div onclick="clickD(this)" style="cursor: pointer;">点击试一下</div>
+        <div onmouseover="mouseD(this)"  onmouseout="outP(this)" style="cursor: pointer;">鼠标移动</div>
+        <div onclick="bigger(this)" style="cursor: pointer;">点击试一下</div>
+    </body>
+</html>

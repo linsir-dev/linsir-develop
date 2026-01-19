@@ -1,0 +1,33 @@
+package com.linsir.configs;
+
+import com.linsir.components.Listener;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+@Configuration
+public class SecurityInterceptor  implements HandlerInterceptor {
+
+    private final static Logger log = LoggerFactory.getLogger(Listener.class);
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        HttpSession session = request.getSession();
+        // 验证当前session是否存在，存在返回true true代表能正常处理业务逻辑
+        if (session.getAttribute("user") != null) {
+            log.info("session拦截器，session={},{}，验证通过", session.getId(), session.getAttribute("user"));
+            return true;
+        }
+        // session不存在，返回false，并提示请重新登录。
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        response.getWriter().write("请登录！！！！！");
+        log.info("session拦截器，session={}，验证失败", session.getId());
+        return false;
+    }
+
+}

@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <script type="text/javascript">
+            function getPwd(){
+                var pwd = document.getElementById("pwd");
+                alert(pwd.value);
+                var pc = document.getElementById("showPwd");
+                pc.innerHTML = pwd.value;
+            }
+            function getUsers(){
+                var users = document.getElementsByName("users");
+               //alert(users.length);
+                for(var i = 0; i < users.length;i++){
+                    alert(users[i].value);
+                }
+            }
+            function getInputs() {
+                var is = document.getElementsByTagName("input");
+                alert(is.length);
+                for(var i = 0; i < is.length;i++){
+                    alert(is[i].value);}
+            }
+        </script>
+    </head>
+    <body>
+        <input type="text" name="users"/>
+        <input type="text" name="users"/>
+        <input type="text" name="users"/>
+        <input type="text" name="users"/>
+        <input type="text" name="users"/>
+        <input type="text" name="users"/>
+        <br/>
+        <input type="password" id="pwd"/>
+        <br/>
+        <input type="button" value="获取users" onclick="getUsers()"/>
+        <input type="button" value="获取PWD" onclick="getPwd()"/>
+        <input type="button" value="获取Input" onclick="getInputs()"/>
+        <br />
+        <div id="showPwd"></div>
+    </body>
+</html>

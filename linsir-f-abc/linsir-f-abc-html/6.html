@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>盒子模型测试</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <style type="text/css">
+            *{
+                border: 0px;
+                margin: 0px;
+                padding: 0px;
+            }
+            #parent{
+                border: 1px solid red;
+                width: 500px;
+                height: 500px; 
+                background-color: aqua;  
+                margin-top: 100px;
+                margin-left: 100px;
+                padding-top: 50px;
+                /*padding-left: 100px;*/
+                                 
+            }
+            #child{
+                border: 1px solid blue;
+                width: 150px;
+                height: 150px;
+                padding: 20px;
+                padding-left: 90px;
+               /* padding: 12px 10px 20px 50px;*/
+                background-color: brown;
+                margin-left: 100px;
+            }
+            #mydiv{
+
+            }
+        </style>
+    </head>
+    <body>
+        <div id="parent">
+            <div id="child">Hello box model</div>
+        </div id = "mydiv">
+
+        <div>
+
+        </div>
+    </body>
+</html>

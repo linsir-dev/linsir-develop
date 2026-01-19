@@ -1,0 +1,1 @@
+org.springframework.context.ApplicationContextInitializer=com.linsir.spring.springboot.base.init.WebApplicationContextInitializer

@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <script type="text/javascript">
+            function over(){
+               var Blk = document.getElementById('Blk');
+               Blk.style.display = "block";
+            }
+
+            function out(){
+                var Blk = document.getElementById('Blk');
+                Blk.style.display = "none";
+            }
+
+        </script>
+    </head>
+    <body>
+        <div onmouseover="over(this)" onmouseout="out(this)">显示部分</div>
+
+        <div id="Blk" style="display:none" >
+        
+        <h2>隐藏部分</h2>
+        
+        </div>
+    </body>
+</html>

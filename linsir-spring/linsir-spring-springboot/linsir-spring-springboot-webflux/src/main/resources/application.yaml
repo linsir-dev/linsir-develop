@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      host: 120.24.177.139
+      port: 27017
+      username: root
+      password: yu@2023
+      database: linsir-spring-springboot-webflux
+      authentication-database: admin

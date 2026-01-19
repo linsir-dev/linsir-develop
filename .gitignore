@@ -1,0 +1,61 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+
+
+/.idea/
+/linsir.iml
+/linsir-core/linsir-core.iml
+/linsir-primary/linsir-primary.iml
+/linsir-mvc/linsir-mvc.iml
+/linsir-tcc/linsir-tcc.iml
+/linsir-tcc/linsir-tcc-client/linsir-tcc-client.iml
+/linsir-springmvc/linsir-springmvc-common/linsir-springmvc-common.iml
+/linsir-springmvc/linsir-springmvc-dao/linsir-springmvc-dao.iml
+/linsir-springmvc/linsir-springmvc.iml
+/linsir-springmvc/linsir-springmvc-pojo/linsir-springmvc-pojo.iml
+/linsir-springmvc/linsir-springmvc-service/linsir-springmvc-service.iml
+/linsir-springmvc/linsir-springmvc-web/linsir-springmvc-web.iml
+/linsir-tcc/linsir-tcc-service/linsir-tcc-service.iml
+/linsir-b/linsir-b-getway/linsir-b-getway.iml
+/linsir-b/linsir-b.iml
+/linsir-b/linsir-b-getway/target/
+/linsir-core/target/
+**/target/
+/linsir-springmvc/linsir-springmvc-common/target/
+/linsir-springboot/linsir-springboot.iml
+/linsir-b/linsir-b-oauth/linsir-b-oauth.iml
+/linsir-b/linsir-b-oauth/linsir-b-oauth-server/linsir-b-oauth-server.iml
+/linsir-b/linsir-b-oauth/linsir-b-oauth-resource/linsir-b-oauth-resource.iml
+/linsir-abc/linsir-abc.iml
+/linsir-abc/linsir-abc-servlet/linsir-abc-servlet.iml
+/linsir-abc/linsir-abc-core/linsir-abc-core.iml
+/linsir-abc/linsir-abc-effective/linsir-abc-effective.iml
+/linsir-abc/linsir-abc-spring/linsir-abc-spring.iml
+/linsir-b/linsir-b-common/linsir-b-common.iml
+/linsir-b/linsir-b-starter/linsir-b-starter.iml
+/linsir-b/linsir-b-common/linsir-b-common-common/linsir-b-common-common.iml
+/linsir-b/linsir-b-starter/linsir-b-starter-es/linsir-b-starter-es.iml
+/linsir-lin/linsir-lin.iml
+/linsir-lin/linsir-lin-web/linsir-lin-web.iml
+/linsir-lin/linsir-lin-core/linsir-lin-core.iml

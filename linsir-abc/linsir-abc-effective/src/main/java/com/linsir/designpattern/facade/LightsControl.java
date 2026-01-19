@@ -1,0 +1,13 @@
+package com.linsir.designpattern.facade;
+
+// 子系统：灯光控制
+public class LightsControl {
+
+    public void turnOn() {
+        System.out.println("Lights are turned on");
+    }
+
+    public void turnOff() {
+        System.out.println("Lights are turned off");
+    }
+}
