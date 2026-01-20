@@ -34,7 +34,7 @@ public class TestMethodAnnotation {
         try {
             // 获取所有methods
             Method[] methods = TestMethodAnnotation.class.getClassLoader()
-                    .loadClass(("com.linsir.core.pdai.ann.TestMethodAnnotation"))
+                    .loadClass(("com.linsir.abc.pdai.annotation.TestMethodAnnotation"))
                     .getMethods();
 
             // 遍历

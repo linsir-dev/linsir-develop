@@ -16,6 +16,8 @@
     <module>linsir-abc</module>
     <module>linsir-subject</module>
     <module>linsir-spring</module>
+      <module>linsir-jdk</module>
+    <module>linsir-jdk/linsir-jdk-8</module>
   </modules>
   <packaging>pom</packaging>
 
