@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.oopdemo;
+package com.linsir.abc.pdai.Base.obj.oopdemo;
 
 public abstract class Animal {
     private String name;

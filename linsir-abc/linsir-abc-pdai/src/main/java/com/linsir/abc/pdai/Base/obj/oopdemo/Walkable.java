@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.oopdemo;
+package com.linsir.abc.pdai.Base.obj.oopdemo;
 
 public interface Walkable {
     void walk();
