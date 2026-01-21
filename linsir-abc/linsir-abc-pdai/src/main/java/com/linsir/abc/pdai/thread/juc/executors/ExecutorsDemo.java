@@ -312,7 +312,11 @@ public class ExecutorsDemo {
             // 提交Runnable任务，返回Future
             Future<?> future3 = executor.submit(() -> {
                 System.out.println("Runnable任务执行中");
-                Thread.sleep(500);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             });
             
             // 获取Future结果
