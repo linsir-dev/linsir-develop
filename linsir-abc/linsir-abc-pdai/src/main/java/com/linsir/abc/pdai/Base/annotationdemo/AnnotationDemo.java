@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.annotationdemo;
+package com.linsir.abc.pdai.base.annotationdemo;
 
 /**
  * 使用自定义注解的示例类

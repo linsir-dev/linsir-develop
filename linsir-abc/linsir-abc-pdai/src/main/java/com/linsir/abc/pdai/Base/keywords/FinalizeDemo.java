@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.keywords;
+package com.linsir.abc.pdai.base.keywords;
 
 /**
  * 演示 finalize 方法的用法

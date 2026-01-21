@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.exceptiondemo;
+package com.linsir.abc.pdai.base.exceptiondemo;
 
 /**
  * 异常测试类

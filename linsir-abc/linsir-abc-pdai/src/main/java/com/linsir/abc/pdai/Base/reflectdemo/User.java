@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.reflectdemo;
+package com.linsir.abc.pdai.base.reflectdemo;
 
 /**
  * 用户类，作为反射操作的目标

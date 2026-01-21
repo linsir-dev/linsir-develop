@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.equalsdemo;
+package com.linsir.abc.pdai.base.equalsdemo;
 
 import java.util.HashSet;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.reflectdemo;
+package com.linsir.abc.pdai.base.reflectdemo;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

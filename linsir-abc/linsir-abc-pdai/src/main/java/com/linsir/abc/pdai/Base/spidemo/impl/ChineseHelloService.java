@@ -1,6 +1,6 @@
-package com.linsir.abc.pdai.Base.spidemo.impl;
+package com.linsir.abc.pdai.base.spidemo.impl;
 
-import com.linsir.abc.pdai.Base.spidemo.HelloService;
+import com.linsir.abc.pdai.base.spidemo.HelloService;
 
 /**
  * 中文实现的HelloService

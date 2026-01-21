@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.oopdemo.str;/*
+package com.linsir.abc.pdai.base.oopdemo.str;/*
  * StringVsBuffersDemo.java
  *
  * 演示：

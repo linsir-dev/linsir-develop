@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.generic;
+package com.linsir.abc.pdai.base.generic;
 
 /**
  * 泛型接口实现类示例

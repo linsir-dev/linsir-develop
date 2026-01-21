@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.oopdemo;
+package com.linsir.abc.pdai.base.oopdemo;
 
 public class Cat extends Animal implements Walkable {
     private boolean indoor;

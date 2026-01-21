@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.oopdemo;
+package com.linsir.abc.pdai.base.oopdemo;
 
 public class Dog extends Animal implements Walkable {
     private String breed;

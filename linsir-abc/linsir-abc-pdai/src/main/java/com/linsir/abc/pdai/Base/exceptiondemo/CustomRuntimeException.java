@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.exceptiondemo;
+package com.linsir.abc.pdai.base.exceptiondemo;
 
 /**
  * 自定义运行时异常类

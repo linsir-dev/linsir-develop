@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.spidemo;
+package com.linsir.abc.pdai.base.spidemo;
 
 import java.util.ServiceLoader;
 

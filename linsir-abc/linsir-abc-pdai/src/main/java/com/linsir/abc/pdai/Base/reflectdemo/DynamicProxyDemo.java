@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.reflectdemo;
+package com.linsir.abc.pdai.base.reflectdemo;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

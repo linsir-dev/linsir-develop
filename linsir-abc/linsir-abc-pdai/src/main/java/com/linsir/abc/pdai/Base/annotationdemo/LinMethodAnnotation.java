@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.annotationdemo;
+package com.linsir.abc.pdai.base.annotationdemo;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
