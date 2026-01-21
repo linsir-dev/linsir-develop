@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.thread;
+package com.linsir.abc.pdai.thread.jmm;
 
 /**
  * @author linsir

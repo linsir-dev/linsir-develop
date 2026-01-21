@@ -234,7 +234,11 @@ public class BasicThreadDemo {
             }, "JoinThread2");
             
             joinThread1.start();
-            Thread.sleep(100); // 确保线程1先启动
+            try {
+                Thread.sleep(100); // 确保线程1先启动
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             joinThread2.start();
             
             try {
