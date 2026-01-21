@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.keyword;
+package com.linsir.abc.pdai.Base.keywords;
 
 /**
  * 演示 finally 代码块的用法

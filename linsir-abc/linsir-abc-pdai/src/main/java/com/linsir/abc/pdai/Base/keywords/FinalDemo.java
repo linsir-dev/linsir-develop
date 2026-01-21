@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.Base.keyword;
+package com.linsir.abc.pdai.Base.keywords;
 
 import java.util.ArrayList;
 import java.util.List;
