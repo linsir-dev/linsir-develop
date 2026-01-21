@@ -68,7 +68,7 @@ public class SetDemo {
         }
 
         System.out.println("\n   使用迭代器:");
-        for (var iterator = hashSet.iterator(); iterator.hasNext(); ) {
+        for (java.util.Iterator<String> iterator = hashSet.iterator(); iterator.hasNext(); ) {
             System.out.println("   - " + iterator.next());
         }
 
