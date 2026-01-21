@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.juc.lock;
+package com.linsir.abc.pdai.thread.juc.lock;
 
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;

@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.juc.tools;
+package com.linsir.abc.pdai.thread.juc.tools;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;

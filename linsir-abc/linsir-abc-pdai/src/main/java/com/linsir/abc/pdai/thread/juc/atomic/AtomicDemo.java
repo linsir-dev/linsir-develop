@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.juc.atomic;
+package com.linsir.abc.pdai.thread.juc.atomic;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
