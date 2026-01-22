@@ -59,7 +59,7 @@ public class LambdaBasicDemo {
      */
     public void testExplicitType() {
         // 显式声明参数类型
-        BiFunction<Integer, Integer, Integer> multiply = (int x, int y) -> x * y;
+        BiFunction<Integer, Integer, Integer> multiply = (Integer x, Integer y) -> x * y;
         int result = multiply.apply(6, 7);
         System.out.println("6 * 7 = " + result);
     }
