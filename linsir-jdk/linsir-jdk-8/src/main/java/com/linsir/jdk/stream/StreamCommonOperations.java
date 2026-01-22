@@ -137,7 +137,7 @@ public class StreamCommonOperations {
         System.out.println("sum(求和): " + sum);
         
         // average - 平均值
-        Optional<Double> average = numbers.stream().mapToInt(Integer::intValue).average();
+        java.util.OptionalDouble average = numbers.stream().mapToInt(Integer::intValue).average();
         System.out.println("average(平均值): " + average.orElse(0.0));
         
         // max - 最大值
