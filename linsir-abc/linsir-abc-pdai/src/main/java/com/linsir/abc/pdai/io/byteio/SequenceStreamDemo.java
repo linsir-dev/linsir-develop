@@ -7,26 +7,15 @@ import java.io.SequenceInputStream;
 import java.util.Vector;
 
 /**
- * @author linsir
- * @version 1.0
- * @description: SequenceInputStream示例
- * @date 2026/1/22 12:00
+ * SequenceInputStream示例
+ * 演示序列字节流的基本操作
  */
-public class SequenceInputStreamDemo {
-    public static void main(String[] args) {
-        // 基本使用示例
-        basicExample();
-        
-        // 使用Vector合并多个流
-        vectorExample();
-        
-        // 综合示例
-        combinedExample();
-    }
-    
-    // 基本使用示例
-    private static void basicExample() {
-        System.out.println("1. SequenceInputStream基本使用示例:");
+public class SequenceStreamDemo {
+    /**
+     * 基本使用示例
+     */
+    public static void basicExample() {
+        System.out.println("10. SequenceInputStream基本使用示例:");
         
         // 创建两个字节数组输入流
         byte[] array1 = "Hello, ".getBytes();
@@ -52,9 +41,11 @@ public class SequenceInputStreamDemo {
         System.out.println();
     }
     
-    // 使用Vector合并多个流
-    private static void vectorExample() {
-        System.out.println("2. SequenceInputStream使用Vector合并多个流示例:");
+    /**
+     * 使用Vector合并多个流
+     */
+    public static void vectorExample() {
+        System.out.println("11. SequenceInputStream使用Vector合并多个流示例:");
         
         // 创建多个字节数组输入流
         byte[] array1 = "First part. ".getBytes();
@@ -87,9 +78,11 @@ public class SequenceInputStreamDemo {
         System.out.println();
     }
     
-    // 综合示例
-    private static void combinedExample() {
-        System.out.println("3. SequenceInputStream综合示例:");
+    /**
+     * 综合示例
+     */
+    public static void combinedExample() {
+        System.out.println("12. SequenceInputStream综合示例:");
         
         // 模拟多个数据源
         byte[] header = "=== Report Header ===\n".getBytes();

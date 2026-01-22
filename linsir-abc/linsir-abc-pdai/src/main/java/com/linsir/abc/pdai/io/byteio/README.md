@@ -1,99 +1,315 @@
 # 字节流示例
 
-本目录包含Java中字节流相关的示例代码，演示了各种字节流的基本用法和特征。
+本目录包含 Java.io 包下字节流的示例代码，展示了各种字节流类的使用方法和特性。
 
-## 字节流的特征
+## 目录结构
+```
+byteio/
+├── FileStreamDemo.java       // FileInputStream和FileOutputStream示例
+├── ByteArrayStreamDemo.java  // ByteArrayInputStream和ByteArrayOutputStream示例
+├── BufferedStreamDemo.java   // BufferedInputStream和BufferedOutputStream示例
+├── DataStreamDemo.java       // DataInputStream和DataOutputStream示例
+├── SequenceStreamDemo.java   // SequenceInputStream示例
+├── ByteStreamTest.java       // 字节流测试主类
+└── README.md                 // 本说明文件
+```
 
-字节流是Java IO中处理原始字节数据的流，主要具有以下特征：
+## 示例代码功能
 
-### 1. 处理单位
-- 以字节（byte）为单位处理数据
-- 适用于处理二进制数据，如图片、音频、视频等
-- 也可以处理文本数据，但需要手动处理编码
+### 字节流概述
+- **特点**：
+  - 以字节为单位处理数据
+  - 适合处理二进制数据（如图像、音频、视频等）
+  - 无缓冲（基本字节流）
 
-### 2. 层次结构
-- 字节流分为输入流（InputStream）和输出流（OutputStream）
-- 所有字节输入流都是InputStream的子类
-- 所有字节输出流都是OutputStream的子类
+### 输入字节流（InputStream及其子类）
 
-### 3. 缓冲机制
-- 原始字节流（如FileInputStream）读取效率较低
-- 缓冲字节流（如BufferedInputStream）通过内部缓冲区提高读取效率
-- 建议使用缓冲字节流来提高IO性能
+#### 1. FileInputStream
+- **特点**：
+  - 从文件系统中的文件读取字节
+  - 基本字节流，无缓冲
+  - 适合读取二进制文件
+- **使用场景**：
+  - 读取文件数据
+  - 处理二进制文件
 
-### 4. 功能扩展
-- 提供了各种功能的字节流实现
-- 如DataInputStream/DataOutputStream支持读写基本数据类型
-- SequenceInputStream支持合并多个输入流
+#### 2. ByteArrayInputStream
+- **特点**：
+  - 从内存中的字节数组读取字节
+  - 支持标记和重置操作
+  - 适合处理内存中的二进制数据
+- **使用场景**：
+  - 处理内存中的二进制数据
+  - 需要标记和重置功能的场景
 
-## 示例代码说明
+#### 3. BufferedInputStream
+- **特点**：
+  - 带缓冲的输入流
+  - 提高读取效率
+  - 装饰器模式，包装其他输入流
+- **使用场景**：
+  - 需要提高读取效率的场景
+  - 频繁读取小数据的场景
 
-### 1. FileInputStream和FileOutputStream
-- **特征**：直接操作文件的字节流
-- **适用场景**：读写二进制文件或文本文件
-- **优势**：直接与文件系统交互，使用简单
+#### 4. DataInputStream
+- **特点**：
+  - 读取基本数据类型
+  - 装饰器模式，包装其他输入流
+  - 适合读取结构化数据
+- **使用场景**：
+  - 读取基本数据类型
+  - 处理结构化的二进制数据
 
-### 2. ByteArrayInputStream和ByteArrayOutputStream
-- **特征**：操作内存中字节数组的流
-- **适用场景**：在内存中处理字节数据，无需读写文件
-- **优势**：速度快，适合临时数据处理
+#### 5. SequenceInputStream
+- **特点**：
+  - 合并多个输入流为一个
+  - 按顺序读取多个流的数据
+  - 适合处理多个数据源
+- **使用场景**：
+  - 合并多个输入流
+  - 处理多个数据源的场景
 
-### 3. BufferedInputStream和BufferedOutputStream
-- **特征**：带缓冲区的字节流
-- **适用场景**：需要提高IO性能的场景
-- **优势**：减少IO操作次数，提高读写效率
+### 输出字节流（OutputStream及其子类）
 
-### 4. DataInputStream和DataOutputStream
-- **特征**：支持读写基本数据类型的字节流
-- **适用场景**：需要读写各种数据类型的场景
-- **优势**：可以直接读写int、long、float、double等类型，无需手动转换
+#### 1. FileOutputStream
+- **特点**：
+  - 向文件系统中的文件写入字节
+  - 基本字节流，无缓冲
+  - 适合写入二进制文件
+- **使用场景**：
+  - 写入文件数据
+  - 处理二进制文件
 
-### 5. SequenceInputStream
-- **特征**：可以合并多个输入流的字节流
-- **适用场景**：需要从多个数据源读取数据的场景
-- **优势**：简化了多流合并的操作
+#### 2. ByteArrayOutputStream
+- **特点**：
+  - 向内存中的字节数组写入字节
+  - 自动扩容
+  - 适合处理内存中的二进制数据
+- **使用场景**：
+  - 处理内存中的二进制数据
+  - 需要动态扩容的场景
 
-### 6. 字节流性能测试
-- **特征**：测试不同字节流的性能差异
-- **适用场景**：选择合适的字节流实现时参考
-- **优势**：直观展示各字节流的性能特点
+#### 3. BufferedOutputStream
+- **特点**：
+  - 带缓冲的输出流
+  - 提高写入效率
+  - 装饰器模式，包装其他输出流
+- **使用场景**：
+  - 需要提高写入效率的场景
+  - 频繁写入小数据的场景
 
-### 7. 字节流工具方法
-- **特征**：提供了一些实用的字节流工具方法
-- **适用场景**：日常开发中需要用到的IO操作
-- **优势**：简化了常见的IO操作，如文件复制、读写字节数组等
+#### 4. DataOutputStream
+- **特点**：
+  - 写入基本数据类型
+  - 装饰器模式，包装其他输出流
+  - 适合写入结构化数据
+- **使用场景**：
+  - 写入基本数据类型
+  - 处理结构化的二进制数据
 
-### 8. 字节流综合示例
-- **特征**：综合演示各种字节流的使用
-- **适用场景**：了解字节流的完整应用
-- **优势**：展示了字节流在实际开发中的应用
+## 示例代码内容
+
+### FileStreamDemo.java
+- **功能**：
+  - 展示 FileOutputStream 的使用方法
+  - 展示 FileInputStream 的使用方法
+  - 演示文件字节流的基本操作
+
+- **主要方法**：
+  - `writeToFile()`：写入数据到文件
+  - `readFromFile()`：从文件读取数据
+  - `cleanTestFiles()`：清理测试文件
+
+### ByteArrayStreamDemo.java
+- **功能**：
+  - 展示 ByteArrayOutputStream 的使用方法
+  - 展示 ByteArrayInputStream 的使用方法
+  - 演示内存字节流的基本操作
+  - 演示重置和标记功能
+
+- **主要方法**：
+  - `writeToByteArray()`：写入数据到字节数组
+  - `readFromByteArray()`：从字节数组读取数据
+  - `demonstrateResetAndMark()`：演示重置和标记功能
+
+### BufferedStreamDemo.java
+- **功能**：
+  - 展示 BufferedOutputStream 的使用方法
+  - 展示 BufferedInputStream 的使用方法
+  - 演示缓冲字节流的基本操作
+
+- **主要方法**：
+  - `writeWithBuffer()`：使用缓冲流写入数据
+  - `readWithBuffer()`：使用缓冲流读取数据
+  - `cleanTestFiles()`：清理测试文件
+
+### DataStreamDemo.java
+- **功能**：
+  - 展示 DataOutputStream 的使用方法
+  - 展示 DataInputStream 的使用方法
+  - 演示数据字节流的基本操作
+  - 演示读写各种基本数据类型
+
+- **主要方法**：
+  - `writeData()`：写入各种类型的数据
+  - `readData()`：读取各种类型的数据
+  - `cleanTestFiles()`：清理测试文件
+
+### SequenceStreamDemo.java
+- **功能**：
+  - 展示 SequenceInputStream 的使用方法
+  - 演示序列字节流的基本操作
+  - 演示合并多个输入流
+
+- **主要方法**：
+  - `basicExample()`：基本使用示例
+  - `vectorExample()`：使用Vector合并多个流
+  - `combinedExample()`：综合示例
+
+### ByteStreamTest.java
+- **功能**：
+  - 测试所有字节流示例代码
+  - 依次运行所有示例
+  - 验证各个字节流的功能
 
 ## 运行示例
 
-运行`ByteStreamDemo`类的`main`方法，即可看到各字节流的使用示例和输出结果。
+### 编译和运行
+1. **编译**：确保所有 .java 文件已编译
+   ```
+   cd linsir-abc/linsir-abc-pdai/src/main/java
+   javac -d ../../../../target com/linsir/abc/pdai/io/byteio/*.java
+   ```
 
-## 字节流使用建议
+2. **运行**：执行 ByteStreamTest 类
+   ```
+   cd linsir-abc/linsir-abc-pdai
+   java -cp target com.linsir.abc.pdai.io.byteio.ByteStreamTest
+   ```
 
-1. **优先使用缓冲流**：
-   - 对于文件IO操作，建议使用BufferedInputStream和BufferedOutputStream
-   - 可以显著提高读写性能
+### 预期输出
+```
+=== Java.io 字节流测试 ===
 
-2. **根据数据类型选择合适的流**：
-   - 处理二进制文件：使用FileInputStream/FileOutputStream
-   - 处理基本数据类型：使用DataInputStream/DataOutputStream
-   - 处理内存中的字节数据：使用ByteArrayInputStream/ByteArrayOutputStream
+1. FileOutputStream写入示例:
+成功写入数据到文件:
+Hello, File Stream!
+This is a test for FileOutputStream.
 
-3. **注意资源管理**：
-   - 使用try-with-resources语句自动关闭流
-   - 确保流在使用完毕后被正确关闭，避免资源泄漏
+2. FileInputStream读取示例:
+成功从文件读取数据:
+Hello, File Stream!
+This is a test for FileOutputStream.
 
-4. **处理异常**：
-   - 捕获并适当处理IO异常
-   - 提供合理的错误处理机制
+3. ByteArrayOutputStream写入示例:
+成功写入数据到字节数组:
+Hello, ByteArray Stream!
+This is a test for ByteArrayOutputStream.
+字节数组长度: 72
 
-5. **性能优化**：
-   - 使用合适大小的缓冲区
-   - 减少IO操作次数
-   - 对于大文件，考虑使用NIO
+4. ByteArrayInputStream读取示例:
+成功从字节数组读取数据:
+Hello, ByteArray Stream!
+This is a test for ByteArrayInputStream.
 
-通过合理使用字节流，可以有效地处理各种二进制数据和文本数据，提高应用程序的IO性能。
+5. ByteArrayInputStream重置和标记功能示例:
+读取前10个字节: Hello, Byte
+读取接下来的5个字节: Array 
+重置后读取的字节: Array Stream!
+
+6. BufferedOutputStream写入示例:
+成功使用BufferedOutputStream写入数据:
+Hello, Buffered Stream!
+This is a test for BufferedOutputStream.
+Buffered streams improve performance.
+
+7. BufferedInputStream读取示例:
+成功使用BufferedInputStream读取数据:
+Hello, Buffered Stream!
+This is a test for BufferedOutputStream.
+Buffered streams improve performance.
+
+8. DataOutputStream写入示例:
+成功使用DataOutputStream写入各种类型的数据:
+Boolean: true
+Byte: 100
+Short: 2000
+Int: 300000
+Long: 4000000000
+Float: 3.14
+Double: 3.1415926535
+String: Hello, Data Stream!
+
+9. DataInputStream读取示例:
+成功使用DataInputStream读取各种类型的数据:
+Boolean: true
+Byte: 100
+Short: 2000
+Int: 300000
+Long: 4000000000
+Float: 3.14
+Double: 3.1415926535
+String: Hello, Data Stream!
+
+10. SequenceInputStream基本使用示例:
+成功使用SequenceInputStream读取多个流:
+读取内容: Hello, Sequence Stream!
+
+11. SequenceInputStream使用Vector合并多个流示例:
+成功使用SequenceInputStream读取多个流:
+读取内容: First part. Second part. Third part. Fourth part.
+
+12. SequenceInputStream综合示例:
+生成的报告:
+=== Report Header ===
+This is the main content of the report.
+It contains important information.
+=== Report Footer ===
+
+=== 字节流测试完成 ===
+```
+
+## 注意事项
+
+### 流的关闭
+- 使用 try-with-resources 语句自动关闭流，避免资源泄露
+- 手动关闭流时，应按照从里到外的顺序关闭
+
+### 缓冲流
+- 缓冲流需要调用 `flush()` 方法确保数据被写入到底层流
+- try-with-resources 语句会自动调用 `flush()` 方法
+
+### 数据流
+- 读取数据的顺序必须与写入数据的顺序一致
+- 读取的数据类型必须与写入的数据类型一致
+
+### 序列流
+- 序列流会按顺序读取多个流，当一个流读取完毕后，会自动关闭该流
+- 序列流关闭时，会关闭所有未关闭的流
+
+## 应用场景
+
+### FileInputStream/FileOutputStream
+- 读取/写入二进制文件
+- 处理文件数据
+- 文件复制操作
+
+### ByteArrayInputStream/ByteArrayOutputStream
+- 处理内存中的二进制数据
+- 数据转换操作
+- 网络编程中的数据处理
+
+### BufferedInputStream/BufferedOutputStream
+- 需要提高读写效率的场景
+- 频繁读写小数据的场景
+- 网络编程中的数据传输
+
+### DataInputStream/DataOutputStream
+- 读取/写入基本数据类型
+- 处理结构化的二进制数据
+- 网络编程中的数据传输
+
+### SequenceInputStream
+- 合并多个输入流
+- 处理多个数据源的场景
+- 日志文件合并操作
