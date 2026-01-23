@@ -14,8 +14,8 @@ public class RedissonConfig {
     {
         Config config = new Config();
         config.useSingleServer()
-                .setAddress("redis://redis-11744.c270.us-east-1-3.ec2.redns.redis-cloud.com:11744")
-                        .setPassword("AcxmzCMgAykYIzysZA7Y7d6b2Rjcekyp");
+                .setAddress("redis://127.0.0.1:6379");
+                        //.setPassword("AcxmzCMgAykYIzysZA7Y7d6b2Rjcekyp");
         return Redisson.create(config);
 
 

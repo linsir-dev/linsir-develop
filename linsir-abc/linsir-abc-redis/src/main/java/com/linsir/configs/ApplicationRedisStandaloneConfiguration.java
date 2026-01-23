@@ -22,8 +22,8 @@ public class ApplicationRedisStandaloneConfiguration {
     @Bean
     public RedisConnectionFactory jedisConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration =
-                new RedisStandaloneConfiguration("redis-11744.c270.us-east-1-3.ec2.redns.redis-cloud.com",11744);
-        redisStandaloneConfiguration.setPassword("AcxmzCMgAykYIzysZA7Y7d6b2Rjcekyp");
+                new RedisStandaloneConfiguration("127.0.0.1",6379);
+        //redisStandaloneConfiguration.setPassword("AcxmzCMgAykYIzysZA7Y7d6b2Rjcekyp");
         return new JedisConnectionFactory(redisStandaloneConfiguration);
     }
 

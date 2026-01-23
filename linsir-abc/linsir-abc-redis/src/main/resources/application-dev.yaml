@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://106.55.181.141:3306/linsir-abc-redis?characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/linsir-abc-redis?characterEncoding=utf8
     username: root
-    password: yu@2023
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   session:
     redis:
