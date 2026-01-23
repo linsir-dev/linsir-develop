@@ -187,6 +187,408 @@
 
 **注意**：OperationController 目前为空，没有实现任何API方法。
 
+### 6. Redis数据类型接口
+
+#### 6.1 String 类型操作
+
+##### 6.1.1 测试 POST /redis/data-type/string/set
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/string/set
+- **方法**：POST
+- **参数**：
+  - key：键名
+  - value：值
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=name, value=Redis
+4. 点击发送
+
+**预期结果**：
+- 返回：`设置成功: name = Redis`
+- HTTP状态码：200
+
+##### 6.1.2 测试 GET /redis/data-type/string/get
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/string/get
+- **方法**：GET
+- **参数**：
+  - key：键名
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：key=name
+4. 点击发送
+
+**预期结果**：
+- 返回：`获取结果: name = Redis`
+- HTTP状态码：200
+
+##### 6.1.3 测试 POST /redis/data-type/string/increment
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/string/increment
+- **方法**：POST
+- **参数**：
+  - key：键名
+  - delta：增量值
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=counter, delta=1
+4. 点击发送
+
+**预期结果**：
+- 返回：`自增成功: counter 增加 1`
+- HTTP状态码：200
+
+##### 6.1.4 测试 POST /redis/data-type/string/decrement
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/string/decrement
+- **方法**：POST
+- **参数**：
+  - key：键名
+  - delta：减量值
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=counter, delta=1
+4. 点击发送
+
+**预期结果**：
+- 返回：`自减成功: counter 减少 1`
+- HTTP状态码：200
+
+#### 6.2 List 类型操作
+
+##### 6.2.1 测试 POST /redis/data-type/list/add
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/list/add
+- **方法**：POST
+- **参数**：
+  - key：键名
+  - values：值（多个值用逗号分隔）
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=mylist, values=value1,value2,value3
+4. 点击发送
+
+**预期结果**：
+- 返回：`添加到列表成功: mylist = value1, value2, value3`
+- HTTP状态码：200
+
+##### 6.2.2 测试 GET /redis/data-type/list/get
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/list/get
+- **方法**：GET
+- **参数**：
+  - key：键名
+  - start：开始索引
+  - end：结束索引
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：key=mylist, start=0, end=2
+4. 点击发送
+
+**预期结果**：
+- 返回：`["value1", "value2", "value3"]`
+- HTTP状态码：200
+
+##### 6.2.3 测试 POST /redis/data-type/list/remove
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/list/remove
+- **方法**：POST
+- **参数**：
+  - key：键名
+  - count：删除数量
+  - value：值
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=mylist, count=1, value=value2
+4. 点击发送
+
+**预期结果**：
+- 返回：`从列表移除成功: mylist 中的 value2 (1个)`
+- HTTP状态码：200
+
+##### 6.2.4 测试 GET /redis/data-type/list/size
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/list/size
+- **方法**：GET
+- **参数**：
+  - key：键名
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：key=mylist
+4. 点击发送
+
+**预期结果**：
+- 返回：`2`（假设删除了一个元素）
+- HTTP状态码：200
+
+#### 6.3 Set 类型操作
+
+##### 6.3.1 测试 POST /redis/data-type/set/add
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/set/add
+- **方法**：POST
+- **参数**：
+  - key：键名
+  - values：值（多个值用逗号分隔）
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=myset, values=value1,value2,value3
+4. 点击发送
+
+**预期结果**：
+- 返回：`添加到集合成功: myset = value1, value2, value3`
+- HTTP状态码：200
+
+##### 6.3.2 测试 GET /redis/data-type/set/get
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/set/get
+- **方法**：GET
+- **参数**：
+  - key：键名
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：key=myset
+4. 点击发送
+
+**预期结果**：
+- 返回：`["value1", "value2", "value3"]`
+- HTTP状态码：200
+
+##### 6.3.3 测试 GET /redis/data-type/set/intersection
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/set/intersection
+- **方法**：GET
+- **参数**：
+  - key1：第一个集合的键名
+  - key2：第二个集合的键名
+
+**测试步骤**：
+1. 先添加两个集合：
+   - POST /redis/data-type/set/add?key=set1&values=1,2,3
+   - POST /redis/data-type/set/add?key=set2&values=2,3,4
+2. 使用Postman设置请求方法为GET
+3. 输入上述URL
+4. 添加参数：key1=set1, key2=set2
+5. 点击发送
+
+**预期结果**：
+- 返回：`["2", "3"]`
+- HTTP状态码：200
+
+#### 6.4 Hash 类型操作
+
+##### 6.4.1 测试 POST /redis/data-type/hash/put
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/hash/put
+- **方法**：POST
+- **参数**：
+  - key：键名
+  - field：字段名
+  - value：值
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=user, field=name, value=admin
+4. 点击发送
+
+**预期结果**：
+- 返回：`添加到哈希成功: user.name = admin`
+- HTTP状态码：200
+
+##### 6.4.2 测试 GET /redis/data-type/hash/get
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/hash/get
+- **方法**：GET
+- **参数**：
+  - key：键名
+  - field：字段名
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：key=user, field=name
+4. 点击发送
+
+**预期结果**：
+- 返回：`获取哈希结果: user.name = admin`
+- HTTP状态码：200
+
+##### 6.4.3 测试 GET /redis/data-type/hash/getAll
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/hash/getAll
+- **方法**：GET
+- **参数**：
+  - key：键名
+
+**测试步骤**：
+1. 先添加多个字段到哈希：
+   - POST /redis/data-type/hash/put?key=user&field=age&value=25
+   - POST /redis/data-type/hash/put?key=user&field=email&value=admin@example.com
+2. 使用Postman设置请求方法为GET
+3. 输入上述URL
+4. 添加参数：key=user
+5. 点击发送
+
+**预期结果**：
+- 返回：`{"name":"admin","age":"25","email":"admin@example.com"}`
+- HTTP状态码：200
+
+#### 6.5 ZSet 类型操作
+
+##### 6.5.1 测试 POST /redis/data-type/zset/add
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/zset/add
+- **方法**：POST
+- **参数**：
+  - key：键名
+  - value：值
+  - score：分数
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=ranking, value=user1, score=95
+4. 点击发送
+
+**预期结果**：
+- 返回：`添加到有序集合成功: ranking = user1 (score: 95.0)`
+- HTTP状态码：200
+
+##### 6.5.2 测试 GET /redis/data-type/zset/get
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/zset/get
+- **方法**：GET
+- **参数**：
+  - key：键名
+  - start：开始索引
+  - end：结束索引
+
+**测试步骤**：
+1. 先添加多个元素到有序集合：
+   - POST /redis/data-type/zset/add?key=ranking&value=user2&score=85
+   - POST /redis/data-type/zset/add?key=ranking&value=user3&score=90
+2. 使用Postman设置请求方法为GET
+3. 输入上述URL
+4. 添加参数：key=ranking, start=0, end=2
+5. 点击发送
+
+**预期结果**：
+- 返回：`["user2", "user3", "user1"]`（按分数升序排列）
+- HTTP状态码：200
+
+#### 6.6 通用操作
+
+##### 6.6.1 测试 DELETE /redis/data-type/key/delete
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/key/delete
+- **方法**：DELETE
+- **参数**：
+  - key：键名
+
+**测试步骤**：
+1. 使用Postman设置请求方法为DELETE
+2. 输入上述URL
+3. 添加参数：key=name
+4. 点击发送
+
+**预期结果**：
+- 返回：`删除键成功: name`
+- HTTP状态码：200
+
+##### 6.6.2 测试 GET /redis/data-type/key/exists
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/key/exists
+- **方法**：GET
+- **参数**：
+  - key：键名
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：key=name
+4. 点击发送
+
+**预期结果**：
+- 返回：`false`（因为已经删除）
+- HTTP状态码：200
+
+##### 6.6.3 测试 POST /redis/data-type/key/expire
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/key/expire
+- **方法**：POST
+- **参数**：
+  - key：键名
+  - seconds：过期时间（秒）
+
+**测试步骤**：
+1. 先设置一个键：POST /redis/data-type/string/set?key=temp&value=test
+2. 使用Postman设置请求方法为POST
+3. 输入上述URL
+4. 添加参数：key=temp, seconds=60
+5. 点击发送
+
+**预期结果**：
+- 返回：`设置过期时间成功: temp (60秒)`
+- HTTP状态码：200
+
+##### 6.6.4 测试 GET /redis/data-type/key/ttl
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/data-type/key/ttl
+- **方法**：GET
+- **参数**：
+  - key：键名
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：key=temp
+4. 点击发送
+
+**预期结果**：
+- 返回：`60`（或接近60的数字，因为有时间差）
+- HTTP状态码：200
+
 ## 完整测试流程
 
 ### 1. 基础功能测试
@@ -199,6 +601,13 @@
    - 测试单个订单
    - 测试并发订单
 4. **测试可重入锁**：访问 /goods/reentrant
+5. **测试Redis数据类型**：
+   - 测试String类型操作
+   - 测试List类型操作
+   - 测试Set类型操作
+   - 测试Hash类型操作
+   - 测试ZSet类型操作
+   - 测试通用操作
 
 ### 2. 集成测试
 
@@ -311,6 +720,18 @@ curl http://localhost:9001/goods/order/1
 | /logout | ✅ | <100ms | logout success | logout success | 正常 |
 | /goods/order/{goodsId} | ✅ | ~10s | 业务成功 | 业务成功 | 包含故意延迟 |
 | /goods/reentrant | ✅ | ~20s | 无返回值 | 无返回值 | 包含故意延迟 |
+| /redis/data-type/string/set | ✅ | <100ms | 设置成功 | 设置成功 | 正常 |
+| /redis/data-type/string/get | ✅ | <100ms | 获取结果 | 获取结果 | 正常 |
+| /redis/data-type/list/add | ✅ | <100ms | 添加到列表成功 | 添加到列表成功 | 正常 |
+| /redis/data-type/list/get | ✅ | <100ms | 列表元素 | 列表元素 | 正常 |
+| /redis/data-type/set/add | ✅ | <100ms | 添加到集合成功 | 添加到集合成功 | 正常 |
+| /redis/data-type/set/get | ✅ | <100ms | 集合元素 | 集合元素 | 正常 |
+| /redis/data-type/hash/put | ✅ | <100ms | 添加到哈希成功 | 添加到哈希成功 | 正常 |
+| /redis/data-type/hash/get | ✅ | <100ms | 获取哈希结果 | 获取哈希结果 | 正常 |
+| /redis/data-type/zset/add | ✅ | <100ms | 添加到有序集合成功 | 添加到有序集合成功 | 正常 |
+| /redis/data-type/zset/get | ✅ | <100ms | 有序集合元素 | 有序集合元素 | 正常 |
+| /redis/data-type/key/delete | ✅ | <100ms | 删除键成功 | 删除键成功 | 正常 |
+| /redis/data-type/key/exists | ✅ | <100ms | true/false | true/false | 正常 |
 
 ## 总结
 
@@ -319,8 +740,9 @@ curl http://localhost:9001/goods/order/1
 1. **基础接口**：首页访问
 2. **用户接口**：登录、获取用户、登出
 3. **订单接口**：下单、分布式锁测试
+4. **Redis数据类型接口**：String、List、Set、Hash、ZSet类型的完整操作
 
-测试文档提供了详细的测试用例、测试步骤和预期结果，以及常见问题的解决方案。通过按照本文档进行测试，可以验证项目的功能是否正常，特别是分布式锁、会话管理等Redis相关的功能。
+测试文档提供了详细的测试用例、测试步骤和预期结果，以及常见问题的解决方案。通过按照本文档进行测试，可以验证项目的功能是否正常，特别是分布式锁、会话管理、Redis各种数据类型操作等功能。
 
 对于未实现的接口（CacheController和OperationController），建议在实现后添加相应的测试用例。
 
@@ -332,5 +754,5 @@ curl http://localhost:9001/goods/order/1
 - Redis版本：6.0+
 - MySQL版本：8.0+
 
-**更新时间**：2026-01-23
-**版本**：1.0.0
+**更新时间**：2026-01-24
+**版本**：1.1.0

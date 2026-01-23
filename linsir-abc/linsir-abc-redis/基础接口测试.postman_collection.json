@@ -1,0 +1,267 @@
+{
+  "info": {
+    "_postman_id": "basic-interface-test-collection",
+    "name": "基础接口测试",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "首页接口",
+      "item": [
+        {
+          "name": "GET /index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/index",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "index"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST /index",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/index",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "index"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "登录接口",
+      "item": [
+        {
+          "name": "登录成功测试",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/login/admin/123456",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "login",
+                "admin",
+                "123456"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "登录失败测试（密码错误）",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/login/admin/wrong",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "login",
+                "admin",
+                "wrong"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "登录失败测试（用户不存在）",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/login/noname/123456",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "login",
+                "noname",
+                "123456"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取用户信息",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/getUser",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "getUser"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "登出",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/logout",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "商品订单接口",
+      "item": [
+        {
+          "name": "下单测试（商品ID=1）",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/goods/order/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "goods",
+                "order",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "下单测试（商品ID=2）",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/goods/order/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "goods",
+                "order",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "下单测试（商品ID=999）",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/goods/order/999",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "goods",
+                "order",
+                "999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "可重入锁测试",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/goods/reentrant",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "goods",
+                "reentrant"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 预处理脚本"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 测试脚本"
+        ]
+      }
+    }
+  ],
+  "variable": []
+}

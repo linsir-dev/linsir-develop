@@ -1,0 +1,1060 @@
+{
+  "info": {
+    "_postman_id": "redis-data-type-test-collection",
+    "name": "Redis数据类型接口测试",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "String类型操作",
+      "item": [
+        {
+          "name": "设置字符串",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/string/set",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "string",
+                "set"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "name",
+                  "description": "键名"
+                },
+                {
+                  "key": "value",
+                  "value": "Redis",
+                  "description": "值"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取字符串",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/string/get",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "string",
+                "get"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "name",
+                  "description": "键名"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "自增操作",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/string/increment",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "string",
+                "increment"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "counter",
+                  "description": "键名"
+                },
+                {
+                  "key": "delta",
+                  "value": "1",
+                  "description": "增量值"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "自减操作",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/string/decrement",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "string",
+                "decrement"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "counter",
+                  "description": "键名"
+                },
+                {
+                  "key": "delta",
+                  "value": "1",
+                  "description": "减量值"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "List类型操作",
+      "item": [
+        {
+          "name": "添加元素",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/list/add",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "list",
+                "add"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "mylist",
+                  "description": "键名"
+                },
+                {
+                  "key": "values",
+                  "value": "value1,value2,value3",
+                  "description": "值（多个值用逗号分隔）"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取范围",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/list/get",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "list",
+                "get"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "mylist",
+                  "description": "键名"
+                },
+                {
+                  "key": "start",
+                  "value": "0",
+                  "description": "开始索引"
+                },
+                {
+                  "key": "end",
+                  "value": "2",
+                  "description": "结束索引"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "删除元素",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/list/remove",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "list",
+                "remove"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "mylist",
+                  "description": "键名"
+                },
+                {
+                  "key": "count",
+                  "value": "1",
+                  "description": "删除数量"
+                },
+                {
+                  "key": "value",
+                  "value": "value2",
+                  "description": "值"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取长度",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/list/size",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "list",
+                "size"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "mylist",
+                  "description": "键名"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Set类型操作",
+      "item": [
+        {
+          "name": "添加元素",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/set/add",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "set",
+                "add"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "myset",
+                  "description": "键名"
+                },
+                {
+                  "key": "values",
+                  "value": "value1,value2,value3",
+                  "description": "值（多个值用逗号分隔）"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取所有元素",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/set/get",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "set",
+                "get"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "myset",
+                  "description": "键名"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "删除元素",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/set/remove",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "set",
+                "remove"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "myset",
+                  "description": "键名"
+                },
+                {
+                  "key": "values",
+                  "value": "value2",
+                  "description": "值（多个值用逗号分隔）"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取大小",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/set/size",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "set",
+                "size"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "myset",
+                  "description": "键名"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "交集操作",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/set/intersection",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "set",
+                "intersection"
+              ],
+              "query": [
+                {
+                  "key": "key1",
+                  "value": "set1",
+                  "description": "第一个集合的键名"
+                },
+                {
+                  "key": "key2",
+                  "value": "set2",
+                  "description": "第二个集合的键名"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "并集操作",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/set/union",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "set",
+                "union"
+              ],
+              "query": [
+                {
+                  "key": "key1",
+                  "value": "set1",
+                  "description": "第一个集合的键名"
+                },
+                {
+                  "key": "key2",
+                  "value": "set2",
+                  "description": "第二个集合的键名"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Hash类型操作",
+      "item": [
+        {
+          "name": "添加字段",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/hash/put",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "hash",
+                "put"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "user",
+                  "description": "键名"
+                },
+                {
+                  "key": "field",
+                  "value": "name",
+                  "description": "字段名"
+                },
+                {
+                  "key": "value",
+                  "value": "admin",
+                  "description": "值"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取字段",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/hash/get",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "hash",
+                "get"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "user",
+                  "description": "键名"
+                },
+                {
+                  "key": "field",
+                  "value": "name",
+                  "description": "字段名"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "批量添加",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/hash/putAll",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "hash",
+                "putAll"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "user",
+                  "description": "键名"
+                },
+                {
+                  "key": "map",
+                  "value": "{\"age\":\"25\",\"email\":\"admin@example.com\"}",
+                  "description": "键值对映射"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取所有字段",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/hash/getAll",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "hash",
+                "getAll"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "user",
+                  "description": "键名"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "删除字段",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/hash/remove",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "hash",
+                "remove"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "user",
+                  "description": "键名"
+                },
+                {
+                  "key": "fields",
+                  "value": "age",
+                  "description": "字段名（多个字段用逗号分隔）"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取大小",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/hash/size",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "hash",
+                "size"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "user",
+                  "description": "键名"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ZSet类型操作",
+      "item": [
+        {
+          "name": "添加元素",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/zset/add",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "zset",
+                "add"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "ranking",
+                  "description": "键名"
+                },
+                {
+                  "key": "value",
+                  "value": "user1",
+                  "description": "值"
+                },
+                {
+                  "key": "score",
+                  "value": "95",
+                  "description": "分数"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "按排名获取",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/zset/get",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "zset",
+                "get"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "ranking",
+                  "description": "键名"
+                },
+                {
+                  "key": "start",
+                  "value": "0",
+                  "description": "开始索引"
+                },
+                {
+                  "key": "end",
+                  "value": "2",
+                  "description": "结束索引"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "按分数获取",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/zset/getByScore",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "zset",
+                "getByScore"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "ranking",
+                  "description": "键名"
+                },
+                {
+                  "key": "min",
+                  "value": "80",
+                  "description": "最小分数"
+                },
+                {
+                  "key": "max",
+                  "value": "100",
+                  "description": "最大分数"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "删除元素",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/zset/remove",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "zset",
+                "remove"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "ranking",
+                  "description": "键名"
+                },
+                {
+                  "key": "values",
+                  "value": "user2",
+                  "description": "值（多个值用逗号分隔）"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取大小",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/zset/size",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "zset",
+                "size"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "ranking",
+                  "description": "键名"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取分数",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/zset/score",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "zset",
+                "score"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "ranking",
+                  "description": "键名"
+                },
+                {
+                  "key": "value",
+                  "value": "user1",
+                  "description": "值"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "通用操作",
+      "item": [
+        {
+          "name": "删除键",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/key/delete",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "key",
+                "delete"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "name",
+                  "description": "键名"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "检查键是否存在",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/key/exists",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "key",
+                "exists"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "name",
+                  "description": "键名"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "设置过期时间",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/key/expire",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "key",
+                "expire"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "temp",
+                  "description": "键名"
+                },
+                {
+                  "key": "seconds",
+                  "value": "60",
+                  "description": "过期时间（秒）"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取过期时间",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/data-type/key/ttl",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "data-type",
+                "key",
+                "ttl"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "temp",
+                  "description": "键名"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 预处理脚本"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 测试脚本"
+        ]
+      }
+    }
+  ],
+  "variable": []
+}
