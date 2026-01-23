@@ -1,0 +1,196 @@
+{
+  "info": {
+    "_postman_id": "promotion-test-collection",
+    "name": "优惠活动接口测试",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "优惠活动操作",
+      "item": [
+        {
+          "name": "创建优惠活动",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/promotion/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "promotion",
+                "create"
+              ],
+              "query": [
+                {
+                  "key": "promotionId",
+                  "value": "test1",
+                  "description": "活动ID"
+                },
+                {
+                  "key": "name",
+                  "value": "测试活动",
+                  "description": "活动名称"
+                },
+                {
+                  "key": "discount",
+                  "value": "0.8",
+                  "description": "折扣"
+                },
+                {
+                  "key": "startTime",
+                  "value": "{{currentTimestamp}}",
+                  "description": "开始时间（时间戳）"
+                },
+                {
+                  "key": "endTime",
+                  "value": "{{endTimestamp}}",
+                  "description": "结束时间（时间戳）"
+                },
+                {
+                  "key": "expireSeconds",
+                  "value": "7200",
+                  "description": "过期时间（秒）"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取优惠活动",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/promotion/get",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "promotion",
+                "get"
+              ],
+              "query": [
+                {
+                  "key": "promotionId",
+                  "value": "test1",
+                  "description": "活动ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "检查活动是否有效",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/promotion/valid",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "promotion",
+                "valid"
+              ],
+              "query": [
+                {
+                  "key": "promotionId",
+                  "value": "test1",
+                  "description": "活动ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "取消优惠活动",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/promotion/cancel",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "promotion",
+                "cancel"
+              ],
+              "query": [
+                {
+                  "key": "promotionId",
+                  "value": "test1",
+                  "description": "活动ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取所有有效活动",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/promotion/valid-all",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "promotion",
+                "valid-all"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 设置当前时间戳",
+          "pm.variables.set('currentTimestamp', Date.now());",
+          "// 设置结束时间戳（当前时间+1小时）",
+          "pm.variables.set('endTimestamp', Date.now() + 3600000);"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 测试脚本"
+        ]
+      }
+    }
+  ],
+  "variable": []
+}

@@ -26,6 +26,8 @@ public class SecurityInterceptor  implements HandlerInterceptor {
         whiteList.add("/login/");
         whiteList.add("/redis/data-type/");
         whiteList.add("/redis/hot-data/");
+        whiteList.add("/redis/promotion/");
+        whiteList.add("/redis/sms/");
     }
 
     @Override

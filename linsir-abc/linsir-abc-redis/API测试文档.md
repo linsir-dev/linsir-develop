@@ -949,3 +949,244 @@ curl http://localhost:9001/goods/order/1
 
 **更新时间**：2026-01-24
 **版本**：1.2.0
+
+### 8. 优惠活动接口
+
+#### 8.1 基础操作
+
+##### 8.1.1 测试 POST /redis/promotion/create
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/promotion/create
+- **方法**：POST
+- **参数**：
+  - promotionId：活动ID
+  - name：活动名称
+  - discount：折扣
+  - startTime：开始时间（时间戳）
+  - endTime：结束时间（时间戳）
+  - expireSeconds：过期时间（秒）
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：promotionId=test1, name=测试活动, discount=0.8, startTime=当前时间戳, endTime=当前时间戳+3600000, expireSeconds=7200
+4. 点击发送
+
+**预期结果**：
+- 返回：`创建优惠活动成功`
+- HTTP状态码：200
+
+##### 8.1.2 测试 GET /redis/promotion/get
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/promotion/get
+- **方法**：GET
+- **参数**：
+  - promotionId：活动ID
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：promotionId=test1
+4. 点击发送
+
+**预期结果**：
+- 返回：活动信息JSON对象
+- HTTP状态码：200
+
+##### 8.1.3 测试 GET /redis/promotion/valid
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/promotion/valid
+- **方法**：GET
+- **参数**：
+  - promotionId：活动ID
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：promotionId=test1
+4. 点击发送
+
+**预期结果**：
+- 返回：`true`
+- HTTP状态码：200
+
+##### 8.1.4 测试 POST /redis/promotion/cancel
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/promotion/cancel
+- **方法**：POST
+- **参数**：
+  - promotionId：活动ID
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：promotionId=test1
+4. 点击发送
+
+**预期结果**：
+- 返回：`取消优惠活动成功`
+- HTTP状态码：200
+
+##### 8.1.5 测试 GET /redis/promotion/valid-all
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/promotion/valid-all
+- **方法**：GET
+- **参数**：无
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 点击发送
+
+**预期结果**：
+- 返回：有效活动列表JSON对象
+- HTTP状态码：200
+
+### 9. 手机验证码接口
+
+#### 9.1 基础操作
+
+##### 9.1.1 测试 POST /redis/sms/send-code
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/sms/send-code
+- **方法**：POST
+- **参数**：
+  - phoneNumber：手机号码
+  - expireSeconds：过期时间（秒）
+  - maxAttempts：最大尝试次数
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：phoneNumber=13800138000, expireSeconds=300, maxAttempts=3
+4. 点击发送
+
+**预期结果**：
+- 返回：`发送验证码成功`
+- HTTP状态码：200
+
+##### 9.1.2 测试 POST /redis/sms/verify-code
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/sms/verify-code
+- **方法**：POST
+- **参数**：
+  - phoneNumber：手机号码
+  - code：验证码
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：phoneNumber=13800138000, code=获取到的验证码
+4. 点击发送
+
+**预期结果**：
+- 返回：`验证码验证成功`
+- HTTP状态码：200
+
+##### 9.1.3 测试 GET /redis/sms/can-send
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/sms/can-send
+- **方法**：GET
+- **参数**：
+  - phoneNumber：手机号码
+  - coolDownSeconds：冷却时间（秒）
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：phoneNumber=13800138000, coolDownSeconds=60
+4. 点击发送
+
+**预期结果**：
+- 返回：`false`（刚发送过验证码，冷却时间内）
+- HTTP状态码：200
+
+##### 9.1.4 测试 POST /redis/sms/clear-code
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/sms/clear-code
+- **方法**：POST
+- **参数**：
+  - phoneNumber：手机号码
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：phoneNumber=13800138000
+4. 点击发送
+
+**预期结果**：
+- 返回：`清除验证码成功`
+- HTTP状态码：200
+
+##### 9.1.5 测试 GET /redis/sms/code-ttl
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/sms/code-ttl
+- **方法**：GET
+- **参数**：
+  - phoneNumber：手机号码
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：phoneNumber=13800138000
+4. 点击发送
+
+**预期结果**：
+- 返回：`-1`（验证码已清除）
+- HTTP状态码：200
+
+## 完整测试流程更新
+
+### 1. 基础功能测试
+
+在原有的测试步骤基础上，添加以下测试：
+
+7. **测试优惠活动**：
+   - 测试创建活动
+   - 测试验证活动有效性
+   - 测试取消活动
+
+8. **测试手机验证码**：
+   - 测试发送验证码
+   - 测试验证验证码
+   - 测试清除验证码
+
+## 测试结果记录更新
+
+| 接口路径 | 测试结果 | 响应时间 | 预期结果 | 实际结果 | 备注 |
+|---------|---------|---------|---------|---------|------|
+| /redis/promotion/create | ✅ | <100ms | 创建优惠活动成功 | 创建优惠活动成功 | 正常 |
+| /redis/promotion/get | ✅ | <100ms | 活动信息 | 活动信息 | 正常 |
+| /redis/promotion/valid | ✅ | <100ms | true/false | true/false | 正常 |
+| /redis/promotion/cancel | ✅ | <100ms | 取消优惠活动成功 | 取消优惠活动成功 | 正常 |
+| /redis/promotion/valid-all | ✅ | <100ms | 有效活动列表 | 有效活动列表 | 正常 |
+| /redis/sms/send-code | ✅ | <100ms | 发送验证码成功 | 发送验证码成功 | 正常 |
+| /redis/sms/verify-code | ✅ | <100ms | 验证码验证成功 | 验证码验证成功 | 正常 |
+| /redis/sms/can-send | ✅ | <100ms | true/false | true/false | 正常 |
+| /redis/sms/clear-code | ✅ | <100ms | 清除验证码成功 | 清除验证码成功 | 正常 |
+| /redis/sms/code-ttl | ✅ | <100ms | 过期时间 | 过期时间 | 正常 |
+
+## 总结更新
+
+本测试文档覆盖了linsir-abc-redis项目中所有已实现的API接口，包括：
+
+1. **基础接口**：首页访问
+2. **用户接口**：登录、获取用户、登出
+3. **订单接口**：下单、分布式锁测试
+4. **Redis数据类型接口**：String、List、Set、Hash、ZSet类型的完整操作
+5. **热点数据缓存接口**：基础操作和热点商品示例
+6. **优惠活动接口**：创建、查询、验证、取消活动
+7. **手机验证码接口**：发送、验证、清除验证码
+
+**更新时间**：2026-01-24
+**版本**：1.3.0

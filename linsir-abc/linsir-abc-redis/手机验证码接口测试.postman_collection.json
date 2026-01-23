@@ -1,0 +1,201 @@
+{
+  "info": {
+    "_postman_id": "sms-verification-test-collection",
+    "name": "手机验证码接口测试",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "验证码操作",
+      "item": [
+        {
+          "name": "发送验证码",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/sms/send-code",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "sms",
+                "send-code"
+              ],
+              "query": [
+                {
+                  "key": "phoneNumber",
+                  "value": "13800138000",
+                  "description": "手机号码"
+                },
+                {
+                  "key": "expireSeconds",
+                  "value": "300",
+                  "description": "过期时间（秒）"
+                },
+                {
+                  "key": "maxAttempts",
+                  "value": "3",
+                  "description": "最大尝试次数"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "验证验证码",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/sms/verify-code",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "sms",
+                "verify-code"
+              ],
+              "query": [
+                {
+                  "key": "phoneNumber",
+                  "value": "13800138000",
+                  "description": "手机号码"
+                },
+                {
+                  "key": "code",
+                  "value": "{{verificationCode}}",
+                  "description": "验证码"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "检查是否可以发送",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/sms/can-send",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "sms",
+                "can-send"
+              ],
+              "query": [
+                {
+                  "key": "phoneNumber",
+                  "value": "13800138000",
+                  "description": "手机号码"
+                },
+                {
+                  "key": "coolDownSeconds",
+                  "value": "60",
+                  "description": "冷却时间（秒）"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "清除验证码",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/sms/clear-code",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "sms",
+                "clear-code"
+              ],
+              "query": [
+                {
+                  "key": "phoneNumber",
+                  "value": "13800138000",
+                  "description": "手机号码"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取验证码过期时间",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/sms/code-ttl",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "sms",
+                "code-ttl"
+              ],
+              "query": [
+                {
+                  "key": "phoneNumber",
+                  "value": "13800138000",
+                  "description": "手机号码"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 预请求脚本"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 测试脚本"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "verificationCode",
+      "value": "",
+      "description": "验证码"
+    }
+  ]
+}
