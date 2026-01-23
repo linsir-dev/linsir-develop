@@ -3,24 +3,26 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.linsir</groupId>
-        <artifactId>linsir-develop</artifactId>
+        <artifactId>linsir-jdk</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>linsir-jdk</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>linsir-jdk-11</module>
-    </modules>
+    <artifactId>linsir-jdk-11</artifactId>
+    <packaging>jar</packaging>
 
-    <distributionManagement>
-        <site>
-            <id>website</id>
-            <url>scp://webhost.company.com/www/website</url>
-        </site>
-    </distributionManagement>
+    <name>linsir-jdk-11</name>
+    <url>http://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
