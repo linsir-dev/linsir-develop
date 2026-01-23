@@ -14,7 +14,7 @@ public class DatabaseConnection {
     // 数据库连接参数
     private static final String URL = "jdbc:mysql://localhost:3306/linsir-abc-pdai?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC";
     private static final String USER = "root";
-    private static final String PASSWORD = "your_password";
+    private static final String PASSWORD = "root";
 
     static {
         try {
