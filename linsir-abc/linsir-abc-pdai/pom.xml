@@ -40,6 +40,36 @@
             <artifactId>logback-classic</artifactId>
             <version>1.2.9</version>
         </dependency>
+        <!-- 加密算法相关依赖 -->
+        <!-- Bouncy Castle：提供更多加密算法实现 -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk18on</artifactId>
+            <version>1.78.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk18on</artifactId>
+            <version>1.78.1</version>
+        </dependency>
+        <!-- Google Tink：现代加密库 -->
+        <dependency>
+            <groupId>com.google.crypto.tink</groupId>
+            <artifactId>tink</artifactId>
+            <version>1.13.0</version>
+        </dependency>
+        <!-- Jasypt：简单的加密库，用于配置文件加密等 -->
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>1.9.3</version>
+        </dependency>
+        <!-- Apache Commons Crypto：提供加密工具类 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-crypto</artifactId>
+            <version>1.1.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
