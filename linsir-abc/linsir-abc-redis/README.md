@@ -137,6 +137,36 @@ spring:
 
 提供评论相关的操作功能。
 
+### 7. Redis数据类型服务（RedisDataTypeService）
+
+提供Redis各种数据类型的操作功能，支持String、List、Set、Hash、ZSet等类型的完整操作。
+
+**核心方法**：
+- `setString(String key, String value)`：设置字符串值
+- `getString(String key)`：获取字符串值
+- `addToList(String key, String value)`：添加元素到列表
+- `getList(String key, long start, long end)`：获取列表范围内的元素
+- `addToSet(String key, String... values)`：添加元素到集合
+- `getSet(String key)`：获取集合所有元素
+- `setSetIntersection(String key1, String key2, String destKey)`：计算集合交集
+- `putToHash(String key, String hashKey, Object value)`：添加哈希字段
+- `getFromHash(String key, String hashKey)`：获取哈希字段值
+- `addToZSet(String key, String value, double score)`：添加元素到有序集合
+- `getZSetByScore(String key, double minScore, double maxScore)`：根据分数范围获取有序集合元素
+
+### 8. 热点数据缓存服务（HotDataService）
+
+提供热点数据的缓存管理功能，支持数据的设置、获取、过期时间管理等操作。
+
+**核心方法**：
+- `setHotData(String key, T value, long expireSeconds)`：设置热点数据
+- `getHotData(String key)`：获取热点数据
+- `deleteHotData(String key)`：删除热点数据
+- `batchSetHotData(Map<String, Object> dataMap, long expireSeconds)`：批量设置热点数据
+- `batchGetHotData(List<String> keys)`：批量获取热点数据
+- `refreshHotDataExpire(String key, long expireSeconds)`：刷新热点数据过期时间
+- `getHotDataTtl(String key)`：获取热点数据剩余过期时间
+
 ## 使用示例
 
 ### 1. 缓存操作示例
@@ -261,6 +291,8 @@ java -jar target/linsir-abc-redis-1.0.0.jar
 - **操作接口**：`/operation/`
 - **登录接口**：`/login/`
 - **首页接口**：`/`
+- **Redis数据类型接口**：`/redis/data-type/`
+- **热点数据缓存接口**：`/redis/hot-data/`
 
 ## 常见问题
 
@@ -369,5 +401,5 @@ linsir-abc-redis 项目是一个综合的 Spring Boot + Redis 示例项目，展
 
 ---
 
-**更新时间**：2026-01-23
-**版本**：1.0.0
+**更新时间**：2026-01-24
+**版本**：1.2.0

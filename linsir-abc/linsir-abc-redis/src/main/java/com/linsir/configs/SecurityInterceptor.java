@@ -23,8 +23,9 @@ public class SecurityInterceptor  implements HandlerInterceptor {
     public SecurityInterceptor() {
         // 初始化白名单
         whiteList.add("/index");
-        whiteList.add("/login/*");
+        whiteList.add("/login/");
         whiteList.add("/redis/data-type/");
+        whiteList.add("/redis/hot-data/");
     }
 
     @Override

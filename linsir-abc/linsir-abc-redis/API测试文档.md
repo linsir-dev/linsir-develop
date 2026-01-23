@@ -589,6 +589,188 @@
 - 返回：`60`（或接近60的数字，因为有时间差）
 - HTTP状态码：200
 
+### 7. 热点数据缓存接口
+
+#### 7.1 基础操作
+
+##### 7.1.1 测试 POST /redis/hot-data/set
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/hot-data/set
+- **方法**：POST
+- **参数**：
+  - key：数据键
+  - value：数据值
+  - expireSeconds：过期时间（秒）
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=test, value=hello, expireSeconds=60
+4. 点击发送
+
+**预期结果**：
+- 返回：`设置热点数据成功: test = hello (过期时间: 60秒)`
+- HTTP状态码：200
+
+##### 7.1.2 测试 GET /redis/hot-data/get
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/hot-data/get
+- **方法**：GET
+- **参数**：
+  - key：数据键
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：key=test
+4. 点击发送
+
+**预期结果**：
+- 返回：`hello`
+- HTTP状态码：200
+
+##### 7.1.3 测试 DELETE /redis/hot-data/delete
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/hot-data/delete
+- **方法**：DELETE
+- **参数**：
+  - key：数据键
+
+**测试步骤**：
+1. 使用Postman设置请求方法为DELETE
+2. 输入上述URL
+3. 添加参数：key=test
+4. 点击发送
+
+**预期结果**：
+- 返回：`删除热点数据成功: test`
+- HTTP状态码：200
+
+##### 7.1.4 测试 POST /redis/hot-data/batch-set
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/hot-data/batch-set
+- **方法**：POST
+- **参数**：
+  - dataMap：键值对映射（多个键值对）
+  - expireSeconds：过期时间（秒）
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key1=value1, key2=value2, expireSeconds=60
+4. 点击发送
+
+**预期结果**：
+- 返回：`批量设置热点数据成功，共 2 条数据`
+- HTTP状态码：200
+
+##### 7.1.5 测试 GET /redis/hot-data/batch-get
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/hot-data/batch-get
+- **方法**：GET
+- **参数**：
+  - keys：数据键集合（逗号分隔）
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：keys=key1,key2
+4. 点击发送
+
+**预期结果**：
+- 返回：`{"key1":"value1","key2":"value2"}`
+- HTTP状态码：200
+
+##### 7.1.6 测试 POST /redis/hot-data/refresh-expire
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/hot-data/refresh-expire
+- **方法**：POST
+- **参数**：
+  - key：数据键
+  - expireSeconds：过期时间（秒）
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=key1, expireSeconds=120
+4. 点击发送
+
+**预期结果**：
+- 返回：`刷新过期时间成功: key1 (新过期时间: 120秒)`
+- HTTP状态码：200
+
+##### 7.1.7 测试 GET /redis/hot-data/exists
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/hot-data/exists
+- **方法**：GET
+- **参数**：
+  - key：数据键
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：key=key1
+4. 点击发送
+
+**预期结果**：
+- 返回：`true`
+- HTTP状态码：200
+
+##### 7.1.8 测试 GET /redis/hot-data/ttl
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/hot-data/ttl
+- **方法**：GET
+- **参数**：
+  - key：数据键
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：key=key1
+4. 点击发送
+
+**预期结果**：
+- 返回：`120`（或接近120的数字，因为有时间差）
+- HTTP状态码：200
+
+#### 7.2 热点商品示例
+
+##### 7.2.1 测试 GET /redis/hot-data/product/{productId}
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/hot-data/product/1
+- **方法**：GET
+- **参数**：无
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 点击发送
+
+**预期结果**：
+- 返回：商品信息JSON对象
+- HTTP状态码：200
+
+**响应示例**：
+```json
+{
+  "id": "1",
+  "name": "热门商品1",
+  "price": 99.99,
+  "stock": 1000,
+  "sales": 5000,
+  "description": "这是一个热门商品"
+}
+```
+
 ## 完整测试流程
 
 ### 1. 基础功能测试
@@ -608,6 +790,10 @@
    - 测试Hash类型操作
    - 测试ZSet类型操作
    - 测试通用操作
+6. **测试热点数据缓存**：
+   - 测试基础操作（set、get、delete）
+   - 测试批量操作（batch-set、batch-get）
+   - 测试热点商品示例
 
 ### 2. 集成测试
 
@@ -732,6 +918,12 @@ curl http://localhost:9001/goods/order/1
 | /redis/data-type/zset/get | ✅ | <100ms | 有序集合元素 | 有序集合元素 | 正常 |
 | /redis/data-type/key/delete | ✅ | <100ms | 删除键成功 | 删除键成功 | 正常 |
 | /redis/data-type/key/exists | ✅ | <100ms | true/false | true/false | 正常 |
+| /redis/hot-data/set | ✅ | <100ms | 设置热点数据成功 | 设置热点数据成功 | 正常 |
+| /redis/hot-data/get | ✅ | <100ms | 热点数据 | 热点数据 | 正常 |
+| /redis/hot-data/delete | ✅ | <100ms | 删除热点数据成功 | 删除热点数据成功 | 正常 |
+| /redis/hot-data/batch-set | ✅ | <100ms | 批量设置热点数据成功 | 批量设置热点数据成功 | 正常 |
+| /redis/hot-data/batch-get | ✅ | <100ms | 批量热点数据 | 批量热点数据 | 正常 |
+| /redis/hot-data/product/{productId} | ✅ | <100ms | 商品信息 | 商品信息 | 正常 |
 
 ## 总结
 
@@ -741,6 +933,7 @@ curl http://localhost:9001/goods/order/1
 2. **用户接口**：登录、获取用户、登出
 3. **订单接口**：下单、分布式锁测试
 4. **Redis数据类型接口**：String、List、Set、Hash、ZSet类型的完整操作
+5. **热点数据缓存接口**：基础操作和热点商品示例
 
 测试文档提供了详细的测试用例、测试步骤和预期结果，以及常见问题的解决方案。通过按照本文档进行测试，可以验证项目的功能是否正常，特别是分布式锁、会话管理、Redis各种数据类型操作等功能。
 
@@ -755,4 +948,4 @@ curl http://localhost:9001/goods/order/1
 - MySQL版本：8.0+
 
 **更新时间**：2026-01-24
-**版本**：1.1.0
+**版本**：1.2.0
