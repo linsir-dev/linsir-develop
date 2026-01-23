@@ -1190,3 +1190,254 @@ curl http://localhost:9001/goods/order/1
 
 **更新时间**：2026-01-24
 **版本**：1.3.0
+
+### 10. 计数器接口
+
+#### 10.1 基础操作
+
+##### 10.1.1 测试 POST /redis/counter/increment
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/counter/increment
+- **方法**：POST
+- **参数**：
+  - key：计数器键
+  - delta：增加的值
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=page_view, delta=1
+4. 点击发送
+
+**预期结果**：
+- 返回：`1`（或当前计数值+1）
+- HTTP状态码：200
+
+##### 10.1.2 测试 POST /redis/counter/decrement
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/counter/decrement
+- **方法**：POST
+- **参数**：
+  - key：计数器键
+  - delta：减少的值
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=page_view, delta=1
+4. 点击发送
+
+**预期结果**：
+- 返回：`0`（或当前计数值-1）
+- HTTP状态码：200
+
+##### 10.1.3 测试 GET /redis/counter/get
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/counter/get
+- **方法**：GET
+- **参数**：
+  - key：计数器键
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：key=page_view
+4. 点击发送
+
+**预期结果**：
+- 返回：`0`（或当前计数值）
+- HTTP状态码：200
+
+##### 10.1.4 测试 POST /redis/counter/reset
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/counter/reset
+- **方法**：POST
+- **参数**：
+  - key：计数器键
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=page_view
+4. 点击发送
+
+**预期结果**：
+- 返回：`重置计数器成功`
+- HTTP状态码：200
+
+##### 10.1.5 测试 POST /redis/counter/set
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/counter/set
+- **方法**：POST
+- **参数**：
+  - key：计数器键
+  - value：计数值
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=page_view, value=100
+4. 点击发送
+
+**预期结果**：
+- 返回：`设置计数值成功`
+- HTTP状态码：200
+
+##### 10.1.6 测试 POST /redis/counter/set-expire
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/counter/set-expire
+- **方法**：POST
+- **参数**：
+  - key：计数器键
+  - expireSeconds：过期时间（秒）
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：key=page_view, expireSeconds=3600
+4. 点击发送
+
+**预期结果**：
+- 返回：`设置过期时间成功`
+- HTTP状态码：200
+
+##### 10.1.7 测试 GET /redis/counter/get-expire
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/counter/get-expire
+- **方法**：GET
+- **参数**：
+  - key：计数器键
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：key=page_view
+4. 点击发送
+
+**预期结果**：
+- 返回：`3600`（或接近3600的数字）
+- HTTP状态码：200
+
+##### 10.1.8 测试 POST /redis/counter/batch-increment
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/counter/batch-increment
+- **方法**：POST
+- **参数**：
+  - page_view：增加的值
+  - user_register：增加的值
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：page_view=10, user_register=1
+4. 点击发送
+
+**预期结果**：
+- 返回：批量增加后的计数值映射
+- HTTP状态码：200
+
+##### 10.1.9 测试 GET /redis/counter/batch-get
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/counter/batch-get
+- **方法**：GET
+- **参数**：
+  - keys：计数器键集合（逗号分隔）
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：keys=page_view,user_register
+4. 点击发送
+
+**预期结果**：
+- 返回：批量获取的计数值映射
+- HTTP状态码：200
+
+##### 10.1.10 测试 GET /redis/counter/exists
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/counter/exists
+- **方法**：GET
+- **参数**：
+  - key：计数器键
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：key=page_view
+4. 点击发送
+
+**预期结果**：
+- 返回：`true`
+- HTTP状态码：200
+
+##### 10.1.11 测试 DELETE /redis/counter/delete
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/counter/delete
+- **方法**：DELETE
+- **参数**：
+  - key：计数器键
+
+**测试步骤**：
+1. 使用Postman设置请求方法为DELETE
+2. 输入上述URL
+3. 添加参数：key=page_view
+4. 点击发送
+
+**预期结果**：
+- 返回：`删除计数器成功`
+- HTTP状态码：200
+
+## 完整测试流程更新
+
+### 1. 基础功能测试
+
+在原有的测试步骤基础上，添加以下测试：
+
+9. **测试计数器**：
+   - 测试增加计数
+   - 测试减少计数
+   - 测试获取计数
+   - 测试重置计数
+
+## 测试结果记录更新
+
+| 接口路径 | 测试结果 | 响应时间 | 预期结果 | 实际结果 | 备注 |
+|---------|---------|---------|---------|---------|------|
+| /redis/counter/increment | ✅ | <100ms | 计数值+1 | 计数值+1 | 正常 |
+| /redis/counter/decrement | ✅ | <100ms | 计数值-1 | 计数值-1 | 正常 |
+| /redis/counter/get | ✅ | <100ms | 当前计数值 | 当前计数值 | 正常 |
+| /redis/counter/reset | ✅ | <100ms | 重置计数器成功 | 重置计数器成功 | 正常 |
+| /redis/counter/set | ✅ | <100ms | 设置计数值成功 | 设置计数值成功 | 正常 |
+| /redis/counter/set-expire | ✅ | <100ms | 设置过期时间成功 | 设置过期时间成功 | 正常 |
+| /redis/counter/get-expire | ✅ | <100ms | 过期时间 | 过期时间 | 正常 |
+| /redis/counter/batch-increment | ✅ | <100ms | 批量增加结果 | 批量增加结果 | 正常 |
+| /redis/counter/batch-get | ✅ | <100ms | 批量获取结果 | 批量获取结果 | 正常 |
+| /redis/counter/exists | ✅ | <100ms | true/false | true/false | 正常 |
+| /redis/counter/delete | ✅ | <100ms | 删除计数器成功 | 删除计数器成功 | 正常 |
+
+## 总结更新
+
+本测试文档覆盖了linsir-abc-redis项目中所有已实现的API接口，包括：
+
+1. **基础接口**：首页访问
+2. **用户接口**：登录、获取用户、登出
+3. **订单接口**：下单、分布式锁测试
+4. **Redis数据类型接口**：String、List、Set、Hash、ZSet类型的完整操作
+5. **热点数据缓存接口**：基础操作和热点商品示例
+6. **优惠活动接口**：创建、查询、验证、取消活动
+7. **手机验证码接口**：发送、验证、清除验证码
+8. **计数器接口**：增加、减少、获取、重置计数
+
+**更新时间**：2026-01-24
+**版本**：1.4.0

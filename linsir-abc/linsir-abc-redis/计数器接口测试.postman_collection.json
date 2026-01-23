@@ -1,0 +1,368 @@
+{
+  "info": {
+    "_postman_id": "counter-test-collection",
+    "name": "计数器接口测试",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "计数器操作",
+      "item": [
+        {
+          "name": "增加计数",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/counter/increment",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "counter",
+                "increment"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "page_view",
+                  "description": "计数器键"
+                },
+                {
+                  "key": "delta",
+                  "value": "1",
+                  "description": "增加的值"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "减少计数",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/counter/decrement",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "counter",
+                "decrement"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "page_view",
+                  "description": "计数器键"
+                },
+                {
+                  "key": "delta",
+                  "value": "1",
+                  "description": "减少的值"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取计数值",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/counter/get",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "counter",
+                "get"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "page_view",
+                  "description": "计数器键"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "重置计数器",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/counter/reset",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "counter",
+                "reset"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "page_view",
+                  "description": "计数器键"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "设置计数值",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/counter/set",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "counter",
+                "set"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "page_view",
+                  "description": "计数器键"
+                },
+                {
+                  "key": "value",
+                  "value": "100",
+                  "description": "计数值"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "设置过期时间",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/counter/set-expire",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "counter",
+                "set-expire"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "page_view",
+                  "description": "计数器键"
+                },
+                {
+                  "key": "expireSeconds",
+                  "value": "3600",
+                  "description": "过期时间（秒）"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取过期时间",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/counter/get-expire",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "counter",
+                "get-expire"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "page_view",
+                  "description": "计数器键"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "批量增加计数",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/counter/batch-increment",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "counter",
+                "batch-increment"
+              ],
+              "query": [
+                {
+                  "key": "page_view",
+                  "value": "10",
+                  "description": "页面访问量增加"
+                },
+                {
+                  "key": "user_register",
+                  "value": "1",
+                  "description": "用户注册量增加"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "批量获取计数",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/counter/batch-get",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "counter",
+                "batch-get"
+              ],
+              "query": [
+                {
+                  "key": "keys",
+                  "value": "page_view,user_register",
+                  "description": "计数器键集合（逗号分隔）"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "检查计数器是否存在",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/counter/exists",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "counter",
+                "exists"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "page_view",
+                  "description": "计数器键"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "删除计数器",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/counter/delete",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "counter",
+                "delete"
+              ],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "page_view",
+                  "description": "计数器键"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 预请求脚本"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 测试脚本"
+        ]
+      }
+    }
+  ],
+  "variable": []
+}
