@@ -167,6 +167,59 @@ spring:
 - `refreshHotDataExpire(String key, long expireSeconds)`：刷新热点数据过期时间
 - `getHotDataTtl(String key)`：获取热点数据剩余过期时间
 
+### 9. 优惠活动服务（PromotionService）
+
+提供限时优惠活动的管理功能，支持活动的创建、验证和取消操作。
+
+**核心方法**：
+- `createPromotion(String promotionId, String name, double discount, long startTime, long endTime, long expireSeconds)`：创建优惠活动
+- `getPromotion(String promotionId)`：获取活动信息
+- `isPromotionValid(String promotionId)`：验证活动是否有效
+- `cancelPromotion(String promotionId)`：取消优惠活动
+- `getAllValidPromotions()`：获取所有有效活动
+
+### 10. 手机验证码服务（SmsVerificationService）
+
+提供手机验证码的生成、发送和验证功能，支持验证码的过期时间和尝试次数限制。
+
+**核心方法**：
+- `sendCode(String phoneNumber, long expireSeconds, int maxAttempts)`：发送验证码
+- `verifyCode(String phoneNumber, String code)`：验证验证码
+- `canSendCode(String phoneNumber, long coolDownSeconds)`：检查是否可以发送验证码
+- `clearCode(String phoneNumber)`：清除验证码
+- `getCodeTtl(String phoneNumber)`：获取验证码剩余过期时间
+
+### 11. 计数器服务（CounterService）
+
+提供基于Redis的分布式计数器功能，支持计数的增加、减少、获取和重置操作。
+
+**核心方法**：
+- `increment(String key, long delta)`：增加计数
+- `decrement(String key, long delta)`：减少计数
+- `getCount(String key)`：获取计数值
+- `resetCounter(String key)`：重置计数器
+- `setCount(String key, long value)`：设置计数值
+- `setExpire(String key, long expireSeconds)`：设置过期时间
+- `getExpire(String key)`：获取过期时间
+- `batchIncrement(Map<String, Long> deltaMap)`：批量增加计数
+- `batchGetCount(List<String> keys)`：批量获取计数
+- `deleteCounter(String key)`：删除计数器
+
+### 12. 评论和点赞服务（CommentLikeService）
+
+提供评论、回复和点赞的管理功能，支持评论的点赞、取消点赞、获取评论列表和热门评论等操作。
+
+**核心方法**：
+- `likeComment(long commentId, long userId)`：点赞评论
+- `unlikeComment(long commentId, long userId)`：取消点赞评论
+- `getCommentLikeCount(long commentId)`：获取评论的点赞数
+- `hasLikedComment(long commentId, long userId)`：检查用户是否已点赞评论
+- `getArticleComments(long articleId, int page, int size)`：获取文章的评论列表
+- `getCommentReplies(long commentId, int page, int size)`：获取评论的回复列表
+- `getHotComments(long articleId, int limit)`：获取热门评论
+- `incrementCommentViewCount(long commentId)`：增加评论的浏览量
+- `getCommentViewCount(long commentId)`：获取评论的浏览量
+
 ## 使用示例
 
 ### 1. 缓存操作示例
@@ -293,6 +346,10 @@ java -jar target/linsir-abc-redis-1.0.0.jar
 - **首页接口**：`/`
 - **Redis数据类型接口**：`/redis/data-type/`
 - **热点数据缓存接口**：`/redis/hot-data/`
+- **优惠活动接口**：`/redis/promotion/`
+- **手机验证码接口**：`/redis/sms/`
+- **计数器接口**：`/redis/counter/`
+- **评论和点赞接口**：`/redis/comment/`
 
 ## 常见问题
 
@@ -387,7 +444,7 @@ public KeyGenerator customKeyGenerator() {
 
 ## 总结
 
-linsir-abc-redis 项目是一个综合的 Spring Boot + Redis 示例项目，展示了如何在 Java 应用中集成和使用 Redis 进行缓存、会话管理等操作。项目结构清晰，功能完整，包含了多个实用的功能模块，可以作为学习 Redis 在 Spring Boot 应用中使用的参考资料。
+linsir-abc-redis 项目是一个综合的 Spring Boot + Redis 示例项目，展示了如何在 Java 应用中集成和使用 Redis 进行缓存、会话管理、分布式计数、限时优惠活动、手机验证码、评论和点赞等操作。项目结构清晰，功能完整，包含了多个实用的功能模块，可以作为学习 Redis 在 Spring Boot 应用中使用的参考资料。
 
 通过本项目，您可以学习到：
 - Redis 与 Spring Boot 的集成方法
@@ -396,10 +453,14 @@ linsir-abc-redis 项目是一个综合的 Spring Boot + Redis 示例项目，展
 - Spring 事件机制的应用
 - 基于 Redis 的会话管理
 - 常见的 Redis 操作示例
+- Redis 在限时优惠活动中的应用
+- Redis 在手机验证码系统中的应用
+- Redis 在分布式计数器中的应用
+- Redis 在评论和点赞系统中的应用
 
 希望本项目对您的学习和开发有所帮助！
 
 ---
 
 **更新时间**：2026-01-24
-**版本**：1.2.0
+**版本**：1.5.0
