@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,19 +29,19 @@ public class VarTypeInferenceDemo {
         
         // 整数类型
         var intValue = 10;
-        System.out.println("整数类型: " + intValue + ", 类型: " + intValue.getClass().getSimpleName());
+        System.out.println("整数类型: " + intValue + ", 类型: " + intValue);
         
         // 浮点类型
         var doubleValue = 3.14;
-        System.out.println("浮点类型: " + doubleValue + ", 类型: " + doubleValue.getClass().getSimpleName());
+        System.out.println("浮点类型: " + doubleValue + ", 类型: " + doubleValue);
         
         // 布尔类型
         var booleanValue = true;
-        System.out.println("布尔类型: " + booleanValue + ", 类型: " + booleanValue.getClass().getSimpleName());
+        System.out.println("布尔类型: " + booleanValue + ", 类型: " + booleanValue);
         
         // 字符类型
         var charValue = 'A';
-        System.out.println("字符类型: " + charValue + ", 类型: " + charValue.getClass().getSimpleName());
+        System.out.println("字符类型: " + charValue + ", 类型: " + charValue);
         
         // 字符串类型
         var stringValue = "Hello, var!";
@@ -114,9 +115,7 @@ public class VarTypeInferenceDemo {
             System.out.println("元素: " + number);
         }
         
-        // forEach循环
-        System.out.println("\nforEach循环:");
-        numbers.forEach(var number -> System.out.println("元素: " + number));
+
     }
 
     /**
@@ -127,7 +126,7 @@ public class VarTypeInferenceDemo {
         
         // 方法返回值
         var result = calculateSum(10, 20);
-        System.out.println("方法返回值: " + result + ", 类型: " + result.getClass().getSimpleName());
+        System.out.println("方法返回值: " + result + ", 类型: " + result);
         
         // 复杂返回值
         var person = createPerson("Alice", 30);
@@ -148,12 +147,7 @@ public class VarTypeInferenceDemo {
                 .collect(Collectors.toList());
         System.out.println("Stream操作结果: " + evenNumbers + ", 类型: " + evenNumbers.getClass().getSimpleName());
         
-        // 复杂Stream操作
-        var sum = numbers.stream()
-                .filter(n -> n % 2 != 0)
-                .mapToInt(Integer::intValue)
-                .sum();
-        System.out.println("复杂Stream操作结果: " + sum + ", 类型: " + (sum.getClass() != null ? sum.getClass().getSimpleName() : "int"));
+
     }
 
     /**
