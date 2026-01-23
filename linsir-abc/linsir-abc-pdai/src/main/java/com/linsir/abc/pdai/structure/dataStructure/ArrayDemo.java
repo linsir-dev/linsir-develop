@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.data-structure;
+package com.linsir.abc.pdai.structure.dataStructure;
 
 /**
  * 数组示例代码

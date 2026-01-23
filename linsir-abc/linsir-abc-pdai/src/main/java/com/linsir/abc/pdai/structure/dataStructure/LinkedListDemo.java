@@ -1,4 +1,4 @@
-package com.linsir.abc.pdai.data-structure;
+package com.linsir.abc.pdai.structure.dataStructure;
 
 /**
  * 普通链表示例代码
@@ -488,7 +488,7 @@ public class LinkedListDemo {
     }
 
     /**
-     * 检测链表是否有环（快慢指针法）
+     * 检测环（快慢指针法）
      */
     private boolean hasCycle(LinkedList list) {
         if (list.head == null || list.head.next == null) {
