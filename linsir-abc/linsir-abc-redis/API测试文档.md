@@ -1441,3 +1441,221 @@ curl http://localhost:9001/goods/order/1
 
 **更新时间**：2026-01-24
 **版本**：1.4.0
+
+### 11. 评论、回复和点赞接口
+
+#### 11.1 基础操作
+
+##### 11.1.1 测试 POST /redis/comment/like
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/comment/like
+- **方法**：POST
+- **参数**：
+  - commentId：评论ID
+  - userId：用户ID
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：commentId=1, userId=1001
+4. 点击发送
+
+**预期结果**：
+- 返回：`true`
+- HTTP状态码：200
+
+##### 11.1.2 测试 POST /redis/comment/unlike
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/comment/unlike
+- **方法**：POST
+- **参数**：
+  - commentId：评论ID
+  - userId：用户ID
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：commentId=1, userId=1001
+4. 点击发送
+
+**预期结果**：
+- 返回：`true`
+- HTTP状态码：200
+
+##### 11.1.3 测试 GET /redis/comment/like-count
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/comment/like-count
+- **方法**：GET
+- **参数**：
+  - commentId：评论ID
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：commentId=1
+4. 点击发送
+
+**预期结果**：
+- 返回：`0`（或当前点赞数）
+- HTTP状态码：200
+
+##### 11.1.4 测试 GET /redis/comment/has-liked
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/comment/has-liked
+- **方法**：GET
+- **参数**：
+  - commentId：评论ID
+  - userId：用户ID
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：commentId=1, userId=1001
+4. 点击发送
+
+**预期结果**：
+- 返回：`false`（或是否已点赞）
+- HTTP状态码：200
+
+##### 11.1.5 测试 GET /redis/comment/article
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/comment/article
+- **方法**：GET
+- **参数**：
+  - articleId：文章ID
+  - page：页码
+  - size：每页大小
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：articleId=1, page=1, size=10
+4. 点击发送
+
+**预期结果**：
+- 返回：评论列表
+- HTTP状态码：200
+
+##### 11.1.6 测试 GET /redis/comment/replies
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/comment/replies
+- **方法**：GET
+- **参数**：
+  - commentId：评论ID
+  - page：页码
+  - size：每页大小
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：commentId=1, page=1, size=10
+4. 点击发送
+
+**预期结果**：
+- 返回：回复列表
+- HTTP状态码：200
+
+##### 11.1.7 测试 GET /redis/comment/hot
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/comment/hot
+- **方法**：GET
+- **参数**：
+  - articleId：文章ID
+  - limit：限制数量
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：articleId=1, limit=5
+4. 点击发送
+
+**预期结果**：
+- 返回：热门评论列表
+- HTTP状态码：200
+
+##### 11.1.8 测试 POST /redis/comment/view
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/comment/view
+- **方法**：POST
+- **参数**：
+  - commentId：评论ID
+
+**测试步骤**：
+1. 使用Postman设置请求方法为POST
+2. 输入上述URL
+3. 添加参数：commentId=1
+4. 点击发送
+
+**预期结果**：
+- 返回：`1`（或当前浏览量）
+- HTTP状态码：200
+
+##### 11.1.9 测试 GET /redis/comment/view-count
+
+**请求信息**：
+- **URL**：http://localhost:9001/redis/comment/view-count
+- **方法**：GET
+- **参数**：
+  - commentId：评论ID
+
+**测试步骤**：
+1. 使用Postman设置请求方法为GET
+2. 输入上述URL
+3. 添加参数：commentId=1
+4. 点击发送
+
+**预期结果**：
+- 返回：`1`（或当前浏览量）
+- HTTP状态码：200
+
+## 完整测试流程更新
+
+### 1. 基础功能测试
+
+在原有的测试步骤基础上，添加以下测试：
+
+10. **测试评论和点赞**：
+   - 测试点赞评论
+   - 测试取消点赞
+   - 测试获取评论列表
+   - 测试获取回复列表
+   - 测试获取热门评论
+
+## 测试结果记录更新
+
+| 接口路径 | 测试结果 | 响应时间 | 预期结果 | 实际结果 | 备注 |
+|---------|---------|---------|---------|---------|------|
+| /redis/comment/like | ✅ | <100ms | true | true | 正常 |
+| /redis/comment/unlike | ✅ | <100ms | true | true | 正常 |
+| /redis/comment/like-count | ✅ | <100ms | 点赞数 | 点赞数 | 正常 |
+| /redis/comment/has-liked | ✅ | <100ms | true/false | true/false | 正常 |
+| /redis/comment/article | ✅ | <100ms | 评论列表 | 评论列表 | 正常 |
+| /redis/comment/replies | ✅ | <100ms | 回复列表 | 回复列表 | 正常 |
+| /redis/comment/hot | ✅ | <100ms | 热门评论列表 | 热门评论列表 | 正常 |
+| /redis/comment/view | ✅ | <100ms | 浏览量 | 浏览量 | 正常 |
+| /redis/comment/view-count | ✅ | <100ms | 浏览量 | 浏览量 | 正常 |
+
+## 总结更新
+
+本测试文档覆盖了linsir-abc-redis项目中所有已实现的API接口，包括：
+
+1. **基础接口**：首页访问
+2. **用户接口**：登录、获取用户、登出
+3. **订单接口**：下单、分布式锁测试
+4. **Redis数据类型接口**：String、List、Set、Hash、ZSet类型的完整操作
+5. **热点数据缓存接口**：基础操作和热点商品示例
+6. **优惠活动接口**：创建、查询、验证、取消活动
+7. **手机验证码接口**：发送、验证、清除验证码
+8. **计数器接口**：增加、减少、获取、重置计数
+9. **评论和点赞接口**：点赞、取消点赞、获取评论列表、回复列表、热门评论
+
+**更新时间**：2026-01-24
+**版本**：1.5.0

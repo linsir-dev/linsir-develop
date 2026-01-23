@@ -1,0 +1,327 @@
+{
+  "info": {
+    "_postman_id": "comment-like-test-collection",
+    "name": "评论和点赞接口测试",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "评论操作",
+      "item": [
+        {
+          "name": "点赞评论",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/comment/like",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "comment",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "commentId",
+                  "value": "1",
+                  "description": "评论ID"
+                },
+                {
+                  "key": "userId",
+                  "value": "1001",
+                  "description": "用户ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "取消点赞",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/comment/unlike",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "comment",
+                "unlike"
+              ],
+              "query": [
+                {
+                  "key": "commentId",
+                  "value": "1",
+                  "description": "评论ID"
+                },
+                {
+                  "key": "userId",
+                  "value": "1001",
+                  "description": "用户ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取评论点赞数",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/comment/like-count",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "comment",
+                "like-count"
+              ],
+              "query": [
+                {
+                  "key": "commentId",
+                  "value": "1",
+                  "description": "评论ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "检查用户是否已点赞",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/comment/has-liked",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "comment",
+                "has-liked"
+              ],
+              "query": [
+                {
+                  "key": "commentId",
+                  "value": "1",
+                  "description": "评论ID"
+                },
+                {
+                  "key": "userId",
+                  "value": "1001",
+                  "description": "用户ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取文章评论列表",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/comment/article",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "comment",
+                "article"
+              ],
+              "query": [
+                {
+                  "key": "articleId",
+                  "value": "1",
+                  "description": "文章ID"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "页码"
+                },
+                {
+                  "key": "size",
+                  "value": "10",
+                  "description": "每页大小"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取评论回复列表",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/comment/replies",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "comment",
+                "replies"
+              ],
+              "query": [
+                {
+                  "key": "commentId",
+                  "value": "1",
+                  "description": "评论ID"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "页码"
+                },
+                {
+                  "key": "size",
+                  "value": "10",
+                  "description": "每页大小"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取热门评论",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/comment/hot",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "comment",
+                "hot"
+              ],
+              "query": [
+                {
+                  "key": "articleId",
+                  "value": "1",
+                  "description": "文章ID"
+                },
+                {
+                  "key": "limit",
+                  "value": "5",
+                  "description": "限制数量"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "增加评论浏览量",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/comment/view",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "comment",
+                "view"
+              ],
+              "query": [
+                {
+                  "key": "commentId",
+                  "value": "1",
+                  "description": "评论ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取评论浏览量",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9001/redis/comment/view-count",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9001",
+              "path": [
+                "redis",
+                "comment",
+                "view-count"
+              ],
+              "query": [
+                {
+                  "key": "commentId",
+                  "value": "1",
+                  "description": "评论ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 预请求脚本"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 测试脚本"
+        ]
+      }
+    }
+  ],
+  "variable": []
+}
