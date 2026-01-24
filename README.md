@@ -73,6 +73,64 @@ linsir-abc 是Java基础学习的核心模块，包含多个子项目：
 #### 3. 使用说明文档
 - `README.md`：MySQL代码使用详细说明
 
+### MongoDB模块（linsir-abc-mongodb）
+
+最近添加了完整的MongoDB用户管理系统：
+
+#### 1. 核心功能
+- 用户的创建、查询、更新、删除操作
+- 根据名称和年龄范围查询用户
+- RESTful API接口设计
+
+#### 2. 技术栈
+- Spring Boot 3.2.0
+- Spring Data MongoDB
+- MongoDB 4.11.1
+
+#### 3. API接口
+- `POST /api/users`：创建用户
+- `GET /api/users/{id}`：根据ID查询用户
+- `GET /api/users`：查询所有用户
+- `GET /api/users/name/{name}`：根据名称查询用户
+- `GET /api/users/age-range`：根据年龄范围查询用户
+- `PUT /api/users/{id}`：更新用户
+- `DELETE /api/users/{id}`：删除用户
+
+## 子项目端口规划
+
+为了确保各子项目能够正常运行且不发生端口冲突，以下是各子项目的端口规划：
+
+| 子项目名称 | 端口号 | 说明 |
+|-----------|-------|------|
+| linsir-abc-mongodb | 6080 | MongoDB用户管理系统 |
+| linsir-abc-kafka | 6081 | Kafka消息队列示例 |
+| linsir-abc-pdai | 6082 | 综合Java实践项目 |
+| linsir-spring | 6083 | Spring框架相关内容 |
+
+### 端口使用说明
+
+1. **MongoDB用户管理系统**（linsir-abc-mongodb）：
+   - 端口：6080
+   - 访问地址：http://localhost:6080/api/users
+
+2. **Kafka消息队列示例**（linsir-abc-kafka）：
+   - 端口：6081
+   - 访问地址：http://localhost:6081
+
+3. **综合Java实践项目**（linsir-abc-pdai）：
+   - 端口：6082
+   - 访问地址：http://localhost:6082
+
+4. **Spring框架相关内容**（linsir-spring）：
+   - 端口：6083
+   - 访问地址：http://localhost:6083
+
+### 注意事项
+
+- 确保在启动子项目前，对应的端口没有被其他程序占用
+- 如果需要修改端口，可以在各子项目的配置文件中进行修改
+- 对于需要数据库的子项目，确保数据库服务已启动且配置正确
+
 ## 技术栈
 
 - **核心技术**：Java 8+
@@ -129,5 +187,5 @@ linsir-abc 是Java基础学习的核心模块，包含多个子项目：
 
 ---
 
-**更新时间**：2026-01-23
+**更新时间**：2026-01-25
 **版本**：1.0.0
