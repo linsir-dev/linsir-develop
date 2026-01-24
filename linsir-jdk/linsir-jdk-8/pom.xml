@@ -3,9 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.linsir</groupId>
-        <artifactId>linsir-develop</artifactId>
+        <artifactId>linsir-jdk</artifactId>
         <version>1.0.0</version>
-        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <artifactId>linsir-jdk-8</artifactId>

@@ -7,10 +7,10 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>linsir-abc-heima</artifactId>
+    <artifactId>linsir-abc-mongodb</artifactId>
     <packaging>jar</packaging>
 
-    <name>linsir-abc-heima</name>
+    <name>linsir-abc-mongodb</name>
     <url>http://maven.apache.org</url>
 
     <properties>
