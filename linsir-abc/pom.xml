@@ -21,7 +21,7 @@
     <module>linsir-abc-kafka</module>
     <module>linsir-abc-redis</module>
     <module>linsir-abc-mysql</module>
-      <module>linsir-abc-mongodb</module>
+    <module>linsir-abc-mongodb</module>
   </modules>
 
   <name>linsir-abc</name>
