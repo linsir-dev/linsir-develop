@@ -100,12 +100,14 @@ linsir-abc 是Java基础学习的核心模块，包含多个子项目：
 
 为了确保各子项目能够正常运行且不发生端口冲突，以下是各子项目的端口规划：
 
-| 子项目名称 | 端口号 | 说明 |
-|-----------|-------|------|
+| 子项目名称 | 端口号  | 说明 |
+|-----------|------|------|
 | linsir-abc-mongodb | 6080 | MongoDB用户管理系统 |
 | linsir-abc-kafka | 6081 | Kafka消息队列示例 |
-| linsir-abc-pdai | 6082 | 综合Java实践项目 |
-| linsir-spring | 6083 | Spring框架相关内容 |
+| linsir-abc-redis | 9001 | redis实践项目 |
+| linsir-abc-servlet| 8080 | linsir-abc-servlet框架相关内容 |
+| linsir-spring-springboot-base| 6082 | springboot框架相关内容 |
+| linsir-spring-springboot-deploy| 6083 | springboot框架相关内容 |
 
 ### 端口使用说明
 
