@@ -22,6 +22,7 @@
     <module>linsir-abc-redis</module>
     <module>linsir-abc-mysql</module>
     <module>linsir-abc-mongodb</module>
+      <module>linsir-abc-es</module>
   </modules>
 
   <name>linsir-abc</name>
