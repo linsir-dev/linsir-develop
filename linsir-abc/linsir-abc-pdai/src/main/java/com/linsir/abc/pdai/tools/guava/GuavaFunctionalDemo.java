@@ -1,12 +1,15 @@
 package com.linsir.abc.pdai.tools.guava;
 
 import com.google.common.base.*;
+import java.util.function.Consumer;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 /**
@@ -188,7 +191,7 @@ public class GuavaFunctionalDemo {
         System.out.println("\n=== Functions 工具类示例 ===");
         
         // forMap 函数
-        java.util.Map<String, Integer> map = com.google.common.collect.Maps.newHashMap();
+        Map<String, Integer> map = Maps.newHashMap();
         map.put("one", 1);
         map.put("two", 2);
         map.put("three", 3);
@@ -261,7 +264,16 @@ public class GuavaFunctionalDemo {
             }
         };
         
-        Supplier<String> supplierFromCallable = Suppliers.supplier(callable);
+        Supplier<String> supplierFromCallable = Suppliers.memoize(new Supplier<String>() {
+            @Override
+            public String get() {
+                try {
+                    return callable.call();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
         System.out.println("Suppliers.supplier 从 Callable 创建: " + supplierFromCallable.get());
     }
 

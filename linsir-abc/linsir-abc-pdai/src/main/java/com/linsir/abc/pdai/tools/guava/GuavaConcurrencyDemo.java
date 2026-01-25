@@ -106,7 +106,7 @@ public class GuavaConcurrencyDemo {
         System.out.println("\n=== Striped 示例 ===");
         
         // 创建 5 个锁的 Striped
-        Striped<Lock> stripedLock = Striped.lock(5);
+        Striped<java.util.concurrent.locks.Lock> stripedLock = Striped.lock(5);
         
         // 创建计数器
         final AtomicInteger counter = new AtomicInteger(0);
@@ -123,7 +123,7 @@ public class GuavaConcurrencyDemo {
                 @Override
                 public void run() {
                     // 获取对应键的锁
-                    Lock lock = stripedLock.get(key);
+                    java.util.concurrent.locks.Lock lock = stripedLock.get(key);
                     lock.lock();
                     try {
                         System.out.println("任务 " + taskId + " 获取锁，键: " + key + ", 计数器当前值: " + counter.get());
@@ -272,7 +272,10 @@ public class GuavaConcurrencyDemo {
         System.out.println("所有任务结果: " + results);
         
         // 获取第一个完成的任务
-        ListenableFuture<String> firstCompleted = Futures.firstCompletedOf(futures, executorService);
+        List<String> futureResults = Futures.successfulAsList(futures).get();
+        ListenableFuture<String> firstCompleted = futureResults != null && !futureResults.isEmpty()
+                ? Futures.immediateFuture(futureResults.get(0))
+                : Futures.immediateFailedFuture(new IllegalStateException("No tasks completed"));
         System.out.println("第一个完成的任务结果: " + firstCompleted.get());
         
         // 关闭执行器
@@ -308,24 +311,21 @@ public class GuavaConcurrencyDemo {
         }
         
         public void put(E element) throws InterruptedException {
-            if (monitor.enterWhen(notFull)) {
-                try {
-                    queue.add(element);
-                } finally {
-                    monitor.leave();
-                }
+            monitor.enterWhen(notFull);
+            try {
+                queue.add(element);
+            } finally {
+                monitor.leave();
             }
         }
         
         public E take() throws InterruptedException {
-            if (monitor.enterWhen(notEmpty)) {
-                try {
-                    return queue.remove(0);
-                } finally {
-                    monitor.leave();
-                }
+            monitor.enterWhen(notEmpty);
+            try {
+                return queue.remove(0);
+            } finally {
+                monitor.leave();
             }
-            return null;
         }
     }
 }
