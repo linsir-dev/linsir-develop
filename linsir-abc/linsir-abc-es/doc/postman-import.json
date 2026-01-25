@@ -1,0 +1,258 @@
+{
+  "info": {
+    "_postman_id": "linsir-abc-es-api",
+    "name": "ElasticSearch文章API",
+    "description": "ElasticSearch文章管理API接口集合",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "创建文章",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Spring Boot入门教程\",\n  \"content\": \"Spring Boot是一个快速开发框架...\",\n  \"author\": \"张三\",\n  \"publishDate\": \"2026-01-25T12:00:00\",\n  \"views\": 100\n}"
+        },
+        "url": {
+          "raw": "http://localhost:6084/api/articles/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "6084",
+          "path": [
+            "api",
+            "articles",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "根据ID查询文章",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:6084/api/articles/{id}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "6084",
+          "path": [
+            "api",
+            "articles",
+            "{id}"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "查询所有文章",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:6084/api/articles/all",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "6084",
+          "path": [
+            "api",
+            "articles",
+            "all"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "根据标题查询文章",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:6084/api/articles/title/{title}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "6084",
+          "path": [
+            "api",
+            "articles",
+            "title",
+            "{title}"
+          ],
+          "variable": [
+            {
+              "key": "title",
+              "value": "Spring Boot入门教程"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "根据作者查询文章",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:6084/api/articles/author/{author}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "6084",
+          "path": [
+            "api",
+            "articles",
+            "author",
+            "{author}"
+          ],
+          "variable": [
+            {
+              "key": "author",
+              "value": "张三"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "根据浏览量范围查询文章",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:6084/api/articles/views-range?minViews=50&maxViews=200",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "6084",
+          "path": [
+            "api",
+            "articles",
+            "views-range"
+          ],
+          "query": [
+            {
+              "key": "minViews",
+              "value": "50"
+            },
+            {
+              "key": "maxViews",
+              "value": "200"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "全文搜索文章",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:6084/api/articles/search?keyword=Spring Boot",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "6084",
+          "path": [
+            "api",
+            "articles",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "keyword",
+              "value": "Spring Boot"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "更新文章",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Spring Boot入门教程（更新版）\",\n  \"content\": \"Spring Boot是一个快速开发框架，本文将介绍其核心功能...\",\n  \"author\": \"张三\",\n  \"publishDate\": \"2026-01-25T12:00:00\",\n  \"views\": 200\n}"
+        },
+        "url": {
+          "raw": "http://localhost:6084/api/articles/{id}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "6084",
+          "path": [
+            "api",
+            "articles",
+            "{id}"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "删除文章",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "http://localhost:6084/api/articles/{id}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "6084",
+          "path": [
+            "api",
+            "articles",
+            "{id}"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

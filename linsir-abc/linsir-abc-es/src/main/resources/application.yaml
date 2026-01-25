@@ -3,4 +3,6 @@ spring:
     active: dev
   application:
     name: linsir-abc-es
+  elasticsearch:
+    uris: http://localhost:9200
 
