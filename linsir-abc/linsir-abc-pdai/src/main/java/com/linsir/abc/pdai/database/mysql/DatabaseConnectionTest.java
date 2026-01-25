@@ -2,14 +2,13 @@ package com.linsir.abc.pdai.database.mysql;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * MySQL数据库连接测试类
@@ -57,6 +56,7 @@ public class DatabaseConnectionTest {
     @Test
     void testCreateTable() {
         assertNotNull(connection, "数据库连接应该不为null");
+
         try {
             Statement statement = connection.createStatement();
             String createTableSql = "CREATE TABLE IF NOT EXISTS test_user (" +
