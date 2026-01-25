@@ -12,6 +12,7 @@ import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,8 +34,9 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public Article createArticle(Article article) {
-        article.setCreatedAt(LocalDateTime.now());
-        article.setUpdatedAt(LocalDateTime.now());
+        String now = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        article.setCreatedAt(now);
+        article.setUpdatedAt(now);
         return articleRepository.save(article);
     }
     
@@ -93,7 +95,7 @@ public class ArticleServiceImpl implements ArticleService {
             updatedArticle.setAuthor(article.getAuthor());
             updatedArticle.setPublishDate(article.getPublishDate());
             updatedArticle.setViews(article.getViews());
-            updatedArticle.setUpdatedAt(LocalDateTime.now());
+            updatedArticle.setUpdatedAt(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
             return articleRepository.save(updatedArticle);
         }
         return null;

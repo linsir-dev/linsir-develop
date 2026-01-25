@@ -108,6 +108,7 @@ linsir-abc 是Java基础学习的核心模块，包含多个子项目：
 | linsir-abc-servlet| 8080 | linsir-abc-servlet框架相关内容 |
 | linsir-spring-springboot-base| 6082 | springboot框架相关内容 |
 | linsir-spring-springboot-deploy| 6083 | springboot框架相关内容 |
+| linsir-abc-es| 6084 | springboot框架相关内容 |
 
 ### 端口使用说明
 
