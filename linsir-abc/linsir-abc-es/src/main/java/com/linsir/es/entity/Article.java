@@ -1,6 +1,8 @@
 package com.linsir.es.entity;
 
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -27,15 +29,18 @@ public class Article {
     @Field(type = FieldType.Keyword)
     private String author;
     
-    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
+    @Field(type = FieldType.Date)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private LocalDateTime publishDate;
     
     @Field(type = FieldType.Integer)
     private Integer views;
     
-    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
+    @Field(type = FieldType.Date)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private LocalDateTime createdAt;
     
-    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
+    @Field(type = FieldType.Date)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private LocalDateTime updatedAt;
 }
