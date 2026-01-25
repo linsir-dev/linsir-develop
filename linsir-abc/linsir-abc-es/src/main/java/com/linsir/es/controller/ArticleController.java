@@ -24,7 +24,7 @@ public class ArticleController {
      * 创建文章
      */
     @PostMapping("/create")
-    public ResponseEntity<Article> createArticle(Article article) {
+    public ResponseEntity<Article> createArticle(@RequestBody Article article) {
         Article createdArticle = articleService.createArticle(article);
         return new ResponseEntity<>(createdArticle, HttpStatus.CREATED);
     }
