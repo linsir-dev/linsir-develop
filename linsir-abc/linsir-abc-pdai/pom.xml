@@ -118,6 +118,12 @@
             <artifactId>guava</artifactId>
             <version>33.1.0-jre</version>
         </dependency>
+        <!-- Hutool：Java 工具库，提供丰富的工具类 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.26</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
