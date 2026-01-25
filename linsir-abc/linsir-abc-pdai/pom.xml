@@ -124,6 +124,18 @@
             <artifactId>hutool-all</artifactId>
             <version>5.8.26</version>
         </dependency>
+        <!-- Spring Core：提供Spring核心工具类 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>6.0.11</version>
+        </dependency>
+        <!-- Spring Context：提供Spring上下文支持 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>6.0.11</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
