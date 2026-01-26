@@ -4,7 +4,7 @@
 
 ## 文档列表
 
-### 1. [如何理解架构的演进？](architecture-evolution.md)
+### 1. [如何理解架构的演进？](architectureBase/architecture-evolution.md)
 详细介绍软件架构从单体架构到云原生架构的演进历史。
 
 **主要内容：**
@@ -18,7 +18,7 @@
 
 ---
 
-### 2. [如何理解架构的服务化趋势？](service-oriented-architecture.md)
+### 2. [如何理解架构的服务化趋势？](architectureBase/service-oriented-architecture.md)
 详细讲解服务化架构的概念、优势、挑战和关键技术。
 
 **主要内容：**
@@ -34,7 +34,7 @@
 
 ---
 
-### 3. [架构中有哪些技术点？](architecture-technologies.md)
+### 3. [架构中有哪些技术点？](architectureBase/architecture-technologies.md)
 全面介绍软件架构涉及的各种技术点和最佳实践。
 
 **主要内容：**
@@ -53,9 +53,9 @@
 ## 学习路径建议
 
 ### 初学者
-1. 先阅读 [如何理解架构的演进？](architecture-evolution.md)，了解软件架构的发展历史
-2. 然后阅读 [如何理解架构的服务化趋势？](service-oriented-architecture.md)，理解服务化架构的概念
-3. 最后阅读 [架构中有哪些技术点？](architecture-technologies.md)，学习架构相关的技术点
+1. 先阅读 [如何理解架构的演进？](architectureBase/architecture-evolution.md)，了解软件架构的发展历史
+2. 然后阅读 [如何理解架构的服务化趋势？](architectureBase/service-oriented-architecture.md)，理解服务化架构的概念
+3. 最后阅读 [架构中有哪些技术点？](architectureBase/architecture-technologies.md)，学习架构相关的技术点
 
 ### 进阶开发者
 1. 深入学习各种架构设计模式
