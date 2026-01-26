@@ -23,6 +23,7 @@
     <module>linsir-abc-mysql</module>
     <module>linsir-abc-mongodb</module>
       <module>linsir-abc-es</module>
+      <module>linsir-abc-MyBatis</module>
   </modules>
 
   <name>linsir-abc</name>
