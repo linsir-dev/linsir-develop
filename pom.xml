@@ -17,6 +17,7 @@
     <module>linsir-subject</module>
     <module>linsir-spring</module>
     <module>linsir-jdk</module>
+      <module>linsir-springcloud</module>
   </modules>
   <packaging>pom</packaging>
 
