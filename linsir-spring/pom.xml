@@ -13,6 +13,7 @@
         <module>linsir-spring-framework</module>
         <module>linsir-spring-springboot</module>
         <module>linsir-spring-springmvc</module>
+        <module>linsir-spring-security</module>
     </modules>
 
     <dependencies>
