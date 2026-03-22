@@ -1,66 +1,23 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 
-export default defineConfig({
+export default withMermaid({
   title: 'linsir-spring-framework',
   description: '轻量级 Java 开发框架',
   lang: 'zh-CN',
   lastUpdated: true,
-  markdown: {
-    config: (md) => {
-      const originalFence = md.renderer.rules.fence
-      md.renderer.rules.fence = (tokens, idx, options, env, self) => {
-        const token = tokens[idx]
-        if (token.info === 'mermaid') {
-          return `<pre class="mermaid">${token.content}</pre>`
-        }
-        return originalFence(tokens, idx, options, env, self)
-      }
-    }
-  },
-  head: [
-    ['script', { src: 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js' }],
-    ['script', {}, `
-      (function() {
-        function initMermaid() {
-          if (typeof mermaid !== 'undefined') {
-            mermaid.initialize({ 
-              startOnLoad: false,
-              theme: 'default',
-              securityLevel: 'loose'
-            });
-            mermaid.run({
-              querySelector: '.mermaid'
-            });
-          }
-        }
-        
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', initMermaid);
-        } else {
-          initMermaid();
-        }
-        
-        // 监听页面切换
-        const observer = new MutationObserver(function(mutations) {
-          initMermaid();
-        });
-        
-        if (document.body) {
-          observer.observe(document.body, { childList: true, subtree: true });
-        } else {
-          document.addEventListener('DOMContentLoaded', function() {
-            observer.observe(document.body, { childList: true, subtree: true });
-          });
-        }
-      })();
-    `]
-  ],
   themeConfig: {
     logo: '/images/logo.png',
     nav: [
       { text: '首页', link: '/' },
       { text: '指南', link: '/guide/' },
-      { text: 'spring-core', link: '/spring-core/' },
+      {
+        text: 'spring-core',
+        items: [
+          { text: '概述', link: '/spring-core/' },
+          { text: '类型系统', link: '/spring-core/type-system/01-resolvable-type' },
+        ]
+      },
       { text: 'spring-beans', link: '/spring-beans/' },
       { text: 'spring-context', link: '/spring-context/' },
       { text: 'spring-aop', link: '/spring-aop/' },
@@ -82,6 +39,16 @@ export default defineConfig({
           text: 'spring-core',
           items: [
             { text: '概述', link: '/spring-core/' },
+            {
+              text: '类型系统',
+              collapsed: false,
+              items: [
+                { text: '1. ResolvableType', link: '/spring-core/type-system/01-resolvable-type' },
+                { text: '2. TypeDescriptor', link: '/spring-core/type-system/02-type-descriptor' },
+                { text: '3. ConversionService', link: '/spring-core/type-system/03-conversion-service' },
+                { text: '4. 测试代码说明', link: '/spring-core/type-system/04-test-documentation' },
+              ]
+            }
           ]
         }
       ],
@@ -135,25 +102,14 @@ export default defineConfig({
       ],
     },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/linsir/linsir-spring' }
-    ],
-    footer: {
-      message: '基于 MIT 许可发布',
-      copyright: 'Copyright © 2024 Linsir'
-    },
-    editLink: {
-      pattern: 'https://github.com/linsir/linsir-spring/edit/main/docs/docs/:path',
-      text: '在 GitHub 上编辑此页'
-    },
-    lastUpdated: {
-      text: '最后更新于'
-    },
-    docFooter: {
-      prev: '上一页',
-      next: '下一页'
-    },
-    outline: {
-      label: '页面导航'
-    }
-  }
+      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+    ]
+  },
+  mermaid: {
+    theme: 'default',
+    securityLevel: 'loose',
+  },
+  mermaidPlugin: {
+    class: 'mermaid',
+  },
 })
