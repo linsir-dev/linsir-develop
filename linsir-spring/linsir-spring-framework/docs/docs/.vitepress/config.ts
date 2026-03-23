@@ -22,6 +22,7 @@ export default withMermaid({
           { text: '断言工具', link: '/spring-core/asserts/00-assert-overview' },
           { text: '环境抽象', link: '/spring-core/env/00-env-overview' },
           { text: '注解处理', link: '/spring-core/annotation/00-annotation-overview' },
+          { text: '任务执行', link: '/spring-core/task/00-task-overview' },
         ]
       },
       { text: 'spring-beans', link: '/spring-beans/' },
@@ -117,6 +118,17 @@ export default withMermaid({
                 { text: '3. 测试引导文档', link: '/spring-core/annotation/02-annotation-test-guide' },
                 { text: '4. 测试报告', link: '/spring-core/annotation/03-annotation-test-report' },
                 { text: '5. 功能扩展设计', link: '/spring-core/annotation/04-annotation-extension-design' },
+              ]
+            },
+            {
+              text: '任务执行',
+              collapsed: false,
+              items: [
+                { text: '1. 任务执行概述', link: '/spring-core/task/00-task-overview' },
+                { text: '2. 示例代码指南', link: '/spring-core/task/01-task-code-guide' },
+                { text: '3. 测试引导文档', link: '/spring-core/task/02-task-test-guide' },
+                { text: '4. 测试报告', link: '/spring-core/task/03-task-test-report' },
+                { text: '5. 功能扩展设计', link: '/spring-core/task/04-task-extension-design' },
               ]
             }
           ]
