@@ -17,6 +17,7 @@ export default withMermaid({
           { text: '概述', link: '/spring-core/' },
           { text: '类型系统', link: '/spring-core/type-system/00-type-system-overview' },
           { text: '反射工具', link: '/spring-core/reflection/00-reflection-overview' },
+          { text: '资源抽象', link: '/spring-core/resource/00-resource-overview' },
         ]
       },
       { text: 'spring-beans', link: '/spring-beans/' },
@@ -57,6 +58,17 @@ export default withMermaid({
                 { text: '3. 测试代码指南', link: '/spring-core/reflection/02-reflection-test-guide' },
                 { text: '4. 测试报告', link: '/spring-core/reflection/03-reflection-test-report' },
                 { text: '5. 功能扩展设计', link: '/spring-core/reflection/04-reflection-extension-design' },
+              ]
+            },
+            {
+              text: '资源抽象',
+              collapsed: false,
+              items: [
+                { text: '1. 资源抽象概述', link: '/spring-core/resource/00-resource-overview' },
+                { text: '2. 示例代码指南', link: '/spring-core/resource/01-resource-code-guide' },
+                { text: '3. 测试引导文档', link: '/spring-core/resource/02-resource-test-guide' },
+                { text: '4. 测试报告', link: '/spring-core/resource/03-resource-test-report' },
+                { text: '5. 功能扩展设计', link: '/spring-core/resource/04-resource-extension-design' },
               ]
             }
           ]
