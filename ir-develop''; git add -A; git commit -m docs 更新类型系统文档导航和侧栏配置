@@ -1,0 +1,83 @@
+[33mcommit 079ca669654325080491b5022204dab50ce9e39f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: linsir <student_yxl@126.com>
+Date:   Mon Mar 23 12:33:41 2026 +0800
+
+    feat: 实现 Spring 类型系统完整示例代码
+    
+    - 新增 ResolvableType 泛型解析模块（TypeResolver、实体类、容器）
+    - 新增 ClassMetadata 元数据扫描模块（扫描器、注解定义）
+    - 新增 TypeFilter 类型过滤器模块（4种过滤器实现）
+    - 新增 ComponentScanner 组件扫描模块（扫描器、组件类型识别）
+    - 新增完整测试套件（48个测试用例全部通过）
+    - 新增类型系统实现说明文档（含扩展设计建议）
+    - 修复 Lombok 版本兼容性问题
+    
+    测试: mvn clean test -Dtest=com.linsir.spring.framework.spring_core.type_system.**
+
+ ...pring-frameworkdocs\357\200\242; pnpm run dev'" |   51 [32m+[m
+ .../type-system/00-type-system-overview.md         |  249 [32m+++++[m
+ .../spring-core/type-system/01-resolvable-type.md  |  553 [31m-----------[m
+ .../type-system/01-type-system-implementation.md   | 1017 [32m++++++++++++++++++++[m
+ .../spring-core/type-system/02-type-descriptor.md  |  491 [31m----------[m
+ .../type-system/03-conversion-service.md           |  570 [31m-----------[m
+ .../type-system/04-test-documentation.md           |  485 [31m----------[m
+ linsir-spring/linsir-spring-framework/pom.xml      |   10 [32m+[m[31m-[m
+ .../type_system/TypeSystemTestRunner.java          |   71 [31m--[m
+ .../type_system/component/ComponentInfo.java       |   88 [32m++[m
+ .../type_system/component/ComponentScanner.java    |  177 [32m++++[m
+ .../type_system/component/ComponentType.java       |   65 [32m++[m
+ .../type_system/component/ScanResult.java          |   99 [32m++[m
+ .../type_system/conversion/ConversionService.java  |    9 [31m-[m
+ .../type_system/conversion/Converter.java          |    9 [31m-[m
+ .../conversion/ConverterLookupDemo.java            |  204 [31m----[m
+ .../type_system/conversion/ConvertiblePair.java    |   33 [31m-[m
+ .../type_system/conversion/GenericConverter.java   |   11 [31m-[m
+ .../type_system/descriptor/NotNull.java            |   16 [31m-[m
+ .../descriptor/PropertyDescriptorDemo.java         |  148 [31m---[m
+ .../spring_core/type_system/descriptor/Range.java  |   18 [31m-[m
+ .../spring_core/type_system/descriptor/Size.java   |   18 [31m-[m
+ .../spring_core/type_system/descriptor/User.java   |   48 [31m-[m
+ .../type_system/descriptor/UserService.java        |   59 [31m--[m
+ .../type_system/descriptor/ValueOfDemo.java        |  135 [31m---[m
+ .../type_system/filter/AnnotationTypeFilter.java   |   54 [32m++[m
+ .../type_system/filter/AssignableTypeFilter.java   |   63 [32m++[m
+ .../type_system/filter/CompositeTypeFilter.java    |   95 [32m++[m
+ .../type_system/filter/RegexPatternTypeFilter.java |   41 [32m+[m
+ .../spring_core/type_system/filter/TypeFilter.java |   29 [32m+[m
+ .../type_system/metadata/model/Component.java      |   24 [32m+[m
+ .../type_system/metadata/model/Repository.java     |   25 [32m+[m
+ .../type_system/metadata/model/Service.java        |   32 [32m+[m
+ .../metadata/scanner/ClassMetadataInfo.java        |  172 [32m++++[m
+ .../metadata/scanner/ClassMetadataScanner.java     |  133 [32m+++[m
+ .../type_system/resolvable/BaseService.java        |   31 [31m-[m
+ .../spring_core/type_system/resolvable/Config.java |   76 [31m--[m
+ .../type_system/resolvable/ForClassDemo.java       |  100 [31m--[m
+ .../type_system/resolvable/ForFieldDemo.java       |  107 [31m--[m
+ .../resolvable/ForMethodParameterDemo.java         |  105 [31m--[m
+ .../resolvable/ForMethodReturnTypeDemo.java        |  106 [31m--[m
+ .../resolvable/GenericResolutionDemo.java          |   82 [31m--[m
+ .../resolvable/TraditionalApproachDemo.java        |  139 [31m---[m
+ .../type_system/resolvable/TypeChecksDemo.java     |  110 [31m---[m
+ .../spring_core/type_system/resolvable/User.java   |   38 [31m-[m
+ .../type_system/resolvable/UserController.java     |   56 [31m--[m
+ .../type_system/resolvable/UserService.java        |   36 [31m-[m
+ .../resolvable/container/DataHolder.java           |   94 [32m++[m
+ .../resolvable/container/GenericContainer.java     |   84 [32m++[m
+ .../type_system/resolvable/entity/Order.java       |   87 [32m++[m
+ .../type_system/resolvable/entity/User.java        |   84 [32m++[m
+ .../resolvable/processor/TypeResolver.java         |  159 [32m+++[m
+ .../resolvable/service/BaseService.java            |   54 [32m++[m
+ .../resolvable/service/OrderService.java           |   78 [32m++[m
+ .../resolvable/service/UserService.java            |   79 [32m++[m
+ .../type_system/TypeSystemIntegrationTest.java     |  307 [32m++++++[m
+ .../type_system/TypeSystemStandaloneTest.java      |  289 [31m------[m
+ .../component/ComponentScannerTest.java            |  280 [32m++++++[m
+ .../conversion/ConversionServiceTest.java          |   63 [31m--[m
+ .../descriptor/TypeDescriptorStandaloneTest.java   |  320 [31m------[m
+ .../type_system/descriptor/TypeDescriptorTest.java |  172 [31m----[m
+ .../type_system/filter/TypeFilterTest.java         |  264 [32m+++++[m
+ .../metadata/ClassMetadataScannerTest.java         |  242 [32m+++++[m
+ .../resolvable/ResolvableTypeStandaloneTest.java   |  327 [31m-------[m
+ .../type_system/resolvable/ResolvableTypeTest.java |  169 [31m----[m
+ .../type_system/resolvable/TypeResolverTest.java   |  259 [32m+++++[m
+ 66 files changed, 4487 insertions(+), 5212 deletions(-)

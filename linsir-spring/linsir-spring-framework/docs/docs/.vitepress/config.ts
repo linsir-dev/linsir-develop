@@ -15,7 +15,8 @@ export default withMermaid({
         text: 'spring-core',
         items: [
           { text: '概述', link: '/spring-core/' },
-          { text: '类型系统', link: '/spring-core/type-system/01-resolvable-type' },
+          { text: '类型系统', link: '/spring-core/type-system/00-type-system-overview' },
+          { text: '反射工具', link: '/spring-core/reflection/00-reflection-overview' },
         ]
       },
       { text: 'spring-beans', link: '/spring-beans/' },
@@ -43,10 +44,15 @@ export default withMermaid({
               text: '类型系统',
               collapsed: false,
               items: [
-                { text: '1. ResolvableType', link: '/spring-core/type-system/01-resolvable-type' },
-                { text: '2. TypeDescriptor', link: '/spring-core/type-system/02-type-descriptor' },
-                { text: '3. ConversionService', link: '/spring-core/type-system/03-conversion-service' },
-                { text: '4. 测试代码说明', link: '/spring-core/type-system/04-test-documentation' },
+                { text: '1. 类型系统概述', link: '/spring-core/type-system/00-type-system-overview' },
+                { text: '2. 实现与测试文档', link: '/spring-core/type-system/01-type-system-implementation' },
+              ]
+            },
+            {
+              text: '反射工具',
+              collapsed: false,
+              items: [
+                { text: '1. 反射工具概述', link: '/spring-core/reflection/00-reflection-overview' },
               ]
             }
           ]
