@@ -53,6 +53,10 @@ export default withMermaid({
               collapsed: false,
               items: [
                 { text: '1. 反射工具概述', link: '/spring-core/reflection/00-reflection-overview' },
+                { text: '2. 示例代码指南', link: '/spring-core/reflection/01-reflection-code-guide' },
+                { text: '3. 测试代码指南', link: '/spring-core/reflection/02-reflection-test-guide' },
+                { text: '4. 测试报告', link: '/spring-core/reflection/03-reflection-test-report' },
+                { text: '5. 功能扩展设计', link: '/spring-core/reflection/04-reflection-extension-design' },
               ]
             }
           ]
