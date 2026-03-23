@@ -20,6 +20,7 @@ export default withMermaid({
           { text: '资源抽象', link: '/spring-core/resource/00-resource-overview' },
           { text: '类型转换', link: '/spring-core/conversion/00-conversion-overview' },
           { text: '断言工具', link: '/spring-core/asserts/00-assert-overview' },
+          { text: '环境抽象', link: '/spring-core/env/00-env-overview' },
         ]
       },
       { text: 'spring-beans', link: '/spring-beans/' },
@@ -93,6 +94,17 @@ export default withMermaid({
                 { text: '3. 测试引导文档', link: '/spring-core/asserts/02-assert-test-guide' },
                 { text: '4. 测试报告', link: '/spring-core/asserts/03-assert-test-report' },
                 { text: '5. 功能扩展设计', link: '/spring-core/asserts/04-assert-extension-design' },
+              ]
+            },
+            {
+              text: '环境抽象',
+              collapsed: false,
+              items: [
+                { text: '1. 环境抽象概述', link: '/spring-core/env/00-env-overview' },
+                { text: '2. 示例代码指南', link: '/spring-core/env/01-env-code-guide' },
+                { text: '3. 测试引导文档', link: '/spring-core/env/02-env-test-guide' },
+                { text: '4. 测试报告', link: '/spring-core/env/03-env-test-report' },
+                { text: '5. 功能扩展设计', link: '/spring-core/env/04-env-extension-design' },
               ]
             }
           ]
