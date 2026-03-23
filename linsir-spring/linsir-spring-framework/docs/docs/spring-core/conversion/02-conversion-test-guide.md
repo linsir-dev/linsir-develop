@@ -41,8 +41,8 @@ src/test/java/com/linsir/spring/framework/spring_core/conversion/
 | testCanConvert | 转换能力判断 | 正确返回 boolean |
 | testCustomConverter | 自定义转换器 | String → User |
 | testConverterFactory | 转换器工厂 | String → Number 子类 |
-| testArrayToCollection | 数组转集合 | String[] → List<String> |
-| testCollectionToArray | 集合转数组 | List<String> → String[] |
+| testArrayToCollection | 数组转集合 | String[] → List&lt;String&gt; |
+| testCollectionToArray | 集合转数组 | List&lt;String&gt; → String[] |
 | testLambdaConverter | Lambda 转换器 | 验证函数式接口支持 |
 | testRemoveConverter | 移除转换器 | 转换器被成功移除 |
 | testGenericTypeDescriptor | 泛型类型描述符 | 正确识别集合类型 |
