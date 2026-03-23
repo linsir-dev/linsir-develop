@@ -18,6 +18,7 @@ export default withMermaid({
           { text: '类型系统', link: '/spring-core/type-system/00-type-system-overview' },
           { text: '反射工具', link: '/spring-core/reflection/00-reflection-overview' },
           { text: '资源抽象', link: '/spring-core/resource/00-resource-overview' },
+          { text: '类型转换', link: '/spring-core/conversion/00-conversion-overview' },
         ]
       },
       { text: 'spring-beans', link: '/spring-beans/' },
@@ -69,6 +70,17 @@ export default withMermaid({
                 { text: '3. 测试引导文档', link: '/spring-core/resource/02-resource-test-guide' },
                 { text: '4. 测试报告', link: '/spring-core/resource/03-resource-test-report' },
                 { text: '5. 功能扩展设计', link: '/spring-core/resource/04-resource-extension-design' },
+              ]
+            },
+            {
+              text: '类型转换',
+              collapsed: false,
+              items: [
+                { text: '1. 类型转换概述', link: '/spring-core/conversion/00-conversion-overview' },
+                { text: '2. 示例代码指南', link: '/spring-core/conversion/01-conversion-code-guide' },
+                { text: '3. 测试引导文档', link: '/spring-core/conversion/02-conversion-test-guide' },
+                { text: '4. 测试报告', link: '/spring-core/conversion/03-conversion-test-report' },
+                { text: '5. 功能扩展设计', link: '/spring-core/conversion/04-conversion-extension-design' },
               ]
             }
           ]
