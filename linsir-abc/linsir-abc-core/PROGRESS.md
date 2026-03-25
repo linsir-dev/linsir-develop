@@ -143,14 +143,14 @@
 | IntegerCacheAnalysisTest.java | IntegerCacheAnalysis.java | ✅ 完成 |
 | LinkedListImplementationTest.java | LinkedListImplementation.java | ✅ 完成 |
 | ListPerformanceComparisonTest.java | ListPerformanceComparison.java | ✅ 完成 |
+| StringImmutabilityTest.java | StringImmutability.java | ✅ 完成 |
+| StringConcatenationBenchmarkTest.java | StringConcatenationBenchmark.java | ✅ 完成 |
+| SystemPropertyManagerTest.java | SystemPropertyManager.java | ✅ 完成 |
+| ArrayCopyPerformanceTest.java | ArrayCopyPerformance.java | ✅ 完成 |
 
 ### 待完成测试
 - [ ] HashCodeGeneratorTest.java
 - [ ] DeepCloneableTest.java
-- [ ] StringImmutabilityTest.java
-- [ ] StringConcatenationBenchmarkTest.java
-- [ ] SystemPropertyManagerTest.java
-- [ ] ArrayCopyPerformanceTest.java
 - [ ] ArrayListImplementationTest.java
 
 ---
@@ -219,8 +219,8 @@ linsir-abc-core/src/main/java/com/linsir/abc/core/base/
 - **已完成类**: 15个
 - **待完成类**: 48个
 - **完成率**: 23.8%
-- **已完成测试**: 10个
-- **待完成测试**: 预计53个
+- **已完成测试**: 14个
+- **待完成测试**: 预计49个
 
 ---
 
