@@ -59,21 +59,24 @@
 
 ## 待完成类清单
 
-### java.util.collection 包 (7个类待完成)
-- [ ] HashMapImplementation.java
-- [ ] TreeMapImplementation.java
-- [ ] LinkedHashMapImplementation.java
-- [ ] HashSetImplementation.java
-- [ ] TreeSetImplementation.java
-- [ ] PriorityQueueImplementation.java
-- [ ] ArrayDequeImplementation.java
-- [ ] HashMapImplementation.java
-- [ ] TreeMapImplementation.java
-- [ ] LinkedHashMapImplementation.java
-- [ ] HashSetImplementation.java
-- [ ] TreeSetImplementation.java
-- [ ] PriorityQueueImplementation.java
-- [ ] ArrayDequeImplementation.java
+### 8. java.util.collection.map 包 (3个类)
+| 类名 | 状态 | 说明 |
+|------|------|------|
+| HashMapImplementation.java | ✅ 完成 | 简化版HashMap实现（数组+链表+红黑树） |
+| TreeMapImplementation.java | ✅ 完成 | 简化版TreeMap实现（红黑树） |
+| LinkedHashMapImplementation.java | ✅ 完成 | 简化版LinkedHashMap实现（哈希表+双向链表） |
+
+### 9. java.util.collection.set 包 (2个类)
+| 类名 | 状态 | 说明 |
+|------|------|------|
+| HashSetImplementation.java | ✅ 完成 | 简化版HashSet实现（基于HashMap） |
+| TreeSetImplementation.java | ✅ 完成 | 简化版TreeSet实现（基于TreeMap） |
+
+### 10. java.util.collection.queue 包 (2个类)
+| 类名 | 状态 | 说明 |
+|------|------|------|
+| PriorityQueueImplementation.java | ✅ 完成 | 简化版PriorityQueue实现（二叉堆） |
+| ArrayDequeImplementation.java | ✅ 完成 | 简化版ArrayDeque实现（循环数组）
 
 ### java.util.stream 包 (3个类待完成)
 - [ ] StreamPipelineBuilder.java
@@ -147,6 +150,13 @@
 | StringConcatenationBenchmarkTest.java | StringConcatenationBenchmark.java | ✅ 完成 |
 | SystemPropertyManagerTest.java | SystemPropertyManager.java | ✅ 完成 |
 | ArrayCopyPerformanceTest.java | ArrayCopyPerformance.java | ✅ 完成 |
+| HashMapImplementationTest.java | HashMapImplementation.java | ✅ 完成 |
+| TreeMapImplementationTest.java | TreeMapImplementation.java | ✅ 完成 |
+| LinkedHashMapImplementationTest.java | LinkedHashMapImplementation.java | ✅ 完成 |
+| HashSetImplementationTest.java | HashSetImplementation.java | ✅ 完成 |
+| TreeSetImplementationTest.java | TreeSetImplementation.java | ✅ 完成 |
+| PriorityQueueImplementationTest.java | PriorityQueueImplementation.java | ✅ 完成 |
+| ArrayDequeImplementationTest.java | ArrayDequeImplementation.java | ✅ 完成 |
 
 ### 待完成测试
 - [ ] HashCodeGeneratorTest.java
@@ -189,7 +199,11 @@ linsir-abc-core/src/main/java/com/linsir/abc/core/base/
 │   ├── reflect/         # 反射相关 (2个类 ✅)
 │   └── wrapper/         # 包装类相关 (2个类 ✅)
 ├── util/
-│   ├── collection/      # 集合框架 (3个类 ✅)
+│   ├── collection/      # 集合框架 (10个类 ✅)
+│   │   ├── list/        # List实现 (3个类 ✅)
+│   │   ├── map/         # Map实现 (3个类 ✅)
+│   │   ├── set/         # Set实现 (2个类 ✅)
+│   │   └── queue/       # Queue实现 (2个类 ✅)
 │   ├── stream/          # Stream API (待完成)
 │   └── concurrent/      # 并发包 (待完成)
 ├── io/                  # IO相关 (待完成)
@@ -216,11 +230,11 @@ linsir-abc-core/src/main/java/com/linsir/abc/core/base/
 
 ## 统计信息
 
-- **已完成类**: 15个
-- **待完成类**: 48个
-- **完成率**: 23.8%
-- **已完成测试**: 14个
-- **待完成测试**: 预计49个
+- **已完成类**: 22个
+- **待完成类**: 41个
+- **完成率**: 34.9%
+- **已完成测试**: 21个
+- **待完成测试**: 预计42个
 
 ---
 
