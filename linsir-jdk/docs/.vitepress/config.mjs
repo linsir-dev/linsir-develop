@@ -24,7 +24,7 @@ export default defineConfig({
         {
           text: '深入学习',
           items: [
-            { text: '深入学习首页', link: '/deep-dive/' }
+            { text: 'JDK 8 源码架构全景分析', link: '/deep-dive/' }
           ]
         }
       ],
