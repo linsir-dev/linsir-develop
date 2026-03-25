@@ -78,10 +78,12 @@
 | PriorityQueueImplementation.java | ✅ 完成 | 简化版PriorityQueue实现（二叉堆） |
 | ArrayDequeImplementation.java | ✅ 完成 | 简化版ArrayDeque实现（循环数组）
 
-### java.util.stream 包 (3个类待完成)
-- [ ] StreamPipelineBuilder.java
-- [ ] ParallelStreamProcessor.java
-- [ ] CustomCollector.java
+### 11. java.util.stream 包 (3个类)
+| 类名 | 状态 | 说明 |
+|------|------|------|
+| StreamPipelineBuilder.java | ✅ 完成 | Stream管道构建器，支持中间操作和终止操作 |
+| ParallelStreamProcessor.java | ✅ 完成 | 并行流处理器，基于Fork/Join框架 |
+| CustomCollector.java | ✅ 完成 | 自定义收集器实现，包括分组、分区、TopN等 |
 
 ### java.util.concurrent 包 (8个类待完成)
 - [ ] ConcurrentHashMapImplementation.java
@@ -160,6 +162,15 @@
 
 ### 待完成测试
 - [ ] HashCodeGeneratorTest.java
+
+### 已完成stream包测试
+| 测试类 | 被测试类 | 状态 |
+|--------|----------|------|
+| StreamPipelineBuilderTest.java | StreamPipelineBuilder.java | ✅ 完成 |
+| ParallelStreamProcessorTest.java | ParallelStreamProcessor.java | ✅ 完成 |
+| CustomCollectorTest.java | CustomCollector.java | ✅ 完成 |
+
+### 待完成测试
 - [ ] DeepCloneableTest.java
 - [ ] ArrayListImplementationTest.java
 
@@ -204,7 +215,7 @@ linsir-abc-core/src/main/java/com/linsir/abc/core/base/
 │   │   ├── map/         # Map实现 (3个类 ✅)
 │   │   ├── set/         # Set实现 (2个类 ✅)
 │   │   └── queue/       # Queue实现 (2个类 ✅)
-│   ├── stream/          # Stream API (待完成)
+│   ├── stream/          # Stream API (3个类 ✅)
 │   └── concurrent/      # 并发包 (待完成)
 ├── io/                  # IO相关 (待完成)
 ├── nio/                 # NIO相关 (待完成)
@@ -230,11 +241,11 @@ linsir-abc-core/src/main/java/com/linsir/abc/core/base/
 
 ## 统计信息
 
-- **已完成类**: 22个
-- **待完成类**: 41个
-- **完成率**: 34.9%
-- **已完成测试**: 21个
-- **待完成测试**: 预计42个
+- **已完成类**: 25个
+- **待完成类**: 38个
+- **完成率**: 39.7%
+- **已完成测试**: 24个
+- **待完成测试**: 预计39个
 
 ---
 
