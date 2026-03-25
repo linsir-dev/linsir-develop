@@ -2,6 +2,8 @@ package com.linsir.abc.core.base.util.stream;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.Collector;
+import java.util.stream.Collector.Characteristics;
 
 /**
  * Stream管道构建器
@@ -48,7 +50,6 @@ public class StreamPipelineBuilder<T> {
     /**
      * 操作接口
      */
-    @FunctionalInterface
     public interface Operation<T> {
         List<T> apply(List<T> input);
         OperationType getType();

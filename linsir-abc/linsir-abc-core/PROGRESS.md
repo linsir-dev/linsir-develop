@@ -85,15 +85,17 @@
 | ParallelStreamProcessor.java | ✅ 完成 | 并行流处理器，基于Fork/Join框架 |
 | CustomCollector.java | ✅ 完成 | 自定义收集器实现，包括分组、分区、TopN等 |
 
-### java.util.concurrent 包 (8个类待完成)
-- [ ] ConcurrentHashMapImplementation.java
-- [ ] CopyOnWriteArrayListImplementation.java
-- [ ] ThreadPoolExecutorImplementation.java
-- [ ] ScheduledExecutorImplementation.java
-- [ ] TaskRejectHandler.java
-- [ ] ReentrantLockImplementation.java
-- [ ] ReadWriteLockImplementation.java
-- [ ] ConditionVariable.java
+### 12. java.util.concurrent 包 (8个类)
+| 类名 | 状态 | 说明 |
+|------|------|------|
+| ConcurrentHashMapImplementation.java | ✅ 完成 | 简化版ConcurrentHashMap实现（分段锁+CAS） |
+| CopyOnWriteArrayListImplementation.java | ✅ 完成 | 简化版CopyOnWriteArrayList实现（写时复制） |
+| ThreadPoolExecutorImplementation.java | ✅ 完成 | 简化版线程池执行器实现 |
+| ScheduledExecutorImplementation.java | ✅ 完成 | 简化版定时任务执行器实现 |
+| TaskRejectHandler.java | ✅ 完成 | 任务拒绝处理器（多种拒绝策略） |
+| ReentrantLockImplementation.java | ✅ 完成 | 简化版可重入锁实现（AQS） |
+| ReadWriteLockImplementation.java | ✅ 完成 | 简化版读写锁实现（读共享写独占） |
+| ConditionVariable.java | ✅ 完成 | 简化版条件变量实现（等待/通知）
 
 ### java.io 包 (7个类待完成)
 - [ ] ByteStreamProcessor.java
@@ -170,9 +172,21 @@
 | ParallelStreamProcessorTest.java | ParallelStreamProcessor.java | ✅ 完成 |
 | CustomCollectorTest.java | CustomCollector.java | ✅ 完成 |
 
+### 已完成concurrent包测试
+| 测试类 | 被测试类 | 状态 |
+|--------|----------|------|
+| ConcurrentHashMapImplementationTest.java | ConcurrentHashMapImplementation.java | ✅ 完成 |
+| CopyOnWriteArrayListImplementationTest.java | CopyOnWriteArrayListImplementation.java | ✅ 完成 |
+| ThreadPoolExecutorImplementationTest.java | ThreadPoolExecutorImplementation.java | ✅ 完成 |
+| ReentrantLockImplementationTest.java | ReentrantLockImplementation.java | ✅ 完成 |
+| ReadWriteLockImplementationTest.java | ReadWriteLockImplementation.java | ✅ 完成 |
+
 ### 待完成测试
 - [ ] DeepCloneableTest.java
 - [ ] ArrayListImplementationTest.java
+- [ ] ScheduledExecutorImplementationTest.java
+- [ ] TaskRejectHandlerTest.java
+- [ ] ConditionVariableTest.java
 
 ---
 
