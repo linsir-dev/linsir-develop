@@ -13,7 +13,8 @@ export default withMermaid(defineConfig({
       {
         text: '核心',
         items: [
-          { text: 'Base 基础模块', link: '/core/base/' }
+          { text: '语法基础', link: '/core/grammar/' },
+          { text: '基础模块', link: '/core/base/' }
         ]
       }
     ],
@@ -28,7 +29,19 @@ export default withMermaid(defineConfig({
           ]
         }
       ],
-      '/core/': [
+      '/core/grammar/': [
+        {
+          text: 'Grammar 语法基础',
+          collapsed: false,
+          items: [
+            { text: 'Grammar 首页', link: '/core/grammar/' },
+            { text: '详细设计文档', link: '/core/grammar/01-grammar-detailed-design' },
+            { text: '代码指南', link: '/core/grammar/02-grammar-code-guide' },
+            { text: '面试题汇总', link: '/core/grammar/03-grammar-interview-questions' }
+          ]
+        }
+      ],
+      '/core/base/': [
         {
           text: 'Base 基础模块',
           collapsed: false,
