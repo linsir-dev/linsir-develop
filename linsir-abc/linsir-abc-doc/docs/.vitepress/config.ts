@@ -1,7 +1,8 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 
 // https://vitepress.vuejs.org/config/app-configs
-export default defineConfig({
+export default withMermaid(defineConfig({
   title: 'Linsir ABC',
   description: 'Linsir ABC 文档',
 
@@ -103,5 +104,17 @@ export default defineConfig({
       message: 'Released under the MIT License.',
       copyright: 'Copyright © 2024-present Linsir'
     }
+  },
+
+  // Mermaid 配置
+  mermaid: {
+    // 可选的 Mermaid 配置
+    theme: 'default'
+  },
+
+  // 可选的 Mermaid 插件配置
+  mermaidPlugin: {
+    class: 'mermaid', // 可选的 CSS 类名
+    // 其他选项...
   }
-})
+}))
