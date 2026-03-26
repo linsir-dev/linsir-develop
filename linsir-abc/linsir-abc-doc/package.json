@@ -8,16 +8,8 @@
     "serve": "vitepress serve docs"
   },
   "devDependencies": {
-    "markdown-it-mermaid": "^0.2.5",
-    "vitepress": "1.0.0-alpha.28",
-    "vitepress-plugin-mermaid": "^2.0.17",
-    "vue": "3.2.44"
+    "vitepress": "1.0.0-rc.45",
+    "vue": "3.4.21"
   },
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "@algolia/client-search"
-      ]
-    }
-  }
+  "dependencies": {}
 }
