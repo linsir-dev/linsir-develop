@@ -218,12 +218,12 @@ public class FileChannelTransfer {
 
         // 准备多个缓冲区
         ByteBuffer header = ByteBuffer.allocate(8);
-        ByteBuffer body = ByteBuffer.allocate(32);
+        ByteBuffer body = ByteBuffer.allocate(64);
         ByteBuffer footer = ByteBuffer.allocate(8);
 
         // 写入数据到缓冲区
         header.put("HEADER".getBytes());
-        body.put("This is the body content of the message.".getBytes());
+        body.put("This is the body content.".getBytes());
         footer.put("FOOTER".getBytes());
 
         // 聚集写入
@@ -238,7 +238,7 @@ public class FileChannelTransfer {
 
         // 分散读取
         ByteBuffer readHeader = ByteBuffer.allocate(8);
-        ByteBuffer readBody = ByteBuffer.allocate(32);
+        ByteBuffer readBody = ByteBuffer.allocate(64);
         ByteBuffer readFooter = ByteBuffer.allocate(8);
 
         ByteBuffer[] readBuffers = {readHeader, readBody, readFooter};
