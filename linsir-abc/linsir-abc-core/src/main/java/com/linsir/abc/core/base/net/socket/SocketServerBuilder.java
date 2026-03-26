@@ -127,7 +127,7 @@ public class SocketServerBuilder {
     /**
      * 演示Echo服务端
      */
-    public static void demonstrateEchoServer() {
+    public static void demonstrateEchoServer() throws IOException {
         System.out.println("=== Socket服务端演示 ===\n");
 
         int port = 12348;
@@ -193,7 +193,7 @@ public class SocketServerBuilder {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         demonstrateEchoServer();
     }
 }
