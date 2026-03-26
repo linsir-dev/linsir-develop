@@ -1,4 +1,4 @@
-package com.linsir.abc.core.base.util.concurrent;
+package com.linsir.abc.core.base.util.concurrent.collection;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

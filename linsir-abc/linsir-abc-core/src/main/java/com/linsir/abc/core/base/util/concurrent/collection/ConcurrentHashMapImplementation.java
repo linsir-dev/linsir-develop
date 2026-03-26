@@ -1,4 +1,4 @@
-package com.linsir.abc.core.base.util.concurrent;
+package com.linsir.abc.core.base.util.concurrent.collection;
 
 import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;

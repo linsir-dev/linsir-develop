@@ -1,4 +1,4 @@
-package com.linsir.abc.core.base.util.concurrent;
+package com.linsir.abc.core.base.util.concurrent.lock;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;

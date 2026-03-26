@@ -1,4 +1,4 @@
-package com.linsir.abc.core.base.util.concurrent;
+package com.linsir.abc.core.base.util.concurrent.executor;
 
 import java.util.*;
 import java.util.concurrent.*;
