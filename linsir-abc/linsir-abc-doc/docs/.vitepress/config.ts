@@ -48,56 +48,48 @@ export default withMermaid(defineConfig({
           link: '/core/jvm/'
         },
         {
-          text: '第1章 走近Java',
-          link: '/core/jvm/chapter-01-intro'
+          text: '第一部分：走近Java',
+          collapsed: false,
+          items: [
+            { text: '第1章 走近Java', link: '/core/jvm/chapter-01-intro' },
+            { text: '第1章 面试题总结', link: '/core/jvm/chapter-01-interview' }
+          ]
         },
         {
-          text: '第2章 Java内存区域与内存溢出异常',
-          link: '/core/jvm/chapter-02-memory'
+          text: '第二部分：自动内存管理',
+          collapsed: true,
+          items: [
+            { text: '第2章 Java内存区域与内存溢出异常', link: '/core/jvm/chapter-02-memory' },
+            { text: '第3章 垃圾收集器与内存分配策略', link: '/core/jvm/chapter-03-gc' },
+            { text: '第4章 虚拟机性能监控与故障处理工具', link: '/core/jvm/chapter-04-tools' },
+            { text: '第5章 调优案例分析与实战', link: '/core/jvm/chapter-05-tuning' }
+          ]
         },
         {
-          text: '第3章 垃圾收集器与内存分配策略',
-          link: '/core/jvm/chapter-03-gc'
+          text: '第三部分：虚拟机执行子系统',
+          collapsed: true,
+          items: [
+            { text: '第6章 类文件结构', link: '/core/jvm/chapter-06-classfile' },
+            { text: '第7章 虚拟机类加载机制', link: '/core/jvm/chapter-07-classloading' },
+            { text: '第8章 虚拟机字节码执行引擎', link: '/core/jvm/chapter-08-execution' },
+            { text: '第9章 类加载及执行子系统的案例与实战', link: '/core/jvm/chapter-09-cases' }
+          ]
         },
         {
-          text: '第4章 虚拟机性能监控与故障处理工具',
-          link: '/core/jvm/chapter-04-tools'
+          text: '第四部分：程序编译与代码优化',
+          collapsed: true,
+          items: [
+            { text: '第10章 早期（编译期）优化', link: '/core/jvm/chapter-10-compile-time' },
+            { text: '第11章 晚期（运行期）优化', link: '/core/jvm/chapter-11-runtime' }
+          ]
         },
         {
-          text: '第5章 调优案例分析与实战',
-          link: '/core/jvm/chapter-05-tuning'
-        },
-        {
-          text: '第6章 类文件结构',
-          link: '/core/jvm/chapter-06-classfile'
-        },
-        {
-          text: '第7章 虚拟机类加载机制',
-          link: '/core/jvm/chapter-07-classloading'
-        },
-        {
-          text: '第8章 虚拟机字节码执行引擎',
-          link: '/core/jvm/chapter-08-execution'
-        },
-        {
-          text: '第9章 类加载及执行子系统的案例与实战',
-          link: '/core/jvm/chapter-09-cases'
-        },
-        {
-          text: '第10章 早期（编译期）优化',
-          link: '/core/jvm/chapter-10-compile-time'
-        },
-        {
-          text: '第11章 晚期（运行期）优化',
-          link: '/core/jvm/chapter-11-runtime'
-        },
-        {
-          text: '第12章 Java内存模型与线程',
-          link: '/core/jvm/chapter-12-jmm'
-        },
-        {
-          text: '第13章 线程安全与锁优化',
-          link: '/core/jvm/chapter-13-thread-safety'
+          text: '第五部分：高效并发',
+          collapsed: true,
+          items: [
+            { text: '第12章 Java内存模型与线程', link: '/core/jvm/chapter-12-jmm' },
+            { text: '第13章 线程安全与锁优化', link: '/core/jvm/chapter-13-thread-safety' }
+          ]
         }
       ],
       '/core/base/': [
