@@ -14,7 +14,8 @@ export default withMermaid(defineConfig({
         text: '核心',
         items: [
           { text: '语法基础', link: '/core/grammar/' },
-          { text: '基础模块', link: '/core/base/' }
+          { text: '基础模块', link: '/core/base/' },
+          { text: 'JVM', link: '/core/jvm/' }
         ]
       }
     ],
@@ -39,6 +40,64 @@ export default withMermaid(defineConfig({
             { text: '代码指南', link: '/core/grammar/02-grammar-code-guide' },
             { text: '面试题汇总', link: '/core/grammar/03-grammar-interview-questions' }
           ]
+        }
+      ],
+      '/core/jvm/': [
+        {
+          text: 'JVM 首页',
+          link: '/core/jvm/'
+        },
+        {
+          text: '第1章 走近Java',
+          link: '/core/jvm/chapter-01-intro'
+        },
+        {
+          text: '第2章 Java内存区域与内存溢出异常',
+          link: '/core/jvm/chapter-02-memory'
+        },
+        {
+          text: '第3章 垃圾收集器与内存分配策略',
+          link: '/core/jvm/chapter-03-gc'
+        },
+        {
+          text: '第4章 虚拟机性能监控与故障处理工具',
+          link: '/core/jvm/chapter-04-tools'
+        },
+        {
+          text: '第5章 调优案例分析与实战',
+          link: '/core/jvm/chapter-05-tuning'
+        },
+        {
+          text: '第6章 类文件结构',
+          link: '/core/jvm/chapter-06-classfile'
+        },
+        {
+          text: '第7章 虚拟机类加载机制',
+          link: '/core/jvm/chapter-07-classloading'
+        },
+        {
+          text: '第8章 虚拟机字节码执行引擎',
+          link: '/core/jvm/chapter-08-execution'
+        },
+        {
+          text: '第9章 类加载及执行子系统的案例与实战',
+          link: '/core/jvm/chapter-09-cases'
+        },
+        {
+          text: '第10章 早期（编译期）优化',
+          link: '/core/jvm/chapter-10-compile-time'
+        },
+        {
+          text: '第11章 晚期（运行期）优化',
+          link: '/core/jvm/chapter-11-runtime'
+        },
+        {
+          text: '第12章 Java内存模型与线程',
+          link: '/core/jvm/chapter-12-jmm'
+        },
+        {
+          text: '第13章 线程安全与锁优化',
+          link: '/core/jvm/chapter-13-thread-safety'
         }
       ],
       '/core/base/': [
