@@ -1,0 +1,2 @@
+com.linsir.abc.core.jvm.classloading.spi.MySQLDataSource
+com.linsir.abc.core.jvm.classloading.spi.OracleDataSource
