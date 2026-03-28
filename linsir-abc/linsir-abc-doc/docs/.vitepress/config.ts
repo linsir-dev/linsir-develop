@@ -60,9 +60,19 @@ export default withMermaid(defineConfig({
           collapsed: true,
           items: [
             { text: '第2章 Java内存区域与内存溢出异常', link: '/core/jvm/chapter-02-memory' },
+            { text: '第2章 代码指南', link: '/core/jvm/chapter-02-oom-code-guide' },
+            { text: '第2章 测试报告', link: '/core/jvm/chapter-02-oom-test-results' },
+            { text: '第2章 面试题总结', link: '/core/jvm/chapter-02-interview' },
             { text: '第3章 垃圾收集器与内存分配策略', link: '/core/jvm/chapter-03-gc' },
+            { text: '第3章 代码指南', link: '/core/jvm/chapter-03-gc-code-guide' },
+            { text: '第3章 测试报告', link: '/core/jvm/chapter-03-gc-test-results' },
+            { text: '第3章 面试题总结', link: '/core/jvm/chapter-03-gc-interview' },
             { text: '第4章 虚拟机性能监控与故障处理工具', link: '/core/jvm/chapter-04-tools' },
-            { text: '第5章 调优案例分析与实战', link: '/core/jvm/chapter-05-tuning' }
+            { text: '第4章 面试题总结', link: '/core/jvm/chapter-04-interview' },
+            { text: '第5章 调优案例分析与实战', link: '/core/jvm/chapter-05-tuning' },
+            { text: '第5章 代码指南', link: '/core/jvm/chapter-05-tuning-code-guide' },
+            { text: '第5章 测试报告', link: '/core/jvm/chapter-05-tuning-test-results' },
+            { text: '第5章 面试题总结', link: '/core/jvm/chapter-05-interview' }
           ]
         },
         {
@@ -70,9 +80,17 @@ export default withMermaid(defineConfig({
           collapsed: true,
           items: [
             { text: '第6章 类文件结构', link: '/core/jvm/chapter-06-classfile' },
+            { text: '第6章 面试题总结', link: '/core/jvm/chapter-06-interview' },
             { text: '第7章 虚拟机类加载机制', link: '/core/jvm/chapter-07-classloading' },
+            { text: '第7章 代码指南', link: '/core/jvm/chapter-07-classloading-code-guide' },
+            { text: '第7章 测试报告', link: '/core/jvm/chapter-07-classloading-test-results' },
+            { text: '第7章 面试题总结', link: '/core/jvm/chapter-07-interview' },
             { text: '第8章 虚拟机字节码执行引擎', link: '/core/jvm/chapter-08-execution' },
-            { text: '第9章 类加载及执行子系统的案例与实战', link: '/core/jvm/chapter-09-cases' }
+            { text: '第8章 面试题总结', link: '/core/jvm/chapter-08-execution-interview-questions' },
+            { text: '第9章 类加载及执行子系统的案例与实战', link: '/core/jvm/chapter-09-cases' },
+            { text: '第9章 代码指南', link: '/core/jvm/chapter-09-cases-code-guide' },
+            { text: '第9章 测试报告', link: '/core/jvm/chapter-09-cases-test-results' },
+            { text: '第9章 面试题总结', link: '/core/jvm/chapter-09-cases-interview-questions' }
           ]
         },
         {

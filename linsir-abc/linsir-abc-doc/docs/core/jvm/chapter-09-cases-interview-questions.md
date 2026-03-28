@@ -871,7 +871,7 @@ Object instance = newClass.getDeclaredConstructor().newInstance();
    - 支持多版本共存
 
 4. **Maven/Gradle依赖管理**
-   - 使用`<dependencyManagement>`统一管理版本
+   - 使用 `<dependencyManagement>` 统一管理版本
    - 排除冲突的传递依赖
 
 5. **类加载器分析工具**

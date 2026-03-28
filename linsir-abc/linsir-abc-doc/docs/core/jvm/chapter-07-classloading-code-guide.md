@@ -10,7 +10,7 @@ com.linsir.abc.core.jvm.classloading/
 │   ├── ConstClass.java          # 常量类，演示编译期常量
 │   └── PassiveReferenceDemo.java # 被动引用演示主类
 ├── process/                     # 7.3 类加载过程
-│   └── ClinitDemo.java          # <clinit>()方法演示
+│   └── ClinitDemo.java          # `<clinit>()`方法演示
 ├── loader/                      # 7.4 类加载器
 │   ├── ClassLoaderHierarchy.java # 类加载器层次结构演示
 │   └── CustomClassLoader.java   # 自定义类加载器
@@ -63,16 +63,16 @@ com.linsir.abc.core.jvm.classloading/
 ### 2. process包 - 类加载过程演示
 
 #### ClinitDemo.java
-- **作用**: 演示<clinit>()方法的执行特点
+- **作用**: 演示`<clinit>()`方法的执行特点
 - **内部类**:
   - `StaticOrderDemo`: 演示静态变量赋值顺序
   - `Parent/Child`: 演示父类静态初始化优先
   - `InterfaceA/InterfaceB/InterfaceImpl`: 演示接口初始化
-  - `DeadLoopClass`: 演示<clinit>()的线程安全性
+  - `DeadLoopClass`: 演示`<clinit>()`的线程安全性
 - **关键特性**:
   - 静态代码块按源文件顺序执行
-  - 父类<clinit>()优先于子类执行
-  - <clinit>()方法线程安全
+  - 父类`<clinit>()`优先于子类执行
+  - `<clinit>()`方法线程安全
 
 ### 3. loader包 - 类加载器演示
 
@@ -141,7 +141,7 @@ java -cp target/classes com.linsir.abc.core.jvm.classloading.ClassLoadingTest
 java -cp target/classes com.linsir.abc.core.jvm.classloading.initialization.PassiveReferenceDemo
 ```
 
-#### 7.3 <clinit>()方法
+#### 7.3 `<clinit>()`方法
 ```bash
 java -cp target/classes com.linsir.abc.core.jvm.classloading.process.ClinitDemo
 ```
@@ -234,7 +234,7 @@ SubClass constructor executed!
 结论：使用new关键字实例化对象时，会触发类的初始化
 ```
 
-### 2. <clinit>()方法预期结果
+### 2. `<clinit>()`方法预期结果
 
 #### 静态变量赋值顺序
 ```
@@ -254,7 +254,7 @@ Parent static block
 Child static block, B = 2
 Child.B = 2
 --- 测试结束 ---
-结论：父类的<clinit>()方法优先于子类的<clinit>()方法执行
+结论：父类的`<clinit>()`方法优先于子类的`<clinit>()`方法执行
 ```
 
 #### 接口初始化
@@ -354,18 +354,18 @@ obj instanceof CustomClassLoader: true
 - **验证**：验证字节流安全性
 - **准备**：为静态变量分配内存并设置默认值
 - **解析**：符号引用转直接引用
-- **初始化**：执行<clinit>()方法
+- **初始化**：执行`<clinit>()`方法
 
-### 3. <clinit>()方法特点
+### 3. `<clinit>()`方法特点
 - 由编译器自动收集静态变量和静态代码块
 - 按源文件顺序执行
-- 父类<clinit>()优先执行
-- 接口也有<clinit>()（但实现类初始化不强制要求接口初始化）
+- 父类`<clinit>()`优先执行
+- 接口也有`<clinit>()`（但实现类初始化不强制要求接口初始化）
 - 多线程安全（只有一个线程执行）
 
 ### 4. 类加载器
-- **启动类加载器**：加载<JAVA_HOME>\lib下的类
-- **扩展类加载器**：加载<JAVA_HOME>\lib\ext下的类
+- **启动类加载器**：加载`<JAVA_HOME>\lib`下的类
+- **扩展类加载器**：加载`<JAVA_HOME>\lib\ext`下的类
 - **应用程序类加载器**：加载classpath下的类
 - **双亲委派模型**：先委托父类加载器加载
 
