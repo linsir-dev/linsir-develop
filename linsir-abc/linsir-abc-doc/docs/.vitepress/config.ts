@@ -98,7 +98,13 @@ export default withMermaid(defineConfig({
           collapsed: true,
           items: [
             { text: '第10章 早期（编译期）优化', link: '/core/jvm/chapter-10-compile-time' },
-            { text: '第11章 晚期（运行期）优化', link: '/core/jvm/chapter-11-runtime' }
+            { text: '第10章 代码指南', link: '/core/jvm/chapter-10-compile-time-code-guide' },
+            { text: '第10章 测试报告', link: '/core/jvm/chapter-10-compile-time-test-results' },
+            { text: '第10章 面试题总结', link: '/core/jvm/chapter-10-compile-time-interview' },
+            { text: '第11章 晚期（运行期）优化', link: '/core/jvm/chapter-11-runtime' },
+            { text: '第11章 代码指南', link: '/core/jvm/chapter-11-runtime-code-guide' },
+            { text: '第11章 测试报告', link: '/core/jvm/chapter-11-runtime-test-results' },
+            { text: '第11章 面试题总结', link: '/core/jvm/chapter-11-runtime-interview' }
           ]
         },
         {
@@ -106,7 +112,13 @@ export default withMermaid(defineConfig({
           collapsed: true,
           items: [
             { text: '第12章 Java内存模型与线程', link: '/core/jvm/chapter-12-jmm' },
-            { text: '第13章 线程安全与锁优化', link: '/core/jvm/chapter-13-thread-safety' }
+            { text: '第12章 代码指南', link: '/core/jvm/chapter-12-jmm-code-guide' },
+            { text: '第12章 测试报告', link: '/core/jvm/chapter-12-jmm-test-results' },
+            { text: '第12章 面试题总结', link: '/core/jvm/chapter-12-jmm-interview' },
+            { text: '第13章 线程安全与锁优化', link: '/core/jvm/chapter-13-thread-safety' },
+            { text: '第13章 代码指南', link: '/core/jvm/chapter-13-thread-safety-code-guide' },
+            { text: '第13章 测试报告', link: '/core/jvm/chapter-13-thread-safety-test-results' },
+            { text: '第13章 面试题总结', link: '/core/jvm/chapter-13-thread-safety-interview' }
           ]
         }
       ],
