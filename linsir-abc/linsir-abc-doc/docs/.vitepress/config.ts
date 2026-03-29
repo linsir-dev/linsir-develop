@@ -120,6 +120,13 @@ export default withMermaid(defineConfig({
             { text: '第13章 测试报告', link: '/core/jvm/chapter-13-thread-safety-test-results' },
             { text: '第13章 面试题总结', link: '/core/jvm/chapter-13-thread-safety-interview' }
           ]
+        },
+        {
+          text: '面试专题',
+          collapsed: true,
+          items: [
+            { text: 'JVM面试题高频TOP榜单', link: '/core/jvm/jvm-interview-top-frequency' }
+          ]
         }
       ],
       '/core/base/': [
