@@ -1,0 +1,63 @@
+# MySQL Architecture Learning Module Configuration
+# 数据库连接配置
+
+spring:
+  application:
+    name: linsir-abc-mysql
+
+  # 数据源配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/linsir-abc-mysql?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # Jackson配置
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    serialization:
+      write-dates-as-timestamps: false
+
+# MyBatis配置
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.linsir.abc.mysql.chapter01.architecture.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+    lazy-loading-enabled: false
+    multiple-result-sets-enabled: true
+    use-column-label: true
+    use-generated-keys: true
+    auto-mapping-behavior: partial
+    default-executor-type: simple
+    default-statement-timeout: 25000
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 日志配置
+logging:
+  level:
+    com.linsir.abc.mysql: DEBUG
+    org.springframework.jdbc: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n"
+
+# 服务器配置
+server:
+  port: 8081
+
+# 应用自定义配置
+app:
+  mysql:
+    # 连接池配置
+    pool:
+      min-idle: 5
+      max-active: 20
+      max-wait: 30000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+    # 会话配置
+    session:
+      timeout-minutes: 30
+      cleanup-interval-minutes: 5
