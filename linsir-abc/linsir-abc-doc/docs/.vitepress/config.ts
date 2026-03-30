@@ -138,12 +138,6 @@ export default withMermaid(defineConfig({
       ],
       '/mysql/': [
         {
-          text: 'MySQL',
-          items: [
-            { text: 'MySQL 首页', link: '/mysql/' }
-          ]
-        },
-        {
           text: '1.1 MySQL逻辑架构',
           collapsed: false,
           items: [
