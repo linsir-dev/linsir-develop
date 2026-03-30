@@ -22,7 +22,7 @@ export default withMermaid(defineConfig({
         text: 'MySQL',
         items: [
           { text: 'MySQL 首页', link: '/mysql/' },
-          { text: '第一章：MySQL架构与历史', link: '/mysql/chapter-01-architecture/01-mysql-logical-architecture' }
+          { text: '第一章：MySQL架构与历史', link: '/mysql/chapter-01-architecture/1.1-mysql-logical-architecture/01-mysql-logical-architecture' }
         ]
       }
     ],
@@ -141,16 +141,16 @@ export default withMermaid(defineConfig({
           text: '1.1 MySQL逻辑架构',
           collapsed: false,
           items: [
-            { text: '逻辑架构概述', link: '/mysql/chapter-01-architecture/01-mysql-logical-architecture' },
-            { text: '代码设计文档', link: '/mysql/chapter-01-architecture/01-mysql-logical-architecture-code-design' },
-            { text: '代码指南', link: '/mysql/chapter-01-architecture/01-mysql-logical-architecture-code-guide' },
-            { text: '测试报告', link: '/mysql/chapter-01-architecture/01-mysql-logical-architecture-test-results' },
-            { text: '面试题总结', link: '/mysql/chapter-01-architecture/01-mysql-logical-architecture-interview' }
+            { text: '逻辑架构概述', link: '/mysql/chapter-01-architecture/1.1-mysql-logical-architecture/01-mysql-logical-architecture' },
+            { text: '代码设计文档', link: '/mysql/chapter-01-architecture/1.1-mysql-logical-architecture/01-mysql-logical-architecture-code-design' },
+            { text: '代码指南', link: '/mysql/chapter-01-architecture/1.1-mysql-logical-architecture/01-mysql-logical-architecture-code-guide' },
+            { text: '测试报告', link: '/mysql/chapter-01-architecture/1.1-mysql-logical-architecture/01-mysql-logical-architecture-test-results' },
+            { text: '面试题总结', link: '/mysql/chapter-01-architecture/1.1-mysql-logical-architecture/01-mysql-logical-architecture-interview' }
           ]
         },
         {
           text: '1.2 并发控制',
-          link: '/mysql/chapter-01-architecture/02-concurrency-control'
+          link: '/mysql/chapter-01-architecture/1.2-concurrency-control/02-concurrency-control'
         }
       ],
       '/core/base/': [
