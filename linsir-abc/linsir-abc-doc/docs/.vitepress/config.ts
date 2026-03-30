@@ -150,7 +150,11 @@ export default withMermaid(defineConfig({
         },
         {
           text: '1.2 并发控制',
-          link: '/mysql/chapter-01-architecture/1.2-concurrency-control/02-concurrency-control'
+          collapsed: false,
+          items: [
+            { text: '并发控制概述', link: '/mysql/chapter-01-architecture/1.2-concurrency-control/02-concurrency-control' },
+            { text: '面试题总结', link: '/mysql/chapter-01-architecture/1.2-concurrency-control/02-concurrency-control-interview' }
+          ]
         }
       ],
       '/core/base/': [
