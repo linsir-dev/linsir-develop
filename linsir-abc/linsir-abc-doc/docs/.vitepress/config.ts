@@ -15,10 +15,10 @@ export default withMermaid(defineConfig({
         items: [
           { text: '语法基础', link: '/core/grammar/' },
           { text: '基础模块', link: '/core/base/' },
-          { text: 'JVM', link: '/core/jvm/' },
-          { text: 'MySQL', link: '/mysql/' }
+          { text: 'JVM', link: '/core/jvm/' }
         ]
-      }
+      },
+      { text: 'MySQL', link: '/mysql/' }
     ],
 
     sidebar: {
