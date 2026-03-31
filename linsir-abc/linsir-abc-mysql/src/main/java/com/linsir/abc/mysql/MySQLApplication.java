@@ -23,7 +23,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication
 @EnableScheduling
-@MapperScan("com.linsir.abc.mysql.chapter01.architecture.mapper")
+@MapperScan({"com.linsir.abc.mysql.chapter01.architecture.mapper", "com.linsir.abc.mysql.chapter01.concurrency.mapper"})
 public class MySQLApplication {
 
     /**

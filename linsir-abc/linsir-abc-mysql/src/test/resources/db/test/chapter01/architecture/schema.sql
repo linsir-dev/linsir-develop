@@ -1,5 +1,7 @@
--- 测试数据库表结构初始化脚本
+-- ============================================================
+-- 第一章 1.1 MySQL逻辑架构 - 测试数据库表结构初始化脚本
 -- 用于H2内存数据库测试
+-- ============================================================
 
 -- 删除已存在的表（如果存在）
 DROP TABLE IF EXISTS order_items;
@@ -8,6 +10,10 @@ DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS connection_sessions;
 DROP TABLE IF EXISTS users;
 
+-- ============================================================
+-- 1. 用户相关表
+-- ============================================================
+
 -- 创建用户表
 CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -15,13 +21,13 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     email VARCHAR(100),
     phone VARCHAR(20),
-    status TINYINT DEFAULT 1 COMMENT '0-禁用, 1-启用',
-    role VARCHAR(20) DEFAULT 'USER' COMMENT '角色: USER/ADMIN',
+    status TINYINT DEFAULT 1,
+    role VARCHAR(20) DEFAULT 'USER',
     last_login_time TIMESTAMP NULL,
     last_login_ip VARCHAR(50),
     login_count INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 创建连接会话表
@@ -35,11 +41,15 @@ CREATE TABLE connection_sessions (
     database_name VARCHAR(50),
     connection_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_active_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status TINYINT DEFAULT 1 COMMENT '0-断开, 1-活跃, 2-空闲',
+    status TINYINT DEFAULT 1,
     command_count INT DEFAULT 0,
     total_execute_time BIGINT DEFAULT 0,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+-- ============================================================
+-- 2. 产品订单相关表
+-- ============================================================
 
 -- 创建产品表
 CREATE TABLE products (
@@ -48,9 +58,9 @@ CREATE TABLE products (
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
     stock INT DEFAULT 0,
-    status TINYINT DEFAULT 1 COMMENT '0-下架, 1-上架',
+    status TINYINT DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 创建订单表
@@ -59,9 +69,9 @@ CREATE TABLE orders (
     order_no VARCHAR(64) NOT NULL UNIQUE,
     user_id BIGINT NOT NULL,
     total_amount DECIMAL(10, 2) NOT NULL,
-    status VARCHAR(20) DEFAULT 'PENDING' COMMENT 'PENDING/PAID/SHIPPED/COMPLETED/CANCELLED',
+    status VARCHAR(20) DEFAULT 'PENDING',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
