@@ -158,6 +158,13 @@ export default withMermaid(defineConfig({
             { text: '测试报告', link: '/mysql/chapter-01-architecture/1.2-concurrency-control/02-concurrency-control-test-report' },
             { text: '面试题总结', link: '/mysql/chapter-01-architecture/1.2-concurrency-control/02-concurrency-control-interview' }
           ]
+        },
+        {
+          text: '1.3 事务',
+          collapsed: false,
+          items: [
+            { text: '事务概述', link: '/mysql/chapter-01-architecture/1.3-transaction/03-transaction' }
+          ]
         }
       ],
       '/core/base/': [
