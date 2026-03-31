@@ -16,13 +16,13 @@
 
 为避免与已有业务（用户、商品、订单）重复，设计以下新场景：
 
-| 场景 | 说明 | 演示的并发概念 |
-|------|------|---------------|
-| **库存扣减** | 高并发下商品库存扣减 | 行锁、乐观锁、悲观锁 |
-| **账户转账** | 银行账户转账操作 | 事务、死锁检测 |
-| **优惠券秒杀** | 限时抢购优惠券 | 乐观锁、行锁、MVCC |
-| **库存盘点** | 读取库存进行盘点 | 共享锁、幻读问题 |
-| **并发充值** | 账户余额并发充值 | 不可重复读、丢失更新 |
+| 场景        | 说明         | 演示的并发概念     |
+| --------- | ---------- | ----------- |
+| **库存扣减**  | 高并发下商品库存扣减 | 行锁、乐观锁、悲观锁  |
+| **账户转账**  | 银行账户转账操作   | 事务、死锁检测     |
+| **优惠券秒杀** | 限时抢购优惠券    | 乐观锁、行锁、MVCC |
+| **库存盘点**  | 读取库存进行盘点   | 共享锁、幻读问题    |
+| **并发充值**  | 账户余额并发充值   | 不可重复读、丢失更新  |
 
 ### 1.3 技术选型
 
@@ -33,13 +33,14 @@
 - **测试**：JUnit 5 + Spring Boot Test
 - **测试数据库**：使用 `linsir-abc-mysql` 数据库（与主应用共用）
 
----
+***
 
 ## 二、详细场景设计
 
 ### 2.1 场景一：账户转账（悲观锁实现）
 
 #### 2.1.1 场景描述
+
 演示两个账户之间的资金转账操作，使用悲观锁（SELECT FOR UPDATE）确保转账过程的数据一致性。
 
 #### 2.1.2 业务流程图
@@ -88,6 +89,7 @@ flowchart LR
 ### 2.2 场景二：账户转账（乐观锁实现）
 
 #### 2.2.1 场景描述
+
 使用版本号机制实现乐观锁，适用于读多写少的场景，减少锁等待时间。
 
 #### 2.2.2 业务流程图
@@ -110,18 +112,19 @@ flowchart TD
 
 #### 2.2.3 乐观锁 vs 悲观锁对比
 
-| 特性 | 乐观锁 | 悲观锁 |
-|------|--------|--------|
-| 实现机制 | 版本号/时间戳 | SELECT FOR UPDATE |
-| 加锁时机 | 更新时检查 | 读取时加锁 |
-| 适用场景 | 读多写少 | 写多读少 |
-| 冲突处理 | 重试/报错 | 阻塞等待 |
-| 性能特点 | 无锁开销，可能重试 | 有锁开销，无重试 |
-| 死锁风险 | 无 | 有（需按序加锁） |
+| 特性   | 乐观锁       | 悲观锁               |
+| ---- | --------- | ----------------- |
+| 实现机制 | 版本号/时间戳   | SELECT FOR UPDATE |
+| 加锁时机 | 更新时检查     | 读取时加锁             |
+| 适用场景 | 读多写少      | 写多读少              |
+| 冲突处理 | 重试/报错     | 阻塞等待              |
+| 性能特点 | 无锁开销，可能重试 | 有锁开销，无重试          |
+| 死锁风险 | 无         | 有（需按序加锁）          |
 
 ### 2.3 场景三：库存扣减（悲观锁）
 
 #### 2.3.1 场景描述
+
 演示电商秒杀场景下的库存扣减，使用悲观锁确保不超卖。
 
 #### 2.3.2 业务流程图
@@ -175,6 +178,7 @@ sequenceDiagram
 ### 2.4 场景四：库存扣减（乐观锁）
 
 #### 2.4.1 场景描述
+
 使用版本号实现乐观锁库存扣减，适用于高并发读场景。
 
 #### 2.4.2 业务流程图
@@ -196,6 +200,7 @@ flowchart TD
 ### 2.5 场景五：优惠券秒杀
 
 #### 2.5.1 场景描述
+
 演示高并发下优惠券领取场景，使用悲观锁/乐观锁控制并发。
 
 #### 2.5.2 业务流程图
@@ -251,6 +256,7 @@ sequenceDiagram
 ### 2.6 场景六：资金冻结与解冻
 
 #### 2.6.1 场景描述
+
 演示预占资金场景，如下单时冻结账户余额，支付完成后扣减或取消订单时解冻。
 
 #### 2.6.2 业务流程图
@@ -297,16 +303,17 @@ flowchart LR
 ### 2.7 场景七：事务隔离级别测试
 
 #### 2.7.1 场景描述
+
 演示不同事务隔离级别下的并发问题：脏读、不可重复读、幻读。
 
 #### 2.7.2 隔离级别对比
 
-| 隔离级别 | 脏读 | 不可重复读 | 幻读 |
-|----------|------|------------|------|
-| READ UNCOMMITTED | ✓ | ✓ | ✓ |
-| READ COMMITTED | ✗ | ✓ | ✓ |
-| REPEATABLE READ | ✗ | ✗ | ✓(MySQL) |
-| SERIALIZABLE | ✗ | ✗ | ✗ |
+| 隔离级别             | 脏读 | 不可重复读 | 幻读       |
+| ---------------- | -- | ----- | -------- |
+| READ UNCOMMITTED | ✓  | ✓     | ✓        |
+| READ COMMITTED   | ✗  | ✓     | ✓        |
+| REPEATABLE READ  | ✗  | ✗     | ✓(MySQL) |
+| SERIALIZABLE     | ✗  | ✗     | ✗        |
 
 ✓ = 可能发生    ✗ = 不会发生
 
@@ -444,7 +451,7 @@ flowchart TD
     end
 ```
 
----
+***
 
 ## 三、数据库设计
 
@@ -475,6 +482,7 @@ CREATE TABLE IF NOT EXISTS accounts (
 ```
 
 **设计说明**：
+
 - `version` 字段用于乐观锁实现
 - `frozen_amount` 用于演示资金冻结场景
 - 余额使用 DECIMAL(19,4) 确保精度
@@ -504,6 +512,7 @@ CREATE TABLE IF NOT EXISTS inventory (
 ```
 
 **设计说明**：
+
 - `available_stock` 和 `locked_stock` 分离，支持预占库存模式
 - `version` 字段用于乐观锁
 - 联合唯一索引防止同一商品在同一仓库重复创建
@@ -539,11 +548,12 @@ CREATE TABLE IF NOT EXISTS coupons (
 ```
 
 **设计说明**：
+
 - `total_quantity` 和 `remaining_quantity` 用于控制发放数量
 - `version` 字段用于乐观锁控制并发领取
 - 时间字段用于控制优惠券有效期
 
-#### 3.1.4 用户优惠券表 (user_coupons)
+#### 3.1.4 用户优惠券表 (user\_coupons)
 
 ```sql
 -- ========================================================
@@ -571,10 +581,11 @@ CREATE TABLE IF NOT EXISTS user_coupons (
 ```
 
 **设计说明**：
+
 - 唯一约束防止重复领取
 - 状态字段跟踪优惠券使用状态
 
-#### 3.1.5 交易流水表 (transaction_logs)
+#### 3.1.5 交易流水表 (transaction\_logs)
 
 ```sql
 -- ========================================================
@@ -602,6 +613,7 @@ CREATE TABLE IF NOT EXISTS transaction_logs (
 ```
 
 **设计说明**：
+
 - 记录完整的资金变动历史
 - 支持审计和追溯
 - 转账场景记录对方账户
@@ -621,7 +633,7 @@ db/chapter01/concurrency/
     └── 02-test-isolation-levels.sql        -- 隔离级别测试脚本
 ```
 
----
+***
 
 ## 四、代码设计
 
@@ -826,7 +838,7 @@ public boolean grabCouponWithPessimisticLock(Long userId, Long couponId) {
 }
 ```
 
----
+***
 
 ## 五、测试设计
 
@@ -856,31 +868,31 @@ spring:
 
 ### 5.3 测试用例汇总
 
-| 测试类 | 测试方法 | 测试目的 |
-|--------|----------|----------|
-| LockTest | testTransferWithPessimisticLock_SingleThread | 悲观锁转账单线程测试 |
-| LockTest | testTransferWithOptimisticLock_SingleThread | 乐观锁转账单线程测试 |
-| LockTest | testDeductStockWithPessimisticLock_Serial | 悲观锁库存扣减串行测试 |
-| LockTest | testDeductStockWithOptimisticLock_Concurrent | 乐观锁库存扣减并发测试 |
-| LockTest | testGrabCouponWithPessimisticLock_Serial | 悲观锁优惠券领取串行测试 |
-| LockTest | testGrabCouponWithOptimisticLock_Concurrent | 乐观锁优惠券领取并发测试 |
-| DeadlockTest | testTransferDeadlockAvoidance | 转账死锁避免测试 |
-| DeadlockTest | testOptimisticLockNoDeadlock | 乐观锁无死锁测试 |
-| DeadlockTest | testFreezeAndTransferConcurrent | 冻结与转账并发测试 |
-| DeadlockTest | testMultiAccountCircularTransfer | 多账户循环转账测试 |
-| IsolationLevelTest | testReadUncommitted | 读未提交隔离级别测试 |
-| IsolationLevelTest | testReadCommitted | 读已提交隔离级别测试 |
-| IsolationLevelTest | testRepeatableRead | 可重复读隔离级别测试 |
-| IsolationLevelTest | testSerializable | 串行化隔离级别测试 |
-| ConcurrentScenarioTest | testSeckillScenario_PessimisticLock | 秒杀场景悲观锁测试 |
-| ConcurrentScenarioTest | testSeckillScenario_OptimisticLock | 秒杀场景乐观锁测试 |
-| ConcurrentScenarioTest | testCouponGrabScenario_PessimisticLock | 红包雨场景测试 |
-| ConcurrentScenarioTest | testTransferPeakScenario | 转账高峰场景测试 |
-| ConcurrentScenarioTest | testMixedScenario | 混合场景测试 |
-| ConcurrentScenarioTest | testStockPreoccupationScenario | 预占库存场景测试 |
-| ConcurrentScenarioTest | testFundFreezeScenario | 资金冻结场景测试 |
+| 测试类                    | 测试方法                                          | 测试目的         |
+| ---------------------- | --------------------------------------------- | ------------ |
+| LockTest               | testTransferWithPessimisticLock\_SingleThread | 悲观锁转账单线程测试   |
+| LockTest               | testTransferWithOptimisticLock\_SingleThread  | 乐观锁转账单线程测试   |
+| LockTest               | testDeductStockWithPessimisticLock\_Serial    | 悲观锁库存扣减串行测试  |
+| LockTest               | testDeductStockWithOptimisticLock\_Concurrent | 乐观锁库存扣减并发测试  |
+| LockTest               | testGrabCouponWithPessimisticLock\_Serial     | 悲观锁优惠券领取串行测试 |
+| LockTest               | testGrabCouponWithOptimisticLock\_Concurrent  | 乐观锁优惠券领取并发测试 |
+| DeadlockTest           | testTransferDeadlockAvoidance                 | 转账死锁避免测试     |
+| DeadlockTest           | testOptimisticLockNoDeadlock                  | 乐观锁无死锁测试     |
+| DeadlockTest           | testFreezeAndTransferConcurrent               | 冻结与转账并发测试    |
+| DeadlockTest           | testMultiAccountCircularTransfer              | 多账户循环转账测试    |
+| IsolationLevelTest     | testReadUncommitted                           | 读未提交隔离级别测试   |
+| IsolationLevelTest     | testReadCommitted                             | 读已提交隔离级别测试   |
+| IsolationLevelTest     | testRepeatableRead                            | 可重复读隔离级别测试   |
+| IsolationLevelTest     | testSerializable                              | 串行化隔离级别测试    |
+| ConcurrentScenarioTest | testSeckillScenario\_PessimisticLock          | 秒杀场景悲观锁测试    |
+| ConcurrentScenarioTest | testSeckillScenario\_OptimisticLock           | 秒杀场景乐观锁测试    |
+| ConcurrentScenarioTest | testCouponGrabScenario\_PessimisticLock       | 红包雨场景测试      |
+| ConcurrentScenarioTest | testTransferPeakScenario                      | 转账高峰场景测试     |
+| ConcurrentScenarioTest | testMixedScenario                             | 混合场景测试       |
+| ConcurrentScenarioTest | testStockPreoccupationScenario                | 预占库存场景测试     |
+| ConcurrentScenarioTest | testFundFreezeScenario                        | 资金冻结场景测试     |
 
----
+***
 
 ## 六、总结
 
@@ -893,17 +905,12 @@ spring:
    - 资金冻结与解冻
    - 事务隔离级别演示
    - 死锁检测与避免
-
 2. **5个数据表**：账户表、库存表、优惠券表、用户优惠券表、交易流水表
-
 3. **完整代码结构**：Entity、Mapper、Service、Controller、Test
-
 4. **两种锁实现**：
    - 悲观锁：`SELECT ... FOR UPDATE`
    - 乐观锁：版本号机制
-
 5. **29个测试用例**：覆盖所有核心功能和并发场景
-
 6. **测试环境**：使用MySQL数据库，支持完整的锁机制演示
 
 后续开发时，请按照本文档的代码结构和设计规范进行实现。
