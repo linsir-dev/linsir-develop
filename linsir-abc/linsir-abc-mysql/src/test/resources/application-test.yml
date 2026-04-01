@@ -11,7 +11,7 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
-  type-aliases-package: com.linsir.abc.mysql.chapter01.architecture.entity,com.linsir.abc.mysql.chapter01.concurrency.entity
+  type-aliases-package: com.linsir.abc.mysql.chapter01.architecture.entity,com.linsir.abc.mysql.chapter01.concurrency.entity,com.linsir.abc.mysql.chapter01.transaction.entity
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

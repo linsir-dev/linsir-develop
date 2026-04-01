@@ -158,6 +158,45 @@ export default withMermaid(defineConfig({
             { text: '测试报告', link: '/mysql/chapter-01-architecture/1.2-concurrency-control/02-concurrency-control-test-report' },
             { text: '面试题总结', link: '/mysql/chapter-01-architecture/1.2-concurrency-control/02-concurrency-control-interview' }
           ]
+        },
+        {
+          text: '1.3 事务',
+          collapsed: false,
+          items: [
+            { text: '事务概述', link: '/mysql/chapter-01-architecture/1.3-transaction/03-transaction' },
+            { text: '详细设计文档', link: '/mysql/chapter-01-architecture/1.3-transaction/03-transaction-detailed-design' },
+            { text: '代码指南', link: '/mysql/chapter-01-architecture/1.3-transaction/03-transaction-code-guide' },
+            { text: '测试报告', link: '/mysql/chapter-01-architecture/1.3-transaction/03-transaction-test-report' },
+            { text: '面试题总结', link: '/mysql/chapter-01-architecture/1.3-transaction/03-transaction-interview' }
+          ]
+        },
+        {
+          text: '1.4 MVCC',
+          collapsed: false,
+          items: [
+            { text: 'MVCC概述', link: '/mysql/chapter-01-architecture/1.4-mvcc/04-mvcc' }
+          ]
+        },
+        {
+          text: '1.5 存储引擎',
+          collapsed: false,
+          items: [
+            { text: '存储引擎概述', link: '/mysql/chapter-01-architecture/1.5-storage-engines/05-storage-engines' }
+          ]
+        },
+        {
+          text: '1.6 MySQL时间线',
+          collapsed: false,
+          items: [
+            { text: 'MySQL时间线', link: '/mysql/chapter-01-architecture/1.6-mysql-timeline/06-mysql-timeline' }
+          ]
+        },
+        {
+          text: '1.7 MySQL开发模型',
+          collapsed: false,
+          items: [
+            { text: 'MySQL开发模型', link: '/mysql/chapter-01-architecture/1.7-mysql-development-model/07-mysql-development-model' }
+          ]
         }
       ],
       '/core/base/': [
