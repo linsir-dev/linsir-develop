@@ -6,7 +6,12 @@ export default withMermaid(defineConfig({
   title: 'Linsir ABC',
   description: 'Linsir ABC 文档',
 
+  head: [
+    ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+  ],
+
   themeConfig: {
+    logo: '/favicon.ico',
     nav: [
       { text: '首页', link: '/' },
       { text: '指南', link: '/guide/' },
@@ -23,6 +28,13 @@ export default withMermaid(defineConfig({
         items: [
           { text: 'MySQL 首页', link: '/mysql/' },
           { text: '第一章：MySQL架构与历史', link: '/mysql/chapter-01-architecture/1.1-mysql-logical-architecture/01-mysql-logical-architecture' }
+        ]
+      },
+      {
+        text: 'Effective',
+        items: [
+          { text: 'Effective 首页', link: '/effective/' },
+          { text: '设计模式', link: '/effective/designpattern/' }
         ]
       }
     ],
@@ -196,6 +208,76 @@ export default withMermaid(defineConfig({
           collapsed: false,
           items: [
             { text: 'MySQL开发模型', link: '/mysql/chapter-01-architecture/1.7-mysql-development-model/07-mysql-development-model' }
+          ]
+        }
+      ],
+      '/effective/designpattern/': [
+        {
+          text: '设计模式首页',
+          link: '/effective/designpattern/'
+        },
+        {
+          text: '创建型模式',
+          collapsed: false,
+          items: [
+            { text: '单例模式', link: '/effective/designpattern/singleton/01-singleton-overview' },
+            { text: '单例模式-代码指南', link: '/effective/designpattern/singleton/02-singleton-code-guide' },
+            { text: '工厂模式', link: '/effective/designpattern/factory/01-factory-overview' },
+            { text: '工厂模式-代码指南', link: '/effective/designpattern/factory/02-factory-code-guide' },
+            { text: '抽象工厂模式', link: '/effective/designpattern/abstract-factory/01-abstract-factory-overview' },
+            { text: '抽象工厂模式-代码指南', link: '/effective/designpattern/abstract-factory/02-abstract-factory-code-guide' },
+            { text: '建造者模式', link: '/effective/designpattern/builder/01-builder-overview' },
+            { text: '建造者模式-代码指南', link: '/effective/designpattern/builder/02-builder-code-guide' },
+            { text: '原型模式', link: '/effective/designpattern/prototype/01-prototype-overview' },
+            { text: '原型模式-代码指南', link: '/effective/designpattern/prototype/02-prototype-code-guide' }
+          ]
+        },
+        {
+          text: '结构型模式',
+          collapsed: false,
+          items: [
+            { text: '代理模式', link: '/effective/designpattern/proxy/01-proxy-overview' },
+            { text: '代理模式-代码指南', link: '/effective/designpattern/proxy/02-proxy-code-guide' },
+            { text: '适配器模式', link: '/effective/designpattern/adapter/01-adapter-overview' },
+            { text: '适配器模式-代码指南', link: '/effective/designpattern/adapter/02-adapter-code-guide' },
+            { text: '桥接模式', link: '/effective/designpattern/bridge/01-bridge-overview' },
+            { text: '桥接模式-代码指南', link: '/effective/designpattern/bridge/02-bridge-code-guide' },
+            { text: '装饰器模式', link: '/effective/designpattern/decorator/01-decorator-overview' },
+            { text: '装饰器模式-代码指南', link: '/effective/designpattern/decorator/02-decorator-code-guide' },
+            { text: '外观模式', link: '/effective/designpattern/facade/01-facade-overview' },
+            { text: '外观模式-代码指南', link: '/effective/designpattern/facade/02-facade-code-guide' },
+            { text: '享元模式', link: '/effective/designpattern/flyweight/01-flyweight-overview' },
+            { text: '享元模式-代码指南', link: '/effective/designpattern/flyweight/02-flyweight-code-guide' },
+            { text: '组合模式', link: '/effective/designpattern/composite/01-composite-overview' },
+            { text: '组合模式-代码指南', link: '/effective/designpattern/composite/02-composite-code-guide' }
+          ]
+        },
+        {
+          text: '行为型模式',
+          collapsed: false,
+          items: [
+            { text: '观察者模式', link: '/effective/designpattern/observer/01-observer-overview' },
+            { text: '观察者模式-代码指南', link: '/effective/designpattern/observer/02-observer-code-guide' },
+            { text: '策略模式', link: '/effective/designpattern/strategy/01-strategy-overview' },
+            { text: '策略模式-代码指南', link: '/effective/designpattern/strategy/02-strategy-code-guide' },
+            { text: '模板方法模式', link: '/effective/designpattern/template-method/01-template-method-overview' },
+            { text: '模板方法模式-代码指南', link: '/effective/designpattern/template-method/02-template-method-code-guide' },
+            { text: '状态模式', link: '/effective/designpattern/state/01-state-overview' },
+            { text: '状态模式-代码指南', link: '/effective/designpattern/state/02-state-code-guide' },
+            { text: '命令模式', link: '/effective/designpattern/command/01-command-overview' },
+            { text: '命令模式-代码指南', link: '/effective/designpattern/command/02-command-code-guide' },
+            { text: '迭代器模式', link: '/effective/designpattern/iterator/01-iterator-overview' },
+            { text: '迭代器模式-代码指南', link: '/effective/designpattern/iterator/02-iterator-code-guide' },
+            { text: '中介者模式', link: '/effective/designpattern/mediator/01-mediator-overview' },
+            { text: '中介者模式-代码指南', link: '/effective/designpattern/mediator/02-mediator-code-guide' },
+            { text: '备忘录模式', link: '/effective/designpattern/memento/01-memento-overview' },
+            { text: '备忘录模式-代码指南', link: '/effective/designpattern/memento/02-memento-code-guide' },
+            { text: '访问者模式', link: '/effective/designpattern/visitor/01-visitor-overview' },
+            { text: '访问者模式-代码指南', link: '/effective/designpattern/visitor/02-visitor-code-guide' },
+            { text: '责任链模式', link: '/effective/designpattern/chain-of-responsibility/01-chain-of-responsibility-overview' },
+            { text: '责任链模式-代码指南', link: '/effective/designpattern/chain-of-responsibility/02-chain-of-responsibility-code-guide' },
+            { text: '解释器模式', link: '/effective/designpattern/interpreter/01-interpreter-overview' },
+            { text: '解释器模式-代码指南', link: '/effective/designpattern/interpreter/02-interpreter-code-guide' }
           ]
         }
       ],
