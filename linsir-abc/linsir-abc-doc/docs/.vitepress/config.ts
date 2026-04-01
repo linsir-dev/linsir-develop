@@ -5,10 +5,9 @@ import { withMermaid } from 'vitepress-plugin-mermaid'
 export default withMermaid(defineConfig({
   title: 'Linsir ABC',
   description: 'Linsir ABC 文档',
-  base: '/linsir-develop/',
 
   head: [
-    ['link', { rel: 'icon', type: 'image/x-icon', href: '/linsir-develop/favicon.ico' }]
+    ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   ],
 
   themeConfig: {

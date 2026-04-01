@@ -1,7 +1,12 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vitepress",
   "buildCommand": "npm run build",
   "outputDirectory": "docs/.vitepress/dist",
   "installCommand": "npm install",
-  "framework": "vitepress"
+  "rewrites": [
+    {
+      "source": "/((?!assets/).*)",
+      "destination": "/index.html"
+    }
+  ]
 }
