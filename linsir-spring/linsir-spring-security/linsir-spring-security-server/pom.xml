@@ -16,29 +16,17 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
-        <!-- Spring Boot 版本 -->
-        <spring-boot.version>3.2.0</spring-boot.version>
-        <!-- Spring Security 版本覆盖 - 文档: https://docs.spring.io/spring-security/reference/getting-spring-security.html -->
-        <spring-security.version>7.0.4</spring-security.version>
-        <!-- Spring Framework 版本 - 与 Spring Security 7.0.4 兼容 -->
-        <spring.version>6.1.6</spring.version>
+        <!-- Spring Boot 4.0.0 版本 - 兼容 Spring Framework 7.0.x 和 Spring Security 7.0.x -->
+        <spring-boot.version>4.0.0</spring-boot.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- Spring Boot BOM - 管理 Spring Boot 相关依赖版本 -->
+            <!-- Spring Boot BOM - 管理 Spring Boot、Spring Framework 和 Spring Security 版本 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- Spring Framework BOM - 确保与 Spring Security 版本兼容 -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-framework-bom</artifactId>
-                <version>${spring.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -72,6 +60,15 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <!-- Spring Milestone 仓库 - 用于获取 Spring Security 7.0.x 等里程碑版本 -->
+    <repositories>
+        <repository>
+            <id>spring-milestone</id>
+            <name>Spring Milestone Repository</name>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
