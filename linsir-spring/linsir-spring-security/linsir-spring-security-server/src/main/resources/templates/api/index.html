@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API 接口列表 - Spring Security</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .api-section {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: #f8f9fa;
+            padding: 20px 30px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .section-header h2 {
+            color: #495057;
+            font-size: 20px;
+        }
+        
+        .api-list {
+            padding: 0;
+        }
+        
+        .api-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e9ecef;
+            transition: background-color 0.3s;
+        }
+        
+        .api-item:last-child {
+            border-bottom: none;
+        }
+        
+        .api-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 12px;
+            min-width: 70px;
+            text-align: center;
+            margin-right: 20px;
+        }
+        
+        .method.get {
+            background: #28a745;
+            color: white;
+        }
+        
+        .method.post {
+            background: #007bff;
+            color: white;
+        }
+        
+        .method.put {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .method.delete {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .api-info {
+            flex: 1;
+        }
+        
+        .api-url {
+            font-family: 'Courier New', monospace;
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .api-description {
+            color: #666;
+            font-size: 13px;
+        }
+        
+        .test-btn {
+            padding: 8px 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background-color 0.3s;
+        }
+        
+        .test-btn:hover {
+            background: #0056b3;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #28a745;
+            color: white;
+            border-radius: 3px;
+            font-size: 11px;
+            margin-left: 10px;
+        }
+        
+        .badge.anonymous {
+            background: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>📡 API 接口列表</h1>
+            <p>Spring Security 认证服务器提供的所有 RESTful API 接口</p>
+            <a href="/" class="back-link">← 返回首页</a>
+        </div>
+
+        <!-- 测试页面 -->
+        <div class="api-section">
+            <div class="section-header">
+                <h2>🧪 测试页面 (Testing Pages)</h2>
+            </div>
+            <div class="api-list">
+                <div class="api-item">
+                    <span class="method get">GET</span>
+                    <div class="api-info">
+                        <div class="api-url">
+                            <a href="/api/hello-page" target="_blank">/api/hello-page</a>
+                        </div>
+                        <div class="api-description">Hello 测试页面</div>
+                    </div>
+                    <span class="badge anonymous">匿名访问</span>
+                </div>
+                
+                <div class="api-item">
+                    <span class="method get">GET</span>
+                    <div class="api-info">
+                        <div class="api-url">
+                            <a href="/api/security-context-page" target="_blank">/api/security-context-page</a>
+                        </div>
+                        <div class="api-description">SecurityContext 测试页面</div>
+                    </div>
+                    <span class="badge anonymous">匿名访问</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 添加点击测试按钮的事件
+        document.querySelectorAll('.test-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const url = this.dataset.url;
+                const method = this.dataset.method;
+                alert('测试功能开发中...\nURL: ' + url + '\nMethod: ' + method);
+            });
+        });
+    </script>
+</body>
+</html>

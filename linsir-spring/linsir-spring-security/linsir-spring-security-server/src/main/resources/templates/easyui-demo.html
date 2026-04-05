@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyUI 示例 - Spring Security</title>
+    
+    <!-- 引入 EasyUI 样式 -->
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css">
+    
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="easyui-layout">
+    
+    <!-- 头部区域 -->
+    <div data-options="region:'north',border:false" style="height: 80px; padding: 10px;">
+        <div class="header">
+            <h1>🎉 EasyUI 示例页面</h1>
+            <p>Spring Security + EasyUI 集成演示</p>
+        </div>
+    </div>
+    
+    <!-- 左侧菜单 -->
+    <div data-options="region:'west',split:true,title:'导航菜单'" style="width: 200px; padding: 10px;">
+        <ul class="easyui-tree" data-options="url:'/api/tree',method:'get',animate:true">
+            <li>
+                <span>用户管理</span>
+                <ul>
+                    <li data-options="url:'/user/list'">用户列表</li>
+                    <li data-options="url:'/user/add'">添加用户</li>
+                </ul>
+            </li>
+            <li>
+                <span>角色管理</span>
+                <ul>
+                    <li data-options="url:'/role/list'">角色列表</li>
+                    <li data-options="url:'/role/add'">添加角色</li>
+                </ul>
+            </li>
+            <li>
+                <span>系统设置</span>
+                <ul>
+                    <li data-options="url:'/settings/basic'">基本设置</li>
+                    <li data-options="url:'/settings/security'">安全设置</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- 右侧内容 -->
+    <div data-options="region:'center',title:'内容区域'">
+        <div class="content">
+            
+            <!-- 数据表格示例 -->
+            <table id="dg" class="easyui-datagrid" style="width: 100%; height: 400px;"
+                   data-options="
+                       url: '/api/users',
+                       method: 'get',
+                       toolbar: '#toolbar',
+                       pagination: true,
+                       rownumbers: true,
+                       fitColumns: true,
+                       singleSelect: true,
+                       striped: true,
+                       loadMsg: '加载中...',
+                       pageList: [10, 20, 30, 40, 50],
+                       pageSize: 10
+                   ">
+                <thead>
+                    <tr>
+                        <th data-options="field:'id',width: 50">ID</th>
+                        <th data-options="field:'username',width: 100">用户名</th>
+                        <th data-options="field:'email',width: 150">邮箱</th>
+                        <th data-options="field:'role',width: 80">角色</th>
+                        <th data-options="field:'status',width: 80,formatter: formatStatus">状态</th>
+                        <th data-options="field:'createTime',width: 120">创建时间</th>
+                    </tr>
+                </thead>
+            </table>
+            
+            <!-- 工具栏 -->
+            <div id="toolbar" style="padding: 5px; height: auto;">
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addUser()">添加</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editUser()">编辑</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="deleteUser()">删除</a>
+                <span style="margin: 0 10px;">|</span>
+                <input class="easyui-searchbox" data-options="prompt:'搜索用户...',searcher: doSearch,style:'width:200px'"></input>
+            </div>
+            
+            <!-- 添加/编辑对话框 -->
+            <div id="dlg" class="easyui-dialog" style="width: 400px; padding: 20px"
+                 data-options="
+                     closed: true,
+                     modal: true,
+                     border: 'thin',
+                     buttons: '#dlg-buttons'
+                 ">
+                <form id="fm" method="post">
+                    <div style="margin-bottom: 15px;">
+                        <label style="width: 80px; display: inline-block;">用户名:</label>
+                        <input name="username" class="easyui-textbox" data-options="required: true, validType: 'length[3,20]'" style="width: 100%;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="width: 80px; display: inline-block;">邮箱:</label>
+                        <input name="email" class="easyui-textbox" data-options="required: true, validType: 'email'" style="width: 100%;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="width: 80px; display: inline-block;">角色:</label>
+                        <select name="role" class="easyui-combobox" data-options="width: '100%'">
+                            <option value="USER">普通用户</option>
+                            <option value="MANAGER">经理</option>
+                            <option value="ADMIN">管理员</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="width: 80px; display: inline-block;">状态:</label>
+                        <input name="status" class="easyui-switchbutton" data-options="onText:'启用',offText:'禁用'">
+                    </div>
+                </form>
+            </div>
+            
+            <div id="dlg-buttons">
+                <button type="button" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="saveUser()">保存</button>
+                <button type="button" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="javascript:$('#dlg').dialog('close')">取消</button>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- 底部区域 -->
+    <div data-options="region:'south',border:false" style="height: 40px;">
+        <div class="footer">
+            © 2026 Spring Security + EasyUI 演示系统
+        </div>
+    </div>
+    
+    <!-- 引入 jQuery -->
+    <script src="/static/js/jquery-3.7.1.min.js"></script>
+    <!-- 引入 EasyUI -->
+    <script src="/static/easyui/js/jquery.easyui.min.js"></script>
+    <!-- 引入中文语言包 -->
+    <script src="/static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <!-- 引入公共 JS -->
+    <script src="/static/js/common.js"></script>
+    
+    <script>
+        // 状态格式化函数
+        function formatStatus(value, row) {
+            if (value === 1 || value === '1' || value === true) {
+                return '<span style="color: green;">✓ 启用</span>';
+            } else {
+                return '<span style="color: red;">✗ 禁用</span>';
+            }
+        }
+        
+        // 添加用户
+        function addUser() {
+            $('#dlg').dialog('open').dialog('center').dialog('setTitle', '添加用户');
+            $('#fm').form('clear');
+        }
+        
+        // 编辑用户
+        function editUser() {
+            var row = $('#dg').datagrid('getSelected');
+            if (row) {
+                $('#dlg').dialog('open').dialog('center').dialog('setTitle', '编辑用户');
+                $('#fm').form('load', row);
+            } else {
+                $.messager.alert('提示', '请选择要编辑的行', 'warning');
+            }
+        }
+        
+        // 保存用户
+        function saveUser() {
+            $('#fm').form('submit', {
+                url: '/api/user/save',
+                onSubmit: function() {
+                    return $(this).form('validate');
+                },
+                success: function(result) {
+                    var result = eval('(' + result + ')');
+                    if (result.code === 200) {
+                        $.messager.alert('成功', '保存成功', 'success');
+                        $('#dlg').dialog('close');
+                        $('#dg').datagrid('reload');
+                    } else {
+                        $.messager.alert('错误', result.message, 'error');
+                    }
+                }
+            });
+        }
+        
+        // 删除用户
+        function deleteUser() {
+            var row = $('#dg').datagrid('getSelected');
+            if (row) {
+                $.messager.confirm('确认', '确定要删除选中的用户吗？', function(r) {
+                    if (r) {
+                        $.post('/api/user/delete', {id: row.id}, function(result) {
+                            if (result.code === 200) {
+                                $.messager.alert('成功', '删除成功', 'success');
+                                $('#dg').datagrid('reload');
+                            } else {
+                                $.messager.alert('错误', result.message, 'error');
+                            }
+                        }, 'json');
+                    }
+                });
+            } else {
+                $.messager.alert('提示', '请选择要删除的行', 'warning');
+            }
+        }
+        
+        // 搜索
+        function doSearch(value, name) {
+            $('#dg').datagrid('load', {
+                keyword: value
+            });
+        }
+        
+        // 页面加载完成后的初始化
+        $(function() {
+            console.log('EasyUI 已加载');
+            
+            // 可以在这里加载示例数据
+            // var data = [...];
+            // $('#dg').datagrid('loadData', data);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello 测试 - Spring Security</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .api-section {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: #f8f9fa;
+            padding: 20px 30px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .section-header h2 {
+            color: #495057;
+            font-size: 20px;
+        }
+        
+        .api-list {
+            padding: 0;
+        }
+        
+        .api-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e9ecef;
+            transition: background-color 0.3s;
+        }
+        
+        .api-item:last-child {
+            border-bottom: none;
+        }
+        
+        .api-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 12px;
+            min-width: 70px;
+            text-align: center;
+            margin-right: 20px;
+        }
+        
+        .method.get {
+            background: #28a745;
+            color: white;
+        }
+        
+        .api-info {
+            flex: 1;
+        }
+        
+        .api-url {
+            font-family: 'Courier New', monospace;
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .api-description {
+            color: #666;
+            font-size: 13px;
+        }
+        
+        .test-btn {
+            padding: 8px 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background-color 0.3s;
+        }
+        
+        .test-btn:hover {
+            background: #0056b3;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #28a745;
+            color: white;
+            border-radius: 3px;
+            font-size: 11px;
+            margin-left: 10px;
+        }
+        
+        .badge.anonymous {
+            background: #6c757d;
+        }
+        
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .result-box h4 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+        
+        .result-content {
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            color: #333;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>👋 Hello 测试接口</h1>
+            <p>测试 Spring Security 的不同访问级别</p>
+            <a href="/api/index" class="back-link">← 返回 API 列表</a>
+        </div>
+
+        <!-- 测试接口 -->
+        <div class="api-section">
+            <div class="section-header">
+                <h2>🧪 测试接口列表</h2>
+            </div>
+            <div class="api-list">
+                <div class="api-item">
+                    <span class="method get">GET</span>
+                    <div class="api-info">
+                        <div class="api-url">/api/hello</div>
+                        <div class="api-description">Hello World 测试接口 - 匿名访问</div>
+                    </div>
+                    <button class="test-btn" data-url="/api/hello" data-method="GET">测试</button>
+                </div>
+                
+                <div class="api-item">
+                    <span class="method get">GET</span>
+                    <div class="api-info">
+                        <div class="api-url">/api/hello/authenticated</div>
+                        <div class="api-description">需要认证的测试接口</div>
+                    </div>
+                    <button class="test-btn" data-url="/api/hello/authenticated" data-method="GET">测试</button>
+                </div>
+                
+                <div class="api-item">
+                    <span class="method get">GET</span>
+                    <div class="api-info">
+                        <div class="api-url">/api/hello/admin</div>
+                        <div class="api-description">需要 ADMIN 角色的测试接口</div>
+                    </div>
+                    <button class="test-btn" data-url="/api/hello/admin" data-method="GET">测试</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 响应结果 -->
+        <div class="api-section">
+            <div class="section-header">
+                <h2>📊 响应结果</h2>
+            </div>
+            <div class="api-list">
+                <div class="api-item" style="display: block;">
+                    <div class="result-box">
+                        <h4>响应内容：</h4>
+                        <div class="result-content" id="result">点击测试按钮查看响应结果</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 添加点击测试按钮的事件
+        document.querySelectorAll('.test-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const url = this.dataset.url;
+                const method = this.dataset.method;
+                const resultDiv = document.getElementById('result');
+                
+                resultDiv.textContent = '加载中...';
+                
+                fetch(url, {
+                    method: method,
+                    credentials: 'same-origin'
+                })
+                .then(response => {
+                    const contentType = response.headers.get('content-type');
+                    if (contentType && contentType.includes('application/json')) {
+                        return response.json().then(data => ({
+                            status: response.status,
+                            data: data,
+                            isJson: true
+                        }));
+                    } else {
+                        return response.text().then(text => ({
+                            status: response.status,
+                            data: text,
+                            isJson: false
+                        }));
+                    }
+                })
+                .then(({ status, data, isJson }) => {
+                    if (isJson) {
+                        resultDiv.textContent = `状态码：${status}\n\n` + JSON.stringify(data, null, 2);
+                    } else {
+                        resultDiv.textContent = `状态码：${status}\n\n响应内容：${data}`;
+                    }
+                })
+                .catch(error => {
+                    resultDiv.textContent = `错误：${error.message}`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

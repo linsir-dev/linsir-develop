@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - Spring Security</title>
+    <!-- 引入公共 CSS -->
+    <link rel="stylesheet" href="/static/css/common.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>🔐 用户登录</h1>
+            <p>请输入您的账号和密码</p>
+        </div>
+        
+        <div id="errorMessage" class="error-message">
+            用户名或密码错误
+        </div>
+        
+        <form id="loginForm" action="/api/auth/login" method="POST">
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" name="username" required placeholder="请输入用户名">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" name="password" required placeholder="请输入密码">
+            </div>
+            
+            <button type="submit" class="login-btn">登 录</button>
+        </form>
+        
+        <div class="back-link">
+            <a href="/">← 返回首页</a>
+        </div>
+    </div>
+    
+    <!-- 引入 jQuery -->
+    <script src="/static/js/jquery-3.7.1.min.js"></script>
+    <!-- 引入公共 JS -->
+    <script src="/static/js/common.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 检查 URL 参数是否有错误
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('error') !== null) {
+                $('#errorMessage').addClass('show');
+            }
+            
+            // 表单提交处理
+            $('#loginForm').on('submit', function(e) {
+                const username = $('#username').val();
+                const password = $('#password').val();
+                
+                if (!username || !password) {
+                    e.preventDefault();
+                    $('#errorMessage').text('请输入用户名和密码').addClass('show');
+                    return false;
+                }
+                
+                // 显示加载状态
+                $('.login-btn').prop('disabled', true).text('登录中...');
+            });
+            
+            // 输入框获得焦点时清除错误提示
+            $('#username, #password').on('input', function() {
+                $('#errorMessage').removeClass('show');
+            });
+        });
+    </script>
+</body>
+</html>

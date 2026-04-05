@@ -4,6 +4,14 @@ server:
 spring:
   application:
     name: linsir-spring-security-server
+  devtools:
+    restart:
+      enabled: true  # 启用热部署
+      additional-paths: src/main/java
+    livereload:
+      enabled: true  # 启用自动刷新
+  thymeleaf:
+    cache: false  # 禁用模板缓存，开发环境使用
 
 logging:
   level:

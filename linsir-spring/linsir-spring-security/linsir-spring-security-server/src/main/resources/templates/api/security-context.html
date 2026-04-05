@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecurityContext 测试 - Spring Security</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .api-section {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: #f8f9fa;
+            padding: 20px 30px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .section-header h2 {
+            color: #495057;
+            font-size: 20px;
+        }
+        
+        .api-list {
+            padding: 0;
+        }
+        
+        .api-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e9ecef;
+            transition: background-color 0.3s;
+        }
+        
+        .api-item:last-child {
+            border-bottom: none;
+        }
+        
+        .api-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 12px;
+            min-width: 70px;
+            text-align: center;
+            margin-right: 20px;
+        }
+        
+        .method.get {
+            background: #28a745;
+            color: white;
+        }
+        
+        .api-info {
+            flex: 1;
+        }
+        
+        .api-url {
+            font-family: 'Courier New', monospace;
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .api-description {
+            color: #666;
+            font-size: 13px;
+        }
+        
+        .test-btn {
+            padding: 8px 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background-color 0.3s;
+        }
+        
+        .test-btn:hover {
+            background: #0056b3;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #28a745;
+            color: white;
+            border-radius: 3px;
+            font-size: 11px;
+            margin-left: 10px;
+        }
+        
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .result-box h4 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+        
+        .result-content {
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            color: #333;
+            font-size: 13px;
+        }
+        
+        .login-form {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .login-form h4 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #495057;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .submit-btn {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>🔍 SecurityContext 测试页面</h1>
+            <p>查看当前认证用户的详细信息和安全上下文</p>
+            <a href="/api/index" class="back-link">← 返回 API 列表</a>
+        </div>
+
+        <!-- 测试接口 -->
+        <div class="api-section">
+            <div class="section-header">
+                <h2>🧪 测试接口列表</h2>
+            </div>
+            <div class="api-list">
+                <div class="api-item">
+                    <span class="method get">GET</span>
+                    <div class="api-info">
+                        <div class="api-url">/api/security-context/info</div>
+                        <div class="api-description">获取当前认证用户的详细信息</div>
+                    </div>
+                    <button class="test-btn" data-url="/api/security-context/info" data-method="GET">测试</button>
+                </div>
+                
+                <div class="api-item">
+                    <span class="method get">GET</span>
+                    <div class="api-info">
+                        <div class="api-url">/api/security-context/authentication</div>
+                        <div class="api-description">获取完整的认证对象信息</div>
+                    </div>
+                    <button class="test-btn" data-url="/api/security-context/authentication" data-method="GET">测试</button>
+                </div>
+                
+                <div class="api-item">
+                    <span class="method get">GET</span>
+                    <div class="api-info">
+                        <div class="api-url">/api/security-context/authorities</div>
+                        <div class="api-description">获取当前用户的权限列表</div>
+                    </div>
+                    <button class="test-btn" data-url="/api/security-context/authorities" data-method="GET">测试</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 登录表单 -->
+        <div class="api-section">
+            <div class="section-header">
+                <h2>🔐 用户登录</h2>
+            </div>
+            <div class="api-list">
+                <div class="api-item" style="display: block;">
+                    <div class="login-form">
+                        <h4>使用以下测试账号登录：</h4>
+                        <div class="form-group">
+                            <label>用户名：</label>
+                            <input type="text" id="username" placeholder="admin / user / expired / locked / disabled" />
+                        </div>
+                        <div class="form-group">
+                            <label>密码：</label>
+                            <input type="password" id="password" placeholder="密码：123456" />
+                        </div>
+                        <button class="submit-btn" onclick="login()">登录</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 响应结果 -->
+        <div class="api-section">
+            <div class="section-header">
+                <h2>📊 响应结果</h2>
+            </div>
+            <div class="api-list">
+                <div class="api-item" style="display: block;">
+                    <div class="result-box">
+                        <h4>响应内容：</h4>
+                        <div class="result-content" id="result">请先登录后测试</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 添加点击测试按钮的事件
+        document.querySelectorAll('.test-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const url = this.dataset.url;
+                const method = this.dataset.method;
+                const resultDiv = document.getElementById('result');
+                
+                resultDiv.textContent = '加载中...';
+                
+                fetch(url, {
+                    method: method,
+                    credentials: 'same-origin'
+                })
+                .then(response => {
+                    return response.json().then(data => ({
+                        status: response.status,
+                        data: data
+                    }));
+                })
+                .then(({ status, data }) => {
+                    resultDiv.textContent = `状态码：${status}\n\n` + JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    resultDiv.textContent = `错误：${error.message}`;
+                });
+            });
+        });
+
+        // 登录功能
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('result');
+            
+            if (!username || !password) {
+                resultDiv.textContent = '请输入用户名和密码';
+                return;
+            }
+            
+            resultDiv.textContent = '登录中...';
+            
+            const params = new URLSearchParams();
+            params.append('username', username);
+            params.append('password', password);
+            
+            fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: params,
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                return response.json().then(data => ({
+                    status: response.status,
+                    data: data
+                }));
+            })
+            .then(({ status, data }) => {
+                if (status === 200) {
+                    resultDiv.textContent = `登录成功！\n\n` + JSON.stringify(data, null, 2) + `\n\n现在可以点击上方的测试按钮查看 SecurityContext 信息。`;
+                } else {
+                    resultDiv.textContent = `登录失败：${data.message || '未知错误'}`;
+                }
+            })
+            .catch(error => {
+                resultDiv.textContent = `登录错误：${error.message}`;
+            });
+        }
+    </script>
+</body>
+</html>

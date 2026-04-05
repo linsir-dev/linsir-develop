@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页 - Spring Security</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .welcome {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .nav-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .info-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .info-section h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .info-section p {
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 欢迎来到 Spring Security 应用</h1>
+        
+        <div class="welcome">
+            <p>这是一个集成了 Spring Security 的安全 Web 应用</p>
+            <p>支持前后端分离的 API 调用和传统页面访问</p>
+        </div>
+        
+        <div class="nav-links">
+            <a href="/login" class="nav-link">🔐 登录页面</a>
+            <a href="/error" class="nav-link">❌ 错误页面</a>
+            <a href="/api/index" class="nav-link">� API 接口列表</a>
+        </div>
+        
+        <div class="info-section">
+            <h3>📌 功能特性</h3>
+            <p>✅ 表单登录/登出</p>
+            <p>✅ 基于角色的访问控制（RBAC）</p>
+            <p>✅ API 接口认证</p>
+            <p>✅ 自定义成功/失败处理器</p>
+            <p>✅ Session 管理</p>
+        </div>
+    </div>
+</body>
+</html>
