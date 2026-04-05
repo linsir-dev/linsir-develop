@@ -1,0 +1,314 @@
+package com.linsir.security.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 后台管理控制器
+ * 
+ * 处理后台管理相关的页面请求
+ * 
+ * @author linsir
+ * @version 1.0.0
+ */
+@Controller
+@RequestMapping("/manager")
+public class ManagerController {
+
+    /**
+     * 后台管理首页
+     * 
+     * @return 后台管理框架视图
+     */
+    @GetMapping("")
+    public String index() {
+        return "manager/index";
+    }
+
+    /**
+     * 后台管理首页（显式路径）
+     * 
+     * @return 后台管理框架视图
+     */
+    @GetMapping("/index")
+    public String indexPage() {
+        return "manager/index";
+    }
+
+    /**
+     * 后台管理仪表板页面
+     * 
+     * @return 仪表板视图
+     */
+    @GetMapping("/home")
+    public String home() {
+        return "manager/home";
+    }
+
+    /**
+     * 用户管理列表页面
+     * 
+     * @return 用户列表视图
+     */
+    @GetMapping("/user/list")
+    public String userList() {
+        return "manager/user/list";
+    }
+
+    /**
+     * 添加用户页面
+     * 
+     * @return 添加用户视图
+     */
+    @GetMapping("/user/add")
+    public String userAdd() {
+        return "manager/user/add";
+    }
+
+    /**
+     * 角色分配页面
+     * 
+     * @return 角色分配视图
+     */
+    @GetMapping("/user/role")
+    public String userRole() {
+        return "manager/user/role";
+    }
+
+    /**
+     * 角色列表页面
+     * 
+     * @return 角色列表视图
+     */
+    @GetMapping("/role/list")
+    public String roleList() {
+        return "manager/role/list";
+    }
+
+    /**
+     * 添加角色页面
+     * 
+     * @return 添加角色视图
+     */
+    @GetMapping("/role/add")
+    public String roleAdd() {
+        return "manager/role/add";
+    }
+
+    /**
+     * 权限配置页面
+     * 
+     * @return 权限配置视图
+     */
+    @GetMapping("/role/permission")
+    public String rolePermission() {
+        return "manager/role/permission";
+    }
+
+    /**
+     * 系统设置页面
+     * 
+     * @return 系统设置视图
+     */
+    @GetMapping("/settings")
+    public String settings() {
+        return "manager/settings/index";
+    }
+
+    /**
+     * 基本设置页面
+     * 
+     * @return 基本设置视图
+     */
+    @GetMapping("/settings/basic")
+    public String settingsBasic() {
+        return "manager/settings/basic";
+    }
+
+    /**
+     * 安全设置页面
+     * 
+     * @return 安全设置视图
+     */
+    @GetMapping("/settings/security")
+    public String settingsSecurity() {
+        return "manager/settings/security";
+    }
+
+    /**
+     * 日志管理页面
+     * 
+     * @return 日志管理视图
+     */
+    @GetMapping("/log")
+    public String log() {
+        return "manager/log/index";
+    }
+
+    /**
+     * 系统信息页面
+     * 
+     * @return 系统信息视图
+     */
+    @GetMapping("/system-info")
+    public String systemInfo() {
+        return "manager/system/info";
+    }
+
+    /**
+     * 权限管理页面
+     * 
+     * @return 权限管理视图
+     */
+    @GetMapping("/permission")
+    public String permission() {
+        return "manager/permission/index";
+    }
+    
+    /**
+     * 欢迎页面
+     * 
+     * @return 欢迎页视图
+     */
+    @GetMapping("/welcome")
+    public String welcome() {
+        return "manager/welcome";
+    }
+    
+    /**
+     * 获取导航菜单数据
+     * 
+     * @return 导航菜单 JSON 数据
+     */
+    @GetMapping("/nav-data")
+    @ResponseBody
+    public List<Map<String, Object>> getNavData() {
+        List<Map<String, Object>> navList = new ArrayList<>();
+        
+        // 系统管理
+        Map<String, Object> system = new HashMap<>();
+        system.put("id", "system");
+        system.put("text", "系统管理");
+        system.put("iconCls", "icon-save");
+        
+        List<Map<String, Object>> systemChildren = new ArrayList<>();
+        Map<String, Object> dashboard = new HashMap<>();
+        dashboard.put("id", "dashboard");
+        dashboard.put("text", "系统首页");
+        dashboard.put("iconCls", "icon-home");
+        dashboard.put("url", "/manager/dashboard");
+        systemChildren.add(dashboard);
+        
+        Map<String, Object> systemInfo = new HashMap<>();
+        systemInfo.put("id", "system-info");
+        systemInfo.put("text", "系统信息");
+        systemInfo.put("iconCls", "icon-info");
+        systemInfo.put("url", "/manager/system-info");
+        systemChildren.add(systemInfo);
+        
+        system.put("children", systemChildren);
+        navList.add(system);
+        
+        // 用户管理
+        Map<String, Object> user = new HashMap<>();
+        user.put("id", "user");
+        user.put("text", "用户管理");
+        user.put("iconCls", "icon-users");
+        
+        List<Map<String, Object>> userChildren = new ArrayList<>();
+        Map<String, Object> userList = new HashMap<>();
+        userList.put("id", "user-list");
+        userList.put("text", "用户列表");
+        userList.put("iconCls", "icon-edit");
+        userList.put("url", "/manager/user/list");
+        userChildren.add(userList);
+        
+        Map<String, Object> userAdd = new HashMap<>();
+        userAdd.put("id", "user-add");
+        userAdd.put("text", "添加用户");
+        userAdd.put("iconCls", "icon-add");
+        userAdd.put("url", "/manager/user/add");
+        userChildren.add(userAdd);
+        
+        Map<String, Object> userRole = new HashMap<>();
+        userRole.put("id", "user-role");
+        userRole.put("text", "角色分配");
+        userRole.put("iconCls", "icon-filter");
+        userRole.put("url", "/manager/user/role");
+        userChildren.add(userRole);
+        
+        user.put("children", userChildren);
+        navList.add(user);
+        
+        // 角色权限
+        Map<String, Object> role = new HashMap<>();
+        role.put("id", "role");
+        role.put("text", "角色权限");
+        role.put("iconCls", "icon-lock");
+        
+        List<Map<String, Object>> roleChildren = new ArrayList<>();
+        Map<String, Object> roleList = new HashMap<>();
+        roleList.put("id", "role-list");
+        roleList.put("text", "角色列表");
+        roleList.put("iconCls", "icon-edit");
+        roleList.put("url", "/manager/role/list");
+        roleChildren.add(roleList);
+        
+        Map<String, Object> roleAdd = new HashMap<>();
+        roleAdd.put("id", "role-add");
+        roleAdd.put("text", "添加角色");
+        roleAdd.put("iconCls", "icon-add");
+        roleAdd.put("url", "/manager/role/add");
+        roleChildren.add(roleAdd);
+        
+        Map<String, Object> rolePermission = new HashMap<>();
+        rolePermission.put("id", "role-permission");
+        rolePermission.put("text", "权限配置");
+        rolePermission.put("iconCls", "icon-filter");
+        rolePermission.put("url", "/manager/role/permission");
+        roleChildren.add(rolePermission);
+        
+        role.put("children", roleChildren);
+        navList.add(role);
+        
+        // 系统设置
+        Map<String, Object> settings = new HashMap<>();
+        settings.put("id", "settings");
+        settings.put("text", "系统设置");
+        settings.put("iconCls", "icon-settings");
+        
+        List<Map<String, Object>> settingsChildren = new ArrayList<>();
+        Map<String, Object> settingsBasic = new HashMap<>();
+        settingsBasic.put("id", "settings-basic");
+        settingsBasic.put("text", "基本设置");
+        settingsBasic.put("iconCls", "icon-save");
+        settingsBasic.put("url", "/manager/settings/basic");
+        settingsChildren.add(settingsBasic);
+        
+        Map<String, Object> settingsSecurity = new HashMap<>();
+        settingsSecurity.put("id", "settings-security");
+        settingsSecurity.put("text", "安全设置");
+        settingsSecurity.put("iconCls", "icon-lock");
+        settingsSecurity.put("url", "/manager/settings/security");
+        settingsChildren.add(settingsSecurity);
+        
+        Map<String, Object> settingsLog = new HashMap<>();
+        settingsLog.put("id", "settings-log");
+        settingsLog.put("text", "日志管理");
+        settingsLog.put("iconCls", "icon-search");
+        settingsLog.put("url", "/manager/settings/log");
+        settingsChildren.add(settingsLog);
+        
+        settings.put("children", settingsChildren);
+        navList.add(settings);
+        
+        return navList;
+    }
+}

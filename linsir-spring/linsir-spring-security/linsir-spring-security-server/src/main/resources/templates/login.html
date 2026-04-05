@@ -131,7 +131,7 @@
             用户名或密码错误
         </div>
         
-        <form id="loginForm" action="/api/auth/login" method="POST">
+        <form id="loginForm" onsubmit="return false;">
             <div class="form-group">
                 <label for="username">用户名</label>
                 <input type="text" id="username" name="username" required placeholder="请输入用户名">
@@ -142,7 +142,7 @@
                 <input type="password" id="password" name="password" required placeholder="请输入密码">
             </div>
             
-            <button type="submit" class="login-btn">登 录</button>
+            <button type="button" id="loginBtn" class="login-btn">登 录</button>
         </form>
         
         <div class="back-link">
@@ -152,6 +152,10 @@
     
     <!-- 引入 jQuery -->
     <script src="/static/js/jquery-3.7.1.min.js"></script>
+    <!-- 引入 EasyUI -->
+    <script src="/static/easyui/js/jquery.easyui.min.js"></script>
+    <!-- 引入中文语言包 -->
+    <script src="/static/easyui/locale/easyui-lang-zh_CN.js"></script>
     <!-- 引入公共 JS -->
     <script src="/static/js/common.js"></script>
     <script>
@@ -162,26 +166,89 @@
                 $('#errorMessage').addClass('show');
             }
             
-            // 表单提交处理
-            $('#loginForm').on('submit', function(e) {
-                const username = $('#username').val();
-                const password = $('#password').val();
+            // 登录按钮点击事件 - AJAX 方式
+            $('#loginBtn').on('click', function() {
+                const username = $('#username').val().trim();
+                const password = $('#password').val().trim();
                 
                 if (!username || !password) {
-                    e.preventDefault();
                     $('#errorMessage').text('请输入用户名和密码').addClass('show');
-                    return false;
+                    return;
                 }
                 
                 // 显示加载状态
-                $('.login-btn').prop('disabled', true).text('登录中...');
+                $('#loginBtn').prop('disabled', true).text('登录中...');
+                $('#errorMessage').removeClass('show');
+                
+                // 使用 AJAX 提交登录请求
+                $.ajax({
+                    url: '/api/auth/login',
+                    type: 'POST',
+                    data: {
+                        username: username,
+                        password: password
+                    },
+                    success: function(response) {
+                        // 登录成功
+                        if (response.code === 200) {
+                            // 跳转到后台管理首页
+                            window.location.href = '/manager';
+                        } else {
+                            // 登录失败，弹框显示失败原因
+                            showLoginError(response.message || '登录失败，请检查用户名和密码');
+                        }
+                    },
+                    error: function(xhr) {
+                        // 登录失败，处理错误响应
+                        let errorMsg = '登录失败，请检查网络连接';
+                        
+                        if (xhr.status === 401) {
+                            // 未授权，尝试解析返回的 JSON 数据
+                            try {
+                                const errorData = xhr.responseJSON;
+                                if (errorData && errorData.message) {
+                                    errorMsg = errorData.message;
+                                } else {
+                                    errorMsg = '用户名或密码错误';
+                                }
+                            } catch (e) {
+                                errorMsg = '用户名或密码错误';
+                            }
+                        } else if (xhr.status === 500) {
+                            errorMsg = '服务器错误，请稍后重试';
+                        }
+                        
+                        showLoginError(errorMsg);
+                    },
+                    complete: function() {
+                        // 恢复按钮状态
+                        $('#loginBtn').prop('disabled', false).text('登 录');
+                    }
+                });
             });
             
             // 输入框获得焦点时清除错误提示
             $('#username, #password').on('input', function() {
                 $('#errorMessage').removeClass('show');
             });
+            
+            // 回车键提交表单
+            $('#username, #password').on('keypress', function(e) {
+                if (e.which === 13) {
+                    $('#loginBtn').click();
+                }
+            });
         });
+        
+        // 显示登录错误信息
+        function showLoginError(message) {
+            $('#errorMessage').text(message).addClass('show');
+            
+            // 使用 EasyUI 的 messager 弹框（如果已加载）
+            if ($.messager) {
+                $.messager.alert('登录失败', message, 'error');
+            }
+        }
     </script>
 </body>
 </html>

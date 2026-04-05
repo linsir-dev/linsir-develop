@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
 /**
  * Spring Security 安全过滤器链配置类
@@ -46,7 +47,15 @@ public class SecurityConfig {
         http
             // 禁用 CSRF（前后端分离通常使用 JWT 或 Session+Token 方式）
             .csrf(csrf -> csrf.disable())
+            // 配置 X-Frame-Options，允许 iframe 加载同源页面
+            .headers(headers -> headers
+                .frameOptions(frameOptions -> frameOptions
+                    .sameOrigin()
+                )
+            )
             .authorizeHttpRequests(auth -> auth
+                // 允许匿名访问静态资源
+                .requestMatchers("/static/**", "/static/css/**", "/static/js/**", "/static/easyui/**", "/static/images/**").permitAll()
                 // 允许匿名访问 API 接口（认证）
                 .requestMatchers("/api/auth/**").permitAll()
                 // 允许匿名访问测试接口（仅 /api/hello）
@@ -55,8 +64,6 @@ public class SecurityConfig {
                 .requestMatchers("/api/index", "/api/hello-page", "/api/security-context-page").permitAll()
                 // 允许匿名访问页面
                 .requestMatchers("/", "/index", "/login", "/error", "/easyui-demo").permitAll()
-                // 允许匿名访问静态资源
-                .requestMatchers("/static/**").permitAll()
                 // 其他请求需要认证
                 .anyRequest().authenticated()
             )

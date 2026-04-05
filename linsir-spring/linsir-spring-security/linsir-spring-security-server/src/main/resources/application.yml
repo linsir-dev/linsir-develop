@@ -12,6 +12,11 @@ spring:
       enabled: true  # 启用自动刷新
   thymeleaf:
     cache: false  # 禁用模板缓存，开发环境使用
+  web:
+    resources:
+      static-locations: classpath:/static/
+      cache:
+        period: 0  # 禁用静态资源缓存，开发环境使用
 
 logging:
   level:

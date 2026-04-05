@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理首页 - Spring Security</title>
+    
+    <!-- 引入 EasyUI 样式 -->
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/icon.css">
+    
+    <style>
+        html, body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            background: #f0f2f5;
+        }
+        
+        .dashboard-container {
+            padding: 20px;
+        }
+        
+        .welcome-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .welcome-card h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .welcome-card p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .statistics-row {
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        
+        .stat-card .label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .quick-access {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .quick-access h3 {
+            margin-top: 0;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .quick-link {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            background: #f0f2f5;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s;
+        }
+        
+        .quick-link:hover {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- 欢迎卡片 -->
+        <div class="welcome-card">
+            <h1>欢迎使用后台管理系统</h1>
+            <p>尊敬的管理员，您好！这是您的管理控制台。</p>
+            <p>当前时间：<span id="current-time"></span></p>
+        </div>
+        
+        <!-- 统计卡片 -->
+        <div class="statistics-row">
+            <div class="easyui-panel" style="width:100%; padding: 0;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="width: 25%;">
+                            <div class="stat-card">
+                                <div class="icon">👥</div>
+                                <div class="number">1,234</div>
+                                <div class="label">用户总数</div>
+                            </div>
+                        </td>
+                        <td style="width: 25%;">
+                            <div class="stat-card">
+                                <div class="icon">📝</div>
+                                <div class="number">56</div>
+                                <div class="label">待办事项</div>
+                            </div>
+                        </td>
+                        <td style="width: 25%;">
+                            <div class="stat-card">
+                                <div class="icon">📊</div>
+                                <div class="number">8,901</div>
+                                <div class="label">订单数量</div>
+                            </div>
+                        </td>
+                        <td style="width: 25%;">
+                            <div class="stat-card">
+                                <div class="icon">💰</div>
+                                <div class="number">¥123,456</div>
+                                <div class="label">销售总额</div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 快捷访问 -->
+        <div class="quick-access">
+            <h3>🚀 快捷访问</h3>
+            <a href="javascript:void(0)" class="quick-link">用户管理</a>
+            <a href="javascript:void(0)" class="quick-link">角色管理</a>
+            <a href="javascript:void(0)" class="quick-link">权限设置</a>
+            <a href="javascript:void(0)" class="quick-link">系统日志</a>
+            <a href="javascript:void(0)" class="quick-link">系统设置</a>
+        </div>
+    </div>
+    
+    <!-- 引入 jQuery -->
+    <script src="/static/js/jquery-3.7.1.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            // 显示当前时间
+            function updateTime() {
+                var now = new Date();
+                var timeStr = now.getFullYear() + '-' + 
+                             (now.getMonth() + 1).toString().padStart(2, '0') + '-' + 
+                             now.getDate().toString().padStart(2, '0') + ' ' + 
+                             now.getHours().toString().padStart(2, '0') + ':' + 
+                             now.getMinutes().toString().padStart(2, '0') + ':' + 
+                             now.getSeconds().toString().padStart(2, '0');
+                $('#current-time').text(timeStr);
+            }
+            
+            updateTime();
+            setInterval(updateTime, 1000);
+        });
+    </script>
+</body>
+</html>
