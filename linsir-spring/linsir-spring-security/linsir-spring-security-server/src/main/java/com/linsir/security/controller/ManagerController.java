@@ -24,7 +24,7 @@ public class ManagerController {
 
     /**
      * 后台管理首页
-     * 
+     *
      * @return 后台管理框架视图
      */
     @GetMapping("")
@@ -33,18 +33,8 @@ public class ManagerController {
     }
 
     /**
-     * 后台管理首页（显式路径）
-     * 
-     * @return 后台管理框架视图
-     */
-    @GetMapping("/index")
-    public String indexPage() {
-        return "manager/index";
-    }
-
-    /**
      * 后台管理仪表板页面
-     * 
+     *
      * @return 仪表板视图
      */
     @GetMapping("/home")
@@ -63,16 +53,6 @@ public class ManagerController {
     }
 
     /**
-     * 角色分配页面
-     *
-     * @return 角色分配视图
-     */
-    @GetMapping("/user/role")
-    public String userRole() {
-        return "manager/user/role";
-    }
-
-    /**
      * 角色列表页面
      *
      * @return 角色列表视图
@@ -83,68 +63,8 @@ public class ManagerController {
     }
 
     /**
-     * 权限配置页面
-     *
-     * @return 权限配置视图
-     */
-    @GetMapping("/role/permission")
-    public String rolePermission() {
-        return "manager/role/permission";
-    }
-
-    /**
-     * 系统设置页面
-     *
-     * @return 系统设置视图
-     */
-    @GetMapping("/settings")
-    public String settings() {
-        return "manager/settings/index";
-    }
-
-    /**
-     * 日志管理页面
-     *
-     * @return 日志管理视图
-     */
-    @GetMapping("/log")
-    public String log() {
-        return "manager/log/index";
-    }
-
-    /**
-     * 系统信息页面
-     *
-     * @return 系统信息视图
-     */
-    @GetMapping("/system-info")
-    public String systemInfo() {
-        return "manager/system/info";
-    }
-
-    /**
-     * 权限管理页面
-     *
-     * @return 权限管理视图
-     */
-    @GetMapping("/permission")
-    public String permission() {
-        return "manager/permission/index";
-    }
-    
-    /**
-     * 欢迎页面
-     * 
-     * @return 欢迎页视图
-     */
-    @GetMapping("/welcome")
-    public String welcome() {
-        return "manager/welcome";
-    }
-    
-    /**
      * 获取导航菜单数据
-     * 
+     *
      * @return 导航菜单 JSON 数据
      */
     @GetMapping("/nav-data")
