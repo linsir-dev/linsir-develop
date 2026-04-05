@@ -118,10 +118,12 @@
     <div class="easyui-layout" data-options="fit:true">
         <!-- 北 -->
         <div data-options="region:'north', height:50" id="north-panel">
-            <span>🚀 后台管理系统</span>
+            <span><img src="/static/images/logo.png" height="32" style="vertical-align: middle; margin-right: 8px;">后台管理系统</span>
             <a href="javascript:void(0)" onclick="goHome()">🏠 首页</a>
-            <a href="javascript:void(0)" id="btn-logout">🚪 退出</a>
-            <span style="float: right; margin-right: 20px;">欢迎 <strong th:text="${username}">admin</strong></span>
+            <span style="float: right; margin-right: 20px;">
+                欢迎 <strong id="current-username">admin</strong>
+                <a href="javascript:void(0)" id="btn-logout" style="margin-left: 15px;">🚪 退出</a>
+            </span>
         </div>
         
         <!-- 西 -->
@@ -141,6 +143,31 @@
                             <h1>欢迎使用后台管理系统</h1>
                             <p>尊敬的管理员，您好！这是您的管理控制台。</p>
                             <p>当前时间：<span id="current-time"></span></p>
+                        </div>
+                        
+                        <!-- 用户信息卡片 -->
+                        <div class="user-info-card" style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <h3 style="margin-top: 0; color: #333; border-bottom: 2px solid #667eea; padding-bottom: 10px; margin-bottom: 15px;">👤 当前用户信息</h3>
+                            <div id="user-info-content">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="padding: 10px; width: 120px; color: #666; font-weight: bold;">用户名：</td>
+                                        <td style="padding: 10px;"><span id="info-username" style="color: #333; font-size: 16px;">-</span></td>
+                                    </tr>
+                                    <tr style="background: #f8f9fa;">
+                                        <td style="padding: 10px; color: #666; font-weight: bold;">认证状态：</td>
+                                        <td style="padding: 10px;"><span id="info-authenticated" style="color: #333;">-</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px; color: #666; font-weight: bold;">认证类型：</td>
+                                        <td style="padding: 10px;"><span id="info-auth-type" style="color: #333;">-</span></td>
+                                    </tr>
+                                    <tr style="background: #f8f9fa;">
+                                        <td style="padding: 10px; color: #666; font-weight: bold; vertical-align: top;">角色权限：</td>
+                                        <td style="padding: 10px;"><span id="info-authorities" style="color: #333;">-</span></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                         
                         <!-- 统计卡片 -->
@@ -241,6 +268,31 @@
             updateTime();
             setInterval(updateTime, 1000);
             
+            // 获取当前用户信息
+            $.getJSON("/api/security-context/get-current-user", function(data) {
+                if (data.authenticated && data.username) {
+                    // 顶部导航栏显示用户名
+                    $("#current-username").text(data.username);
+                    
+                    // 用户信息卡片显示详细信息
+                    $("#info-username").text(data.username);
+                    $("#info-authenticated").html('<span style="color: #52c41a; font-weight: bold;">✓ 已认证</span>');
+                    $("#info-auth-type").text(data.authenticationClass || '未知');
+                    
+                    // 显示权限列表
+                    if (data.authorities && data.authorities.length > 0) {
+                        var authHtml = data.authorities.map(function(auth) {
+                            return '<span style="display: inline-block; background: #667eea; color: white; padding: 4px 12px; border-radius: 4px; margin: 2px; font-size: 12px;">' + auth + '</span>';
+                        }).join('');
+                        $("#info-authorities").html(authHtml);
+                    } else {
+                        $("#info-authorities").html('<span style="color: #999;">暂无权限</span>');
+                    }
+                } else {
+                    $("#info-authenticated").html('<span style="color: #ff4d4f; font-weight: bold;">✗ 未认证</span>');
+                }
+            });
+            
             // 加载导航菜单
             $.getJSON(navDataUrl, function(data) {
                 if (data.length == 0) {
@@ -297,7 +349,58 @@
             $("#btn-logout").click(function() {
                 $.messager.confirm("确认", "确定要退出登录吗？", function(r) {
                     if (r) {
-                        window.location.href = "/logout";
+                        // 调用登出接口
+                        $.ajax({
+                            url: "/api/auth/logout",
+                            type: "POST",
+                            dataType: "json",
+                            success: function(result) {
+                                if (result.code === 200 || result.success === true) {
+                                    // 退出成功，显示提示并3秒后跳转
+                                    $.messager.show({
+                                        title: "提示",
+                                        msg: result.message || "退出成功",
+                                        timeout: 3000,
+                                        showType: "fade",
+                                        style: {
+                                            right: '',
+                                            top: document.body.scrollTop + document.documentElement.scrollTop + 100,
+                                            bottom: ''
+                                        }
+                                    });
+                                    setTimeout(function() {
+                                        window.location.href = "/login";
+                                    }, 3000);
+                                } else {
+                                    // 退出失败，显示错误提示
+                                    $.messager.show({
+                                        title: "错误",
+                                        msg: result.message || "退出失败",
+                                        timeout: 3000,
+                                        showType: "fade",
+                                        style: {
+                                            right: '',
+                                            top: document.body.scrollTop + document.documentElement.scrollTop + 100,
+                                            bottom: ''
+                                        }
+                                    });
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                // 请求失败
+                                $.messager.show({
+                                    title: "错误",
+                                    msg: "退出请求失败，请稍后重试",
+                                    timeout: 3000,
+                                    showType: "fade",
+                                    style: {
+                                        right: '',
+                                        top: document.body.scrollTop + document.documentElement.scrollTop + 100,
+                                        bottom: ''
+                                    }
+                                });
+                            }
+                        });
                     }
                 });
             });

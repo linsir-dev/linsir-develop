@@ -5,13 +5,10 @@ import com.linsir.security.handler.CustomLoginSuccessHandler;
 import com.linsir.security.handler.CustomLogoutSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
 /**
  * Spring Security 安全过滤器链配置类
@@ -62,14 +59,18 @@ public class SecurityConfig {
                 .requestMatchers("/api/hello").permitAll()
                 // 允许匿名访问 API 页面
                 .requestMatchers("/api/index", "/api/hello-page", "/api/security-context-page").permitAll()
+                // 允许已认证用户访问 SecurityContext 接口
+                .requestMatchers("/api/security-context/**").authenticated()
                 // 允许匿名访问页面
                 .requestMatchers("/", "/index", "/login", "/error", "/easyui-demo").permitAll()
                 // 其他请求需要认证
                 .anyRequest().authenticated()
             )
-            // 未认证时返回 401 状态码，而不是重定向
+            // 未认证时重定向到登录页面
             .exceptionHandling(exception -> exception
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .authenticationEntryPoint((request, response, authException) -> {
+                    response.sendRedirect("/");
+                })
             )
             // Session 管理配置
             .sessionManagement(session -> session

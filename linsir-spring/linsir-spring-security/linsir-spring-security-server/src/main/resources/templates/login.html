@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录 - Spring Security</title>
+    <!-- 引入 EasyUI CSS -->
+    <link rel="stylesheet" href="/static/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" href="/static/easyui/themes/icon.css">
     <!-- 引入公共 CSS -->
     <link rel="stylesheet" href="/static/css/common.css">
     <style>
@@ -123,7 +126,8 @@
 <body>
     <div class="login-container">
         <div class="login-header">
-            <h1>🔐 用户登录</h1>
+            <img src="/static/images/logo.png" height="48" style="margin-bottom: 15px;">
+            <h1>用户登录</h1>
             <p>请输入您的账号和密码</p>
         </div>
         
@@ -246,7 +250,17 @@
             
             // 使用 EasyUI 的 messager 弹框（如果已加载）
             if ($.messager) {
-                $.messager.alert('登录失败', message, 'error');
+                $.messager.show({
+                    title: '登录失败',
+                    msg: message,
+                    timeout: 3000,
+                    showType: 'fade',
+                    style: {
+                        right: '',
+                        top: document.body.scrollTop + document.documentElement.scrollTop + 100,
+                        bottom: ''
+                    }
+                });
             }
         }
     </script>
