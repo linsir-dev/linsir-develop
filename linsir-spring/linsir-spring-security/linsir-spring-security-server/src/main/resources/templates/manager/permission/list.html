@@ -1,0 +1,544 @@
+<!-- 权限列表页面 - 使用 EasyUI TreeGrid 展示树形结构 -->
+
+<!-- 查询工具栏 -->
+<div id="permission-search-toolbar" style="padding:5px;height:auto;">
+    <div style="margin-bottom:5px;">
+        <!-- 权限名称输入框 -->
+        <input id="search-permissionName" class="easyui-textbox" data-options="prompt:'请输入权限名称'" style="width:150px;">
+        <!-- 状态下拉菜单 -->
+        <select id="search-status" class="easyui-combobox" style="width:120px;" data-options="panelHeight:'auto',editable:false">
+            <option value="">全部状态</option>
+            <option value="1">启用</option>
+            <option value="0">禁用</option>
+        </select>
+        <!-- 查询按钮 -->
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="doSearch()">查询</a>
+        <!-- 重置按钮 -->
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-clear" onclick="doReset()">重置</a>
+    </div>
+</div>
+
+<!-- 树形表格 -->
+<div style="height: calc(100% - 50px);">
+    <table id="tg"></table>
+</div>
+
+<!-- 权限编辑对话框 -->
+<div id="permission-dialog" class="easyui-dialog" style="width:450px;height:400px;padding:20px;"
+     data-options="
+         closed:true,
+         modal:true,
+         buttons:[{
+             text:'保存',
+             iconCls:'icon-ok',
+             handler:savePermission
+         },{
+             text:'取消',
+             iconCls:'icon-cancel',
+             handler:closeDialog
+         }]
+    ">
+    <form id="permission-form" method="post">
+        <input type="hidden" id="permission-id" name="id">
+        <table style="width:100%;border-collapse:collapse;">
+            <tr>
+                <td style="padding:8px;width:80px;text-align:right;">上级权限：</td>
+                <td style="padding:8px;">
+                    <select id="form-parentId" name="parentId" class="easyui-combobox" style="width:280px;"
+                            data-options="url:'/api/permission/parent-options',method:'get',valueField:'id',textField:'permissionName',editable:false,panelHeight:'auto',prompt:'请选择上级权限'">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:8px;text-align:right;">权限编码：</td>
+                <td style="padding:8px;">
+                    <input id="form-permissionCode" name="permissionCode" class="easyui-textbox"
+                           data-options="required:true,validType:'length[2,50]'" style="width:280px;">
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:8px;text-align:right;">权限名称：</td>
+                <td style="padding:8px;">
+                    <input id="form-permissionName" name="permissionName" class="easyui-textbox"
+                           data-options="required:true,validType:'length[2,50]'" style="width:280px;">
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:8px;text-align:right;">资源类型：</td>
+                <td style="padding:8px;">
+                    <select id="form-resourceType" name="resourceType" class="easyui-combobox" style="width:280px;" data-options="panelHeight:'auto',editable:false,required:true">
+                        <option value="menu">菜单</option>
+                        <option value="button">按钮</option>
+                        <option value="api">接口</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:8px;text-align:right;">URL路径：</td>
+                <td style="padding:8px;">
+                    <input id="form-url" name="url" class="easyui-textbox" style="width:280px;">
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:8px;text-align:right;">请求方法：</td>
+                <td style="padding:8px;">
+                    <select id="form-method" name="method" class="easyui-combobox" style="width:280px;" data-options="panelHeight:'auto',editable:false">
+                        <option value="">无</option>
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:8px;text-align:right;">图标：</td>
+                <td style="padding:8px;">
+                    <input id="form-icon" name="icon" class="easyui-textbox" style="width:280px;">
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:8px;text-align:right;">排序号：</td>
+                <td style="padding:8px;">
+                    <input id="form-sortOrder" name="sortOrder" class="easyui-numberbox"
+                           data-options="min:0,value:0" style="width:280px;">
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:8px;text-align:right;">状态：</td>
+                <td style="padding:8px;">
+                    <select id="form-status" name="status" class="easyui-combobox" style="width:280px;" data-options="panelHeight:'auto',editable:false">
+                        <option value="1">启用</option>
+                        <option value="0">禁用</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<script>
+    /**
+     * 权限列表表格列定义
+     * 定义TreeGrid的所有列配置
+     */
+    var permissionColumns = [
+        {
+            // 权限名称列（树形节点）
+            field: 'permissionName',
+            title: '权限名称',
+            width: 180
+        },
+        {
+            // 权限编码列
+            field: 'permissionCode',
+            title: '权限编码',
+            width: 150,
+            align: 'center'
+        },
+        {
+            // 资源类型列
+            field: 'resourceType',
+            title: '类型',
+            width: 80,
+            align: 'center',
+            formatter: function(value, row, index) {
+                if (value === 'menu') {
+                    return '<span style="color:green;">菜单</span>';
+                } else if (value === 'button') {
+                    return '<span style="color:orange;">按钮</span>';
+                } else if (value === 'api') {
+                    return '<span style="color:blue;">接口</span>';
+                }
+                return value;
+            }
+        },
+        {
+            // URL路径列
+            field: 'url',
+            title: 'URL路径',
+            width: 150,
+            align: 'center'
+        },
+        {
+            // 请求方法列
+            field: 'method',
+            title: '请求方法',
+            width: 80,
+            align: 'center'
+        },
+        {
+            // 图标列
+            field: 'icon',
+            title: '图标',
+            width: 80,
+            align: 'center',
+            formatter: function(value, row, index) {
+                if (value) {
+                    return '<span class="' + value + '"></span>';
+                }
+                return '';
+            }
+        },
+        {
+            // 排序号列
+            field: 'sortOrder',
+            title: '排序',
+            width: 60,
+            align: 'center'
+        },
+        {
+            // 状态列
+            field: 'status',
+            title: '状态',
+            width: 80,
+            align: 'center',
+            formatter: function(value, row, index) {
+                if (value === 1) {
+                    return '<span style="color:green;">启用</span>';
+                } else {
+                    return '<span style="color:red;">禁用</span>';
+                }
+            }
+        },
+        {
+            // 创建时间列
+            field: 'createTime',
+            title: '创建时间',
+            width: 150,
+            align: 'center'
+        },
+        {
+            // 操作列
+            field: 'operate',
+            title: '操作',
+            width: 100,
+            align: 'center',
+            formatter: function(value, row, index) {
+                var editBtn = '<a href="javascript:void(0)" title="编辑" class="easyui-linkbutton" data-options="iconCls:\'icon-edit\',plain:true" style="margin:0 2px;" onclick="openEditDialogById(' + row.id + ')"></a>';
+                var deleteBtn = '<a href="javascript:void(0)" title="删除" class="easyui-linkbutton" data-options="iconCls:\'icon-remove\',plain:true" style="margin:0 2px;" onclick="deletePermission(' + row.id + ', \'' + row.permissionName + '\')"></a>';
+                // 只有非接口类型才显示添加子权限按钮
+                var addChildBtn = '';
+                if (row.resourceType !== 'api') {
+                    addChildBtn = '<a href="javascript:void(0)" title="添加子权限" class="easyui-linkbutton" data-options="iconCls:\'icon-add\',plain:true" style="margin:0 2px;" onclick="openAddChildDialog(' + row.id + ', \'' + row.permissionName + '\')"></a>';
+                }
+                return editBtn + deleteBtn + addChildBtn;
+            }
+        }
+    ];
+
+    /**
+     * 工具栏配置
+     * 定义TreeGrid顶部工具栏按钮
+     */
+    var permissionToolbar = [
+        {
+            // 新增按钮
+            text: '新增',
+            iconCls: 'icon-add',
+            handler: openAddDialog
+        },
+        '-', // 分隔符
+        {
+            // 刷新按钮
+            text: '刷新',
+            iconCls: 'icon-reload',
+            handler: function() {
+                // 重新加载表格数据
+                $('#tg').treegrid('reload');
+            }
+        },
+        '-', // 分隔符
+        {
+            // 展开全部按钮
+            text: '展开',
+            iconCls: 'icon-add',
+            handler: function() {
+                $('#tg').treegrid('expandAll');
+            }
+        },
+        '-', // 分隔符
+        {
+            // 折叠全部按钮
+            text: '折叠',
+            iconCls: 'icon-edit-remove',
+            handler: function() {
+                $('#tg').treegrid('collapseAll');
+            }
+        }
+    ];
+
+    /**
+     * 执行查询
+     * 根据搜索条件重新加载表格数据
+     */
+    function doSearch() {
+        $('#tg').treegrid('load', {
+            permissionName: $('#search-permissionName').textbox('getValue'),
+            status: $('#search-status').combobox('getValue')
+        });
+    }
+
+    /**
+     * 重置查询条件
+     * 清空搜索框并重新加载数据
+     */
+    function doReset() {
+        $('#search-permissionName').textbox('clear');
+        $('#search-status').combobox('clear');
+        $('#tg').treegrid('load', {});
+    }
+
+    /**
+     * 打开新增权限对话框
+     */
+    function openAddDialog() {
+        // 清空表单
+        $('#permission-form').form('clear');
+        $('#permission-id').val('');
+
+        // 设置默认值
+        $('#form-parentId').combobox('setValue', '0');
+        $('#form-resourceType').combobox('setValue', 'menu');
+        $('#form-status').combobox('setValue', '1');
+        $('#form-sortOrder').numberbox('setValue', '0');
+
+        // 打开对话框
+        $('#permission-dialog').dialog({
+            title: '新增权限',
+            closed: false
+        });
+    }
+
+    /**
+     * 打开添加子权限对话框
+     * @param {number} parentId - 父权限ID
+     * @param {string} parentName - 父权限名称
+     */
+    function openAddChildDialog(parentId, parentName) {
+        // 清空表单
+        $('#permission-form').form('clear');
+        $('#permission-id').val('');
+
+        // 设置父权限
+        $('#form-parentId').combobox('setValue', parentId);
+        $('#form-resourceType').combobox('setValue', 'menu');
+        $('#form-status').combobox('setValue', '1');
+        $('#form-sortOrder').numberbox('setValue', '0');
+
+        // 打开对话框
+        $('#permission-dialog').dialog({
+            title: '新增子权限 - ' + parentName,
+            closed: false
+        });
+    }
+
+    /**
+     * 打开编辑权限对话框（通过ID）
+     * @param {number} id - 权限ID
+     */
+    function openEditDialogById(id) {
+        // 获取行数据
+        var row = $('#tg').treegrid('find', id);
+
+        if (!row) {
+            $.messager.show({
+                title: '提示',
+                msg: '未找到权限数据',
+                timeout: 2000,
+                showType: 'slide'
+            });
+            return;
+        }
+
+        // 清空表单
+        $('#permission-form').form('clear');
+
+        // 填充表单数据
+        $('#permission-id').val(row.id);
+        $('#form-parentId').combobox('setValue', row.parentId || '0');
+        $('#form-permissionCode').textbox('setValue', row.permissionCode);
+        $('#form-permissionName').textbox('setValue', row.permissionName);
+        $('#form-resourceType').combobox('setValue', row.resourceType);
+        $('#form-url').textbox('setValue', row.url);
+        $('#form-method').combobox('setValue', row.method);
+        $('#form-icon').textbox('setValue', row.icon);
+        $('#form-sortOrder').numberbox('setValue', row.sortOrder);
+        $('#form-status').combobox('setValue', row.status);
+
+        // 打开对话框
+        $('#permission-dialog').dialog({
+            title: '编辑权限 - ' + row.permissionName,
+            closed: false
+        });
+    }
+
+    /**
+     * 删除权限
+     * @param {number} id - 权限ID
+     * @param {string} permissionName - 权限名称
+     */
+    function deletePermission(id, permissionName) {
+        $.messager.confirm('确认删除', '确定要删除权限 "' + permissionName + '" 吗？', function(r) {
+            if (r) {
+                $.ajax({
+                    url: '/api/permission/delete/' + id,
+                    type: 'DELETE',
+                    success: function(res) {
+                        if (res.code === 200) {
+                            $.messager.show({
+                                title: '提示',
+                                msg: res.message,
+                                timeout: 2000,
+                                showType: 'slide'
+                            });
+                            $('#tg').treegrid('reload');
+                        } else {
+                            $.messager.show({
+                                title: '错误',
+                                msg: res.message,
+                                timeout: 3000,
+                                showType: 'slide'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        var message = '删除失败！';
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            message = xhr.responseJSON.message;
+                        }
+                        $.messager.show({
+                            title: '错误',
+                            msg: message,
+                            timeout: 3000,
+                            showType: 'slide'
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * 保存权限（新增或编辑）
+     */
+    function savePermission() {
+        // 表单验证
+        if (!$('#permission-form').form('enableValidation').form('validate')) {
+            return;
+        }
+
+        var id = $('#permission-id').val();
+        var isEdit = id && id !== '';
+
+        // 收集表单数据
+        var permissionData = {
+            parentId: parseInt($('#form-parentId').combobox('getValue')) || 0,
+            permissionCode: $('#form-permissionCode').textbox('getValue'),
+            permissionName: $('#form-permissionName').textbox('getValue'),
+            resourceType: $('#form-resourceType').combobox('getValue'),
+            url: $('#form-url').textbox('getValue'),
+            method: $('#form-method').combobox('getValue'),
+            icon: $('#form-icon').textbox('getValue'),
+            sortOrder: parseInt($('#form-sortOrder').numberbox('getValue')) || 0,
+            status: parseInt($('#form-status').combobox('getValue'))
+        };
+
+        // 编辑时需要设置ID
+        if (isEdit) {
+            permissionData.id = parseInt(id);
+        }
+
+        // 发送请求
+        var url = isEdit ? '/api/permission/update/' + id : '/api/permission/create';
+        var method = isEdit ? 'PUT' : 'POST';
+
+        $.ajax({
+            url: url,
+            type: method,
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(permissionData),
+            success: function(res) {
+                if (res.code === 200) {
+                    $.messager.show({
+                        title: '提示',
+                        msg: res.message,
+                        timeout: 2000,
+                        showType: 'slide'
+                    });
+                    closeDialog();
+                    $('#tg').treegrid('reload');
+                } else {
+                    $.messager.show({
+                        title: '错误',
+                        msg: res.message,
+                        timeout: 3000,
+                        showType: 'slide'
+                    });
+                }
+            },
+            error: function(xhr) {
+                var message = '保存失败！';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                } else if (xhr.statusText) {
+                    message = '保存失败！状态码：' + xhr.status + '，错误：' + xhr.statusText;
+                }
+                console.error('保存权限失败:', xhr);
+                $.messager.show({
+                    title: '错误',
+                    msg: message,
+                    timeout: 3000,
+                    showType: 'slide'
+                });
+            }
+        });
+    }
+
+    /**
+     * 关闭对话框
+     */
+    function closeDialog() {
+        $('#permission-dialog').dialog('close');
+    }
+
+    /**
+     * 页面初始化
+     * 在DOM加载完成后初始化TreeGrid
+     */
+    $(function() {
+        // 初始化权限树形表格
+        $('#tg').treegrid({
+            // 主键字段
+            idField: 'id',
+            // 树形结构父ID字段
+            treeField: 'permissionName',
+            // 数据加载地址
+            url: '/api/permission/list',
+            // 请求方式
+            method: 'get',
+            // 自适应父容器大小
+            fit: true,
+            // 自适应列宽
+            fitColumns: true,
+            // 显示斑马纹效果
+            striped: true,
+            // 显示行号
+            rownumbers: true,
+            // 数据加载时的提示消息
+            loadMsg: '正在加载权限数据，请稍候...',
+            // 无数据时显示的提示消息
+            emptyMsg: '暂无权限数据',
+            // 列定义
+            columns: [permissionColumns],
+            // 工具栏配置
+            toolbar: permissionToolbar,
+            // 数据加载完成后解析操作列的按钮，并展开所有节点
+            onLoadSuccess: function(row, data) {
+                $('#tg').treegrid('getPanel').find('.easyui-linkbutton').linkbutton();
+                // 默认展开所有节点
+                $('#tg').treegrid('expandAll');
+            }
+        });
+    });
+</script>

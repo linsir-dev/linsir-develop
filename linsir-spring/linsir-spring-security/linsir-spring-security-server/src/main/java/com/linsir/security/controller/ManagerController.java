@@ -63,6 +63,16 @@ public class ManagerController {
     }
 
     /**
+     * 权限列表页面
+     *
+     * @return 权限列表视图
+     */
+    @GetMapping("/permission/list")
+    public String permissionList() {
+        return "manager/permission/list";
+    }
+
+    /**
      * 获取导航菜单数据
      *
      * @return 导航菜单 JSON 数据
@@ -132,7 +142,7 @@ public class ManagerController {
         role.put("id", "role");
         role.put("text", "角色权限");
         role.put("iconCls", "icon-lock");
-        
+
         List<Map<String, Object>> roleChildren = new ArrayList<>();
         Map<String, Object> roleList = new HashMap<>();
         roleList.put("id", "role-list");
@@ -140,21 +150,14 @@ public class ManagerController {
         roleList.put("iconCls", "icon-edit");
         roleList.put("url", "/manager/role/list");
         roleChildren.add(roleList);
-        
-        Map<String, Object> roleAdd = new HashMap<>();
-        roleAdd.put("id", "role-add");
-        roleAdd.put("text", "添加角色");
-        roleAdd.put("iconCls", "icon-add");
-        roleAdd.put("url", "/manager/role/add");
-        roleChildren.add(roleAdd);
-        
-        Map<String, Object> rolePermission = new HashMap<>();
-        rolePermission.put("id", "role-permission");
-        rolePermission.put("text", "权限配置");
-        rolePermission.put("iconCls", "icon-filter");
-        rolePermission.put("url", "/manager/role/permission");
-        roleChildren.add(rolePermission);
-        
+
+        Map<String, Object> permissionList = new HashMap<>();
+        permissionList.put("id", "permission-list");
+        permissionList.put("text", "权限列表");
+        permissionList.put("iconCls", "icon-edit");
+        permissionList.put("url", "/manager/permission/list");
+        roleChildren.add(permissionList);
+
         role.put("children", roleChildren);
         navList.add(role);
         

@@ -127,10 +127,8 @@
         </div>
         
         <!-- 西 -->
-        <div data-options="region:'west', split:true, minWidth:100, width:180, title:'导航菜单'" style="padding: 5px;">
-            <div id="main-nav" class="easyui-accordion" data-options="fit:true, border:false, selected:true">
-                <!-- 动态加载 -->
-            </div>
+        <div data-options="region:'west', split:true, minWidth:100, width:200, title:'导航菜单'" style="padding: 5px;">
+            <ul id="main-nav" class="easyui-tree" data-options="fit:true, border:false, animate:true, lines:true"></ul>
         </div>
         
         <!-- 中 -->
@@ -170,8 +168,9 @@
     <script src="/static/easyui/locale/easyui-lang-zh_CN.js"></script>
     
     <script type="text/javascript">
-        var navDataUrl = "/manager/nav-data";
-        
+        // 菜单数据接口地址
+        var menuDataUrl = "/api/permission/menu/list";
+
         $(function() {
             // 获取当前用户信息（仅用于顶部导航栏）
             $.getJSON("/api/security-context/get-current-user", function(data) {
@@ -181,36 +180,23 @@
                 }
             });
 
-            // 加载导航菜单
-            $.getJSON(navDataUrl, function(data) {
-                if (data.length == 0) {
+            // 加载导航菜单（使用 Tree 组件）
+            $.getJSON(menuDataUrl, function(result) {
+                if (result.code !== 200 || !result.data || result.data.length === 0) {
                     return;
                 }
 
-                // 第一层生成手风琴的项
-                $.each(data, function(i, item) {
-                    var id = item.id;
-                    $("#main-nav").accordion("add", {
-                        title: item.text,
-                        content: "<ul id='tree-" + id + "'></ul>",
-                        selected: i === 0,
-                        iconCls: item.iconCls
-                    });
-                    
-                    // 第二层生成树节点
-                    if (!item.children || item.children.length == 0) {
-                        return true;
-                    }
-                    
-                    var treeData = transToTreeData(item.children);
-                    $("#tree-" + id).tree({
-                        data: treeData,
-                        onClick: function(node) {
-                            if (node.attributes && node.attributes.url) {
-                                addTab(node.text, node.attributes.url, node.iconCls);
-                            }
+                // 转换菜单数据为 Tree 格式
+                var treeData = convertToTreeData(result.data);
+
+                // 初始化 Tree
+                $("#main-nav").tree({
+                    data: treeData,
+                    onClick: function(node) {
+                        if (node.url) {
+                            addTab(node.text, node.url, node.iconCls);
                         }
-                    });
+                    }
                 });
             });
             
@@ -316,19 +302,19 @@
             }
         }
         
-        // 转换树形数据
-        function transToTreeData(data) {
+        // 转换菜单数据为 Tree 格式
+        function convertToTreeData(data) {
             return $.map(data, function(item) {
                 var obj = {
                     id: item.id,
-                    text: item.text,
-                    iconCls: item.iconCls
+                    text: item.permissionName,
+                    iconCls: item.icon || 'icon-blank'
                 };
                 if (item.url) {
-                    obj.attributes = { url: item.url };
+                    obj.url = item.url;
                 }
                 if (item.children && item.children.length > 0) {
-                    obj.children = transToTreeData(item.children);
+                    obj.children = convertToTreeData(item.children);
                 }
                 return obj;
             });

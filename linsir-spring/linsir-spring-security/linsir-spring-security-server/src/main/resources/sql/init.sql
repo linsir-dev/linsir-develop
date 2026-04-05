@@ -120,38 +120,50 @@ INSERT INTO `sys_role` (`role_code`, `role_name`, `description`, `sort_order`) V
 ('ROLE_USER', '普通用户', '拥有基本权限', 2),
 ('ROLE_TEST', '测试用户', '拥有测试权限', 3);
 
--- 2. 初始化权限（菜单）
+-- 2. 初始化权限（菜单）- 根据 ManagerController 导航菜单结构
 INSERT INTO `sys_permission` (`permission_code`, `permission_name`, `resource_type`, `url`, `method`, `parent_id`, `icon`, `sort_order`) VALUES
 -- 系统管理
-('system:manage', '系统管理', 'menu', '/system', NULL, 0, 'icon-setting', 1),
-('user:manage', '用户管理', 'menu', '/system/user', NULL, 1, 'icon-user', 1),
-('role:manage', '角色管理', 'menu', '/system/role', NULL, 1, 'icon-role', 2),
-('permission:manage', '权限管理', 'menu', '/system/permission', NULL, 1, 'icon-lock', 3),
+('system:manage', '系统管理', 'menu', NULL, NULL, 0, 'icon-save', 1),
+('dashboard:view', '系统首页', 'menu', '/manager/home', NULL, 1, 'icon-home', 1),
+('system:info', '系统信息', 'menu', '/manager/system-info', NULL, 1, 'icon-info', 2),
 
--- 业务管理
-('business:manage', '业务管理', 'menu', '/business', NULL, 0, 'icon-application', 2),
-('order:manage', '订单管理', 'menu', '/business/order', NULL, 5, 'icon-order', 1),
-('product:manage', '商品管理', 'menu', '/business/product', NULL, 5, 'icon-product', 2);
+-- 用户管理
+('user:manage', '用户管理', 'menu', NULL, NULL, 0, 'icon-users', 2),
+('user:list', '用户列表', 'menu', '/manager/user/list', NULL, 4, 'icon-edit', 1),
+('user:add', '添加用户', 'menu', '/manager/user/add', NULL, 4, 'icon-add', 2),
+('user:role', '角色分配', 'menu', '/manager/user/role', NULL, 4, 'icon-filter', 3),
+
+-- 角色权限
+('role:manage', '角色权限', 'menu', NULL, NULL, 0, 'icon-lock', 3),
+('role:list', '角色列表', 'menu', '/manager/role/list', NULL, 8, 'icon-edit', 1),
+('permission:list', '权限列表', 'menu', '/manager/permission/list', NULL, 8, 'icon-edit', 2),
+
+-- 系统设置
+('settings:manage', '系统设置', 'menu', NULL, NULL, 0, 'icon-settings', 4),
+('settings:basic', '基本设置', 'menu', '/manager/settings/basic', NULL, 11, 'icon-save', 1),
+('settings:security', '安全设置', 'menu', '/manager/settings/security', NULL, 11, 'icon-lock', 2),
+('settings:log', '日志管理', 'menu', '/manager/settings/log', NULL, 11, 'icon-search', 3);
 
 -- 3. 初始化权限（接口）
 INSERT INTO `sys_permission` (`permission_code`, `permission_name`, `resource_type`, `url`, `method`, `parent_id`, `sort_order`) VALUES
--- 用户接口权限
-('user:list', '用户列表', 'api', '/api/user/list', 'GET', 2, 1),
-('user:create', '创建用户', 'api', '/api/user/create', 'POST', 2, 2),
-('user:update', '更新用户', 'api', '/api/user/update', 'PUT', 2, 3),
-('user:delete', '删除用户', 'api', '/api/user/delete', 'DELETE', 2, 4),
+-- 用户接口权限（parent_id 指向用户列表菜单 5）
+('api:user:list', '用户列表接口', 'api', '/api/user/list', 'GET', 5, 1),
+('api:user:create', '创建用户接口', 'api', '/api/user/create', 'POST', 5, 2),
+('api:user:update', '更新用户接口', 'api', '/api/user/update', 'PUT', 5, 3),
+('api:user:delete', '删除用户接口', 'api', '/api/user/delete', 'DELETE', 5, 4),
 
--- 角色接口权限
-('role:list', '角色列表', 'api', '/api/role/list', 'GET', 3, 1),
-('role:create', '创建角色', 'api', '/api/role/create', 'POST', 3, 2),
-('role:update', '更新角色', 'api', '/api/role/update', 'PUT', 3, 3),
-('role:delete', '删除角色', 'api', '/api/role/delete', 'DELETE', 3, 4),
+-- 角色接口权限（parent_id 指向角色列表菜单 9）
+('api:role:list', '角色列表接口', 'api', '/api/role/list', 'GET', 9, 1),
+('api:role:create', '创建角色接口', 'api', '/api/role/create', 'POST', 9, 2),
+('api:role:update', '更新角色接口', 'api', '/api/role/update', 'PUT', 9, 3),
+('api:role:delete', '删除角色接口', 'api', '/api/role/delete', 'DELETE', 9, 4),
 
--- 权限接口权限
-('permission:list', '权限列表', 'api', '/api/permission/list', 'GET', 4, 1),
-('permission:create', '创建权限', 'api', '/api/permission/create', 'POST', 4, 2),
-('permission:update', '更新权限', 'api', '/api/permission/update', 'PUT', 4, 3),
-('permission:delete', '删除权限', 'api', '/api/permission/delete', 'DELETE', 4, 4);
+-- 权限接口权限（parent_id 指向权限列表菜单 10）
+('api:permission:list', '权限列表接口', 'api', '/api/permission/list', 'GET', 10, 1),
+('api:permission:create', '创建权限接口', 'api', '/api/permission/create', 'POST', 10, 2),
+('api:permission:update', '更新权限接口', 'api', '/api/permission/update', 'PUT', 10, 3),
+('api:permission:delete', '删除权限接口', 'api', '/api/permission/delete', 'DELETE', 10, 4),
+('api:permission:menu', '菜单列表接口', 'api', '/api/permission/menu/list', 'GET', 10, 5);
 
 -- 4. 初始化管理员用户（密码：admin123）
 -- 密码使用 BCrypt 加密：$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z5EO
@@ -168,18 +180,20 @@ INSERT INTO `sys_user_role` (`user_id`, `role_id`) VALUES
 
 -- 6. 初始化角色权限关联（ROLE_ADMIN 拥有所有权限）
 INSERT INTO `sys_role_permission` (`role_id`, `permission_id`) VALUES
--- ROLE_ADMIN 拥有所有权限
-(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7),
-(1, 8), (1, 9), (1, 10), (1, 11), (1, 12), (1, 13), (1, 14),
-(1, 15), (1, 16), (1, 17), (1, 18), (1, 19), (1, 20),
+-- ROLE_ADMIN 拥有所有权限（1-26）
+(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10),
+(1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18), (1, 19), (1, 20),
+(1, 21), (1, 22), (1, 23), (1, 24), (1, 25), (1, 26),
 
--- ROLE_USER 拥有部分权限
-(2, 5), (2, 6), (2, 7),  -- 业务管理菜单
-(2, 8), (2, 9),          -- 用户查看权限
+-- ROLE_USER 拥有部分权限（系统首页、用户列表、角色列表、权限列表）
+(2, 2),  -- 系统首页
+(2, 5),  -- 用户列表
+(2, 9),  -- 角色列表
+(2, 10), -- 权限列表
 
--- ROLE_TEST 拥有测试权限
-(3, 5), (3, 6), (3, 7),  -- 业务管理菜单
-(3, 8), (3, 9), (3, 10), (3, 11); -- 用户管理权限
+-- ROLE_TEST 拥有测试权限（系统首页、用户管理相关）
+(3, 2),  -- 系统首页
+(3, 5), (3, 6), (3, 7); -- 用户列表、添加用户、角色分配
 
 -- ========================================================
 -- 添加外键约束（可选，根据实际需求决定是否启用）
