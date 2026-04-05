@@ -1,0 +1,441 @@
+<!-- 角色列表页面 - 页面片段，无需完整HTML结构 -->
+
+<!-- 查询工具栏 -->
+<div id="role-search-toolbar" style="padding:5px;height:auto;">
+    <div style="margin-bottom:5px;">
+        <!-- 角色编码输入框 -->
+        <input id="search-roleCode" class="easyui-textbox" data-options="prompt:'请输入角色编码'" style="width:150px;">
+        <!-- 角色名称输入框 -->
+        <input id="search-roleName" class="easyui-textbox" data-options="prompt:'请输入角色名称'" style="width:150px;">
+        <!-- 状态下拉菜单 -->
+        <select id="search-status" class="easyui-combobox" style="width:120px;" data-options="panelHeight:'auto',editable:false">
+            <option value="">全部状态</option>
+            <option value="1">启用</option>
+            <option value="0">禁用</option>
+        </select>
+        <!-- 查询按钮 -->
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="doSearch()">查询</a>
+        <!-- 重置按钮 -->
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-clear" onclick="doReset()">重置</a>
+    </div>
+</div>
+
+<!-- 数据表格 -->
+<div style="height: calc(100% - 50px);">
+    <table id="dg"></table>
+</div>
+
+<!-- 角色编辑对话框 -->
+<div id="role-dialog" class="easyui-dialog" style="width:450px;height:320px;padding:20px;"
+     data-options="
+         closed:true,
+         modal:true,
+         buttons:[{
+             text:'保存',
+             iconCls:'icon-ok',
+             handler:saveRole
+         },{
+             text:'取消',
+             iconCls:'icon-cancel',
+             handler:closeDialog
+         }]
+     ">
+    <form id="role-form" method="post">
+        <input type="hidden" id="role-id" name="id">
+        <table style="width:100%;border-collapse:collapse;">
+            <tr>
+                <td style="padding:8px;width:80px;text-align:right;">角色编码：</td>
+                <td style="padding:8px;">
+                    <input id="form-roleCode" name="roleCode" class="easyui-textbox"
+                           data-options="required:true,validType:'length[2,50]'" style="width:280px;">
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:8px;text-align:right;">角色名称：</td>
+                <td style="padding:8px;">
+                    <input id="form-roleName" name="roleName" class="easyui-textbox"
+                           data-options="required:true,validType:'length[2,50]'" style="width:280px;">
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:8px;text-align:right;">描述：</td>
+                <td style="padding:8px;">
+                    <input id="form-description" name="description" class="easyui-textbox"
+                           data-options="multiline:true" style="width:280px;height:60px;">
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:8px;text-align:right;">状态：</td>
+                <td style="padding:8px;">
+                    <select id="form-status" name="status" class="easyui-combobox" style="width:280px;" data-options="panelHeight:'auto',editable:false">
+                        <option value="1">启用</option>
+                        <option value="0">禁用</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<script>
+    /**
+     * 角色列表表格列定义
+     * 定义DataGrid的所有列配置
+     */
+    var roleColumns = [
+        {
+            // ID列
+            field: 'id',
+            title: 'ID',
+            width: 60,
+            align: 'center'
+        },
+        {
+            // 角色编码列
+            field: 'roleCode',
+            title: '角色编码',
+            width: 120,
+            align: 'center'
+        },
+        {
+            // 角色名称列
+            field: 'roleName',
+            title: '角色名称',
+            width: 120,
+            align: 'center'
+        },
+        {
+            // 描述列
+            field: 'description',
+            title: '描述',
+            width: 200,
+            align: 'center'
+        },
+        {
+            // 状态列
+            field: 'status',
+            title: '状态',
+            width: 80,
+            align: 'center',
+            // 格式化状态显示：1-启用（绿色），0-禁用（红色）
+            formatter: function(value, row, index) {
+                if (value === 1) {
+                    return '<span style="color:green;">启用</span>';
+                } else {
+                    return '<span style="color:red;">禁用</span>';
+                }
+            }
+        },
+        {
+            // 创建时间列
+            field: 'createTime',
+            title: '创建时间',
+            width: 150,
+            align: 'center'
+        },
+        {
+            // 更新时间列
+            field: 'updateTime',
+            title: '更新时间',
+            width: 150,
+            align: 'center'
+        },
+        {
+            // 操作列
+            field: 'operate',
+            title: '操作',
+            width: 80,
+            align: 'center',
+            formatter: function(value, row, index) {
+                var editBtn = '<a href="javascript:void(0)" title="编辑" class="easyui-linkbutton" data-options="iconCls:\'icon-edit\',plain:true" style="margin:0 2px;" onclick="openEditDialogById(' + row.id + ')"></a>';
+                var deleteBtn = '<a href="javascript:void(0)" title="删除" class="easyui-linkbutton" data-options="iconCls:\'icon-remove\',plain:true" style="margin:0 2px;" onclick="deleteRole(' + row.id + ', \'' + row.roleName + '\')"></a>';
+                return editBtn + deleteBtn;
+            }
+        }
+    ];
+
+    /**
+     * 工具栏配置
+     * 定义DataGrid顶部工具栏按钮
+     */
+    var roleToolbar = [
+        {
+            // 新增按钮
+            text: '新增',
+            iconCls: 'icon-add',
+            handler: openAddDialog
+        },
+        '-', // 分隔符
+        {
+            // 刷新按钮
+            text: '刷新',
+            iconCls: 'icon-reload',
+            handler: function() {
+                // 重新加载表格数据
+                $('#dg').datagrid('reload');
+            }
+        }
+    ];
+
+    /**
+     * 执行查询
+     * 根据搜索条件重新加载表格数据
+     */
+    function doSearch() {
+        $('#dg').datagrid('load', {
+            roleCode: $('#search-roleCode').textbox('getValue'),
+            roleName: $('#search-roleName').textbox('getValue'),
+            status: $('#search-status').combobox('getValue')
+        });
+    }
+
+    /**
+     * 重置查询条件
+     * 清空搜索框并重新加载数据
+     */
+    function doReset() {
+        $('#search-roleCode').textbox('clear');
+        $('#search-roleName').textbox('clear');
+        $('#search-status').combobox('clear');
+        $('#dg').datagrid('load', {});
+    }
+
+    /**
+     * 打开新增角色对话框
+     */
+    function openAddDialog() {
+        // 清空表单
+        $('#role-form').form('clear');
+        $('#role-id').val('');
+
+        // 设置默认状态为启用
+        $('#form-status').combobox('setValue', '1');
+
+        // 打开对话框
+        $('#role-dialog').dialog({
+            title: '新增角色',
+            closed: false
+        });
+    }
+
+    /**
+     * 打开编辑角色对话框（通过行选择）
+     */
+    function openEditDialog() {
+        // 获取选中的行
+        var row = $('#dg').datagrid('getSelected');
+        if (!row) {
+            $.messager.alert('提示', '请选择要编辑的角色！', 'warning');
+            return;
+        }
+        openEditDialogById(row.id);
+    }
+
+    /**
+     * 打开编辑角色对话框（通过ID）
+     * @param {number} id - 角色ID
+     */
+    function openEditDialogById(id) {
+        // 根据ID获取行数据
+        var rows = $('#dg').datagrid('getRows');
+        var row = null;
+        for (var i = 0; i < rows.length; i++) {
+            if (rows[i].id === id) {
+                row = rows[i];
+                break;
+            }
+        }
+
+        if (!row) {
+            $.messager.show({
+                title: '提示',
+                msg: '未找到角色数据',
+                timeout: 2000,
+                showType: 'slide'
+            });
+            return;
+        }
+
+        // 清空表单
+        $('#role-form').form('clear');
+
+        // 填充表单数据
+        $('#role-id').val(row.id);
+        $('#form-roleCode').textbox('setValue', row.roleCode);
+        $('#form-roleName').textbox('setValue', row.roleName);
+        $('#form-description').textbox('setValue', row.description);
+        $('#form-status').combobox('setValue', row.status);
+
+        // 打开对话框
+        $('#role-dialog').dialog({
+            title: '编辑角色 - ' + row.roleName,
+            closed: false
+        });
+    }
+
+    /**
+     * 删除角色
+     * @param {number} id - 角色ID
+     * @param {string} roleName - 角色名称
+     */
+    function deleteRole(id, roleName) {
+        $.messager.confirm('确认删除', '确定要删除角色 "' + roleName + '" 吗？', function(r) {
+            if (r) {
+                $.ajax({
+                    url: '/api/role/delete/' + id,
+                    type: 'DELETE',
+                    success: function(res) {
+                        if (res.code === 200) {
+                            $.messager.show({
+                                title: '提示',
+                                msg: res.message,
+                                timeout: 2000,
+                                showType: 'slide'
+                            });
+                            $('#dg').datagrid('reload');
+                        } else {
+                            $.messager.show({
+                                title: '错误',
+                                msg: res.message,
+                                timeout: 3000,
+                                showType: 'slide'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        var message = '删除失败！';
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            message = xhr.responseJSON.message;
+                        }
+                        $.messager.show({
+                            title: '错误',
+                            msg: message,
+                            timeout: 3000,
+                            showType: 'slide'
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * 保存角色（新增或编辑）
+     */
+    function saveRole() {
+        // 表单验证
+        if (!$('#role-form').form('enableValidation').form('validate')) {
+            return;
+        }
+
+        var id = $('#role-id').val();
+        var isEdit = id && id !== '';
+
+        // 收集表单数据
+        var roleData = {
+            roleCode: $('#form-roleCode').textbox('getValue'),
+            roleName: $('#form-roleName').textbox('getValue'),
+            description: $('#form-description').textbox('getValue'),
+            status: parseInt($('#form-status').combobox('getValue'))
+        };
+
+        // 编辑时需要设置ID
+        if (isEdit) {
+            roleData.id = parseInt(id);
+        }
+
+        // 发送请求
+        var url = isEdit ? '/api/role/update/' + id : '/api/role/create';
+        var method = isEdit ? 'PUT' : 'POST';
+
+        $.ajax({
+            url: url,
+            type: method,
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(roleData),
+            success: function(res) {
+                if (res.code === 200) {
+                    $.messager.show({
+                        title: '提示',
+                        msg: res.message,
+                        timeout: 2000,
+                        showType: 'slide'
+                    });
+                    closeDialog();
+                    $('#dg').datagrid('reload');
+                } else {
+                    $.messager.show({
+                        title: '错误',
+                        msg: res.message,
+                        timeout: 3000,
+                        showType: 'slide'
+                    });
+                }
+            },
+            error: function(xhr) {
+                var message = '保存失败！';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                } else if (xhr.statusText) {
+                    message = '保存失败！状态码：' + xhr.status + '，错误：' + xhr.statusText;
+                }
+                console.error('保存角色失败:', xhr);
+                $.messager.show({
+                    title: '错误',
+                    msg: message,
+                    timeout: 3000,
+                    showType: 'slide'
+                });
+            }
+        });
+    }
+
+    /**
+     * 关闭对话框
+     */
+    function closeDialog() {
+        $('#role-dialog').dialog('close');
+    }
+
+    /**
+     * 页面初始化
+     * 在DOM加载完成后初始化DataGrid
+     */
+    $(function() {
+        // 初始化角色数据表格
+        $('#dg').datagrid({
+            // 主键字段，用于标识唯一行
+            idField: 'id',
+            // 数据加载时的提示消息
+            loadMsg: '正在加载角色数据，请稍候...',
+            // 无数据时显示的提示消息
+            emptyMsg: '暂无角色数据',
+            // 数据加载地址
+            url: '/api/role/list',
+            // 请求方式
+            method: 'get',
+            // 自适应父容器大小
+            fit: true,
+            // 自动调整列宽以适应表格宽度
+            fitColumns: true,
+            // 显示斑马纹效果
+            striped: true,
+            // 显示行号
+            rownumbers: true,
+            // 启用分页
+            pagination: true,
+            // 默认每页显示条数
+            pageSize: 10,
+            // 可选的每页显示条数
+            pageList: [10, 20, 50, 100],
+            // 列定义 - 使用双数组结构，外层用于分组，内层是实际列配置
+            columns: [roleColumns],
+            // 工具栏配置
+            toolbar: roleToolbar,
+            // 数据加载完成后解析操作列的按钮
+            onLoadSuccess: function(data) {
+                $('#dg').datagrid('getPanel').find('.easyui-linkbutton').linkbutton();
+            }
+        });
+    });
+</script>

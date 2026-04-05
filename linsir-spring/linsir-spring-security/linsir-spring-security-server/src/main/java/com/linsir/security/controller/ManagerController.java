@@ -53,8 +53,8 @@ public class ManagerController {
     }
 
     /**
-     * 用户管理列表页面
-     * 
+     * 用户列表页面
+     *
      * @return 用户列表视图
      */
     @GetMapping("/user/list")
@@ -63,18 +63,8 @@ public class ManagerController {
     }
 
     /**
-     * 添加用户页面
-     * 
-     * @return 添加用户视图
-     */
-    @GetMapping("/user/add")
-    public String userAdd() {
-        return "manager/user/add";
-    }
-
-    /**
      * 角色分配页面
-     * 
+     *
      * @return 角色分配视图
      */
     @GetMapping("/user/role")
@@ -84,7 +74,7 @@ public class ManagerController {
 
     /**
      * 角色列表页面
-     * 
+     *
      * @return 角色列表视图
      */
     @GetMapping("/role/list")
@@ -93,18 +83,8 @@ public class ManagerController {
     }
 
     /**
-     * 添加角色页面
-     * 
-     * @return 添加角色视图
-     */
-    @GetMapping("/role/add")
-    public String roleAdd() {
-        return "manager/role/add";
-    }
-
-    /**
      * 权限配置页面
-     * 
+     *
      * @return 权限配置视图
      */
     @GetMapping("/role/permission")
@@ -114,7 +94,7 @@ public class ManagerController {
 
     /**
      * 系统设置页面
-     * 
+     *
      * @return 系统设置视图
      */
     @GetMapping("/settings")
@@ -123,28 +103,8 @@ public class ManagerController {
     }
 
     /**
-     * 基本设置页面
-     * 
-     * @return 基本设置视图
-     */
-    @GetMapping("/settings/basic")
-    public String settingsBasic() {
-        return "manager/settings/basic";
-    }
-
-    /**
-     * 安全设置页面
-     * 
-     * @return 安全设置视图
-     */
-    @GetMapping("/settings/security")
-    public String settingsSecurity() {
-        return "manager/settings/security";
-    }
-
-    /**
      * 日志管理页面
-     * 
+     *
      * @return 日志管理视图
      */
     @GetMapping("/log")
@@ -154,7 +114,7 @@ public class ManagerController {
 
     /**
      * 系统信息页面
-     * 
+     *
      * @return 系统信息视图
      */
     @GetMapping("/system-info")
@@ -164,7 +124,7 @@ public class ManagerController {
 
     /**
      * 权限管理页面
-     * 
+     *
      * @return 权限管理视图
      */
     @GetMapping("/permission")
