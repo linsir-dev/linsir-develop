@@ -3,11 +3,11 @@ package com.linsir.security.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.linsir.security.entity.Role;
 import com.linsir.security.entity.User;
 import com.linsir.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -174,6 +174,62 @@ public class UserController {
         } else {
             result.put("code", 500);
             result.put("message", "批量删除失败");
+        }
+
+        return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 获取用户的角色列表
+     */
+    @GetMapping("/{userId}/roles")
+    public ResponseEntity<Map<String, Object>> getUserRoles(@PathVariable("userId") Long userId) {
+        Map<String, Object> result = new HashMap<>();
+
+        // 查询用户是否存在
+        User user = userService.getById(userId);
+        if (user == null) {
+            result.put("code", 404);
+            result.put("message", "用户不存在");
+            return ResponseEntity.ok(result);
+        }
+
+        // 调用 Service 获取用户角色列表
+        List<Role> roles = userService.getUserRoles(userId);
+
+        result.put("code", 200);
+        result.put("message", "查询成功");
+        result.put("data", roles);
+
+        return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 给用户分配角色
+     */
+    @PostMapping("/{userId}/roles")
+    public ResponseEntity<Map<String, Object>> assignRoles(
+            @PathVariable("userId") Long userId,
+            @RequestBody List<Long> roleIds) {
+        Map<String, Object> result = new HashMap<>();
+
+        // 查询用户是否存在
+        User user = userService.getById(userId);
+        if (user == null) {
+            result.put("code", 404);
+            result.put("message", "用户不存在");
+            return ResponseEntity.ok(result);
+        }
+
+        try {
+            // 调用 Service 分配角色
+            userService.assignRoles(userId, roleIds);
+
+            result.put("code", 200);
+            result.put("message", "角色分配成功");
+        } catch (Exception e) {
+            result.put("code", 500);
+            result.put("message", "角色分配失败: " + e.getMessage());
         }
 
         return ResponseEntity.ok(result);

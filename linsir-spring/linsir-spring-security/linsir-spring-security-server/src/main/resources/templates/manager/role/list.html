@@ -22,7 +22,7 @@
 
 <!-- 数据表格 -->
 <div style="height: calc(100% - 50px);">
-    <table id="dg"></table>
+    <table id="role-dg"></table>
 </div>
 
 <!-- 角色编辑对话框 -->
@@ -172,7 +172,7 @@
             iconCls: 'icon-reload',
             handler: function() {
                 // 重新加载表格数据
-                $('#dg').datagrid('reload');
+                $('#role-dg').datagrid('reload');
             }
         }
     ];
@@ -182,7 +182,7 @@
      * 根据搜索条件重新加载表格数据
      */
     function doSearch() {
-        $('#dg').datagrid('load', {
+        $('#role-dg').datagrid('load', {
             roleCode: $('#search-roleCode').textbox('getValue'),
             roleName: $('#search-roleName').textbox('getValue'),
             status: $('#search-status').combobox('getValue')
@@ -197,7 +197,7 @@
         $('#search-roleCode').textbox('clear');
         $('#search-roleName').textbox('clear');
         $('#search-status').combobox('clear');
-        $('#dg').datagrid('load', {});
+        $('#role-dg').datagrid('load', {});
     }
 
     /**
@@ -223,7 +223,7 @@
      */
     function openEditDialog() {
         // 获取选中的行
-        var row = $('#dg').datagrid('getSelected');
+        var row = $('#role-dg').datagrid('getSelected');
         if (!row) {
             $.messager.alert('提示', '请选择要编辑的角色！', 'warning');
             return;
@@ -237,7 +237,7 @@
      */
     function openEditDialogById(id) {
         // 根据ID获取行数据
-        var rows = $('#dg').datagrid('getRows');
+        var rows = $('#role-dg').datagrid('getRows');
         var row = null;
         for (var i = 0; i < rows.length; i++) {
             if (rows[i].id === id) {
@@ -292,7 +292,7 @@
                                 timeout: 2000,
                                 showType: 'slide'
                             });
-                            $('#dg').datagrid('reload');
+                            $('#role-dg').datagrid('reload');
                         } else {
                             $.messager.show({
                                 title: '错误',
@@ -362,7 +362,7 @@
                         showType: 'slide'
                     });
                     closeDialog();
-                    $('#dg').datagrid('reload');
+                    $('#role-dg').datagrid('reload');
                 } else {
                     $.messager.show({
                         title: '错误',
@@ -403,7 +403,7 @@
      */
     $(function() {
         // 初始化角色数据表格
-        $('#dg').datagrid({
+        $('#role-dg').datagrid({
             // 主键字段，用于标识唯一行
             idField: 'id',
             // 数据加载时的提示消息
@@ -434,7 +434,7 @@
             toolbar: roleToolbar,
             // 数据加载完成后解析操作列的按钮
             onLoadSuccess: function(data) {
-                $('#dg').datagrid('getPanel').find('.easyui-linkbutton').linkbutton();
+                $('#role-dg').datagrid('getPanel').find('.easyui-linkbutton').linkbutton();
             }
         });
     });

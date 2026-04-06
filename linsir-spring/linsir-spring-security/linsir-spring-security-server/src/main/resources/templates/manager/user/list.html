@@ -1,5 +1,31 @@
 <!-- 用户列表页面 - 页面片段，无需完整HTML结构 -->
 
+<!-- 分配角色对话框 -->
+<div id="role-dialog" class="easyui-dialog" style="width:400px;height:350px;padding:20px;"
+     data-options="
+         closed:true,
+         modal:true,
+         buttons:[{
+             text:'保存',
+             iconCls:'icon-ok',
+             handler:saveUserRoles
+         },{
+             text:'取消',
+             iconCls:'icon-cancel',
+             handler:function() {
+                 $('#role-dialog').dialog('close');
+             }
+         }]
+     ">
+    <input type="hidden" id="role-user-id">
+    <div style="margin-bottom:10px;">
+        <span id="role-user-name" style="font-weight:bold;"></span>
+    </div>
+    <div id="role-checkboxes" style="height:250px;overflow-y:auto;">
+        <!-- 角色复选框将动态加载 -->
+    </div>
+</div>
+
 <!-- 查询工具栏 -->
 <div id="user-search-toolbar" style="padding:5px;height:auto;">
     <div style="margin-bottom:5px;">
@@ -20,7 +46,7 @@
 
 <!-- 数据表格 -->
 <div style="height: calc(100% - 50px);">
-    <table id="dg"></table>
+    <table id="user-dg"></table>
 </div>
 
 <!-- 用户编辑对话框 -->
@@ -167,7 +193,8 @@
             formatter: function(value, row, index) {
                 var editBtn = '<a href="javascript:void(0)" title="编辑" class="easyui-linkbutton" data-options="iconCls:\'icon-edit\',plain:true" style="margin:0 2px;" onclick="openEditDialogById(' + row.id + ')"></a>';
                 var deleteBtn = '<a href="javascript:void(0)" title="删除" class="easyui-linkbutton" data-options="iconCls:\'icon-remove\',plain:true" style="margin:0 2px;" onclick="deleteUser(' + row.id + ', \'' + row.username + '\')"></a>';
-                return editBtn + deleteBtn;
+                var roleBtn = '<a href="javascript:void(0)" title="分配角色" class="easyui-linkbutton" data-options="iconCls:\'icon-filter\',plain:true" style="margin:0 2px;" onclick="openRoleDialog(' + row.id + ', \'' + row.username + '\')"></a>';
+                return editBtn + deleteBtn + roleBtn;
             }
         }
     ];
@@ -190,7 +217,7 @@
             iconCls: 'icon-reload',
             handler: function() {
                 // 重新加载表格数据
-                $('#dg').datagrid('reload');
+                $('#user-dg').datagrid('reload');
             }
         }
     ];
@@ -200,7 +227,7 @@
      * 根据搜索条件重新加载表格数据
      */
     function doSearch() {
-        $('#dg').datagrid('load', {
+        $('#user-dg').datagrid('load', {
             username: $('#search-username').textbox('getValue'),
             status: $('#search-status').combobox('getValue')
         });
@@ -213,7 +240,7 @@
     function doReset() {
         $('#search-username').textbox('clear');
         $('#search-status').combobox('clear');
-        $('#dg').datagrid('load', {});
+        $('#user-dg').datagrid('load', {});
     }
 
     /**
@@ -246,7 +273,7 @@
      */
     function openEditDialog() {
         // 获取选中的行
-        var row = $('#dg').datagrid('getSelected');
+        var row = $('#user-dg').datagrid('getSelected');
         if (!row) {
             $.messager.alert('提示', '请选择要编辑的用户！', 'warning');
             return;
@@ -260,7 +287,7 @@
      */
     function openEditDialogById(id) {
         // 根据ID获取行数据
-        var rows = $('#dg').datagrid('getRows');
+        var rows = $('#user-dg').datagrid('getRows');
         var row = null;
         for (var i = 0; i < rows.length; i++) {
             if (rows[i].id === id) {
@@ -322,7 +349,7 @@
                                 timeout: 2000,
                                 showType: 'slide'
                             });
-                            $('#dg').datagrid('reload');
+                            $('#user-dg').datagrid('reload');
                         } else {
                             $.messager.show({
                                 title: '错误',
@@ -399,7 +426,7 @@
                         showType: 'slide'
                     });
                     closeDialog();
-                    $('#dg').datagrid('reload');
+                    $('#user-dg').datagrid('reload');
                 } else {
                     $.messager.show({
                         title: '错误',
@@ -435,12 +462,134 @@
     }
 
     /**
+     * 打开分配角色对话框
+     */
+    function openRoleDialog(userId, username) {
+        $('#role-user-id').val(userId);
+        $('#role-user-name').text('为用户「' + username + '」分配角色');
+
+        // 清空角色复选框
+        $('#role-checkboxes').html('<div style="padding:20px;text-align:center;">加载中...</div>');
+
+        // 打开对话框
+        $('#role-dialog').dialog({
+            title: '分配角色',
+            closed: false
+        });
+
+        // 加载角色列表和用户当前角色
+        loadRolesAndUserRoles(userId);
+    }
+
+    /**
+     * 加载角色列表和用户当前角色
+     */
+    function loadRolesAndUserRoles(userId) {
+        // 并行加载所有角色和用户的角色
+        $.when(
+            $.ajax({
+                url: '/api/role/list',
+                type: 'GET',
+                data: { page: 1, rows: 100 }
+            }),
+            $.ajax({
+                url: '/api/user/' + userId + '/roles',
+                type: 'GET'
+            })
+        ).done(function(roleRes, userRoleRes) {
+            var roles = roleRes[0].rows || [];
+            var userRoles = userRoleRes[0].data || [];
+
+            // 获取用户已有的角色ID
+            var userRoleIds = userRoles.map(function(r) { return r.id; });
+
+            // 生成角色复选框
+            var html = '';
+            if (roles.length === 0) {
+                html = '<div style="padding:20px;text-align:center;">暂无可分配的角色</div>';
+            } else {
+                for (var i = 0; i < roles.length; i++) {
+                    var role = roles[i];
+                    var checked = userRoleIds.indexOf(role.id) >= 0 ? 'checked' : '';
+                    html += '<div style="padding:5px;">';
+                    html += '<input type="checkbox" name="role" value="' + role.id + '" ' + checked + ' style="vertical-align:middle;">';
+                    html += '<span style="vertical-align:middle;margin-left:5px;">' + role.roleName + '</span>';
+                    html += '</div>';
+                }
+            }
+
+            $('#role-checkboxes').html(html);
+        }).fail(function() {
+            $('#role-checkboxes').html('<div style="padding:20px;text-align:center;color:red;">加载失败</div>');
+        });
+    }
+
+    /**
+     * 保存用户角色
+     */
+    function saveUserRoles() {
+        var userId = $('#role-user-id').val();
+        if (!userId) {
+            $.messager.show({
+                title: '错误',
+                msg: '用户ID不能为空',
+                timeout: 3000,
+                showType: 'slide'
+            });
+            return;
+        }
+
+        // 获取选中的角色ID
+        var roleIds = [];
+        $('input[name="role"]:checked').each(function() {
+            roleIds.push(parseInt($(this).val()));
+        });
+
+        $.ajax({
+            url: '/api/user/' + userId + '/roles',
+            type: 'POST',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(roleIds),
+            success: function(res) {
+                if (res.code === 200) {
+                    $.messager.show({
+                        title: '提示',
+                        msg: res.message,
+                        timeout: 2000,
+                        showType: 'slide'
+                    });
+                    $('#role-dialog').dialog('close');
+                } else {
+                    $.messager.show({
+                        title: '错误',
+                        msg: res.message,
+                        timeout: 3000,
+                        showType: 'slide'
+                    });
+                }
+            },
+            error: function(xhr) {
+                var message = '保存失败！';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                }
+                $.messager.show({
+                    title: '错误',
+                    msg: message,
+                    timeout: 3000,
+                    showType: 'slide'
+                });
+            }
+        });
+    }
+
+    /**
      * 页面初始化
      * 在DOM加载完成后初始化DataGrid
      */
     $(function() {
         // 初始化用户数据表格
-        $('#dg').datagrid({
+        $('#user-dg').datagrid({
             // 主键字段，用于标识唯一行
             idField: 'id',
             // 数据加载时的提示消息
@@ -471,7 +620,7 @@
             toolbar: userToolbar,
             // 数据加载完成后解析操作列的按钮
             onLoadSuccess: function(data) {
-                $('#dg').datagrid('getPanel').find('.easyui-linkbutton').linkbutton();
+                $('#user-dg').datagrid('getPanel').find('.easyui-linkbutton').linkbutton();
             }
         });
     });
