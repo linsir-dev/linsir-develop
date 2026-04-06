@@ -233,6 +233,55 @@ public class PermissionController {
     }
 
     /**
+     * 获取所有权限（树形结构，用于角色赋权）
+     * 返回嵌套的树形结构，包含所有类型的权限
+     */
+    @GetMapping("/tree")
+    public ResponseEntity<Map<String, Object>> getPermissionTree() {
+        // 查询所有权限（状态为启用）
+        LambdaQueryWrapper<Permission> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Permission::getStatus, 1)
+               .orderByAsc(Permission::getSortOrder);
+
+        List<Permission> permissionList = permissionService.list(wrapper);
+
+        // 构建权限树形结构
+        List<Map<String, Object>> permissionTree = buildPermissionTreeForRole(permissionList);
+
+        // 封装返回结果
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", 200);
+        result.put("message", "查询成功");
+        result.put("data", permissionTree);
+
+        return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 构建权限树形结构（用于角色赋权）
+     * @param permissionList 权限列表
+     * @return 嵌套的树形结构数据
+     */
+    private List<Map<String, Object>> buildPermissionTreeForRole(List<Permission> permissionList) {
+        // 转换为Map列表
+        List<Map<String, Object>> mapList = permissionList.stream().map(permission -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", permission.getId());
+            map.put("parentId", permission.getParentId());
+            map.put("permissionCode", permission.getPermissionCode());
+            map.put("permissionName", permission.getPermissionName());
+            map.put("resourceType", permission.getResourceType());
+            map.put("url", permission.getUrl());
+            map.put("icon", permission.getIcon());
+            map.put("sortOrder", permission.getSortOrder());
+            return map;
+        }).collect(Collectors.toList());
+
+        // 构建嵌套树形结构
+        return buildTreeRecursive(mapList, 0L);
+    }
+
+    /**
      * 查询可选的父权限列表（用于下拉选择）
      * 返回所有菜单和按钮类型的权限（可作为父权限）
      */

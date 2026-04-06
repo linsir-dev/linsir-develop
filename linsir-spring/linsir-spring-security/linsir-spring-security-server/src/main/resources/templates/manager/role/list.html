@@ -1,5 +1,31 @@
 <!-- 角色列表页面 - 页面片段，无需完整HTML结构 -->
 
+<!-- 分配权限对话框 -->
+<div id="permission-dialog" class="easyui-dialog" style="width:500px;height:500px;padding:20px;"
+     data-options="
+         closed:true,
+         modal:true,
+         buttons:[{
+             text:'保存',
+             iconCls:'icon-ok',
+             handler:saveRolePermissions
+         },{
+             text:'取消',
+             iconCls:'icon-cancel',
+             handler:function() {
+                 $('#permission-dialog').dialog('close');
+             }
+         }]
+     ">
+    <input type="hidden" id="permission-role-id">
+    <div style="margin-bottom:10px;">
+        <span id="permission-role-name" style="font-weight:bold;"></span>
+    </div>
+    <div id="permission-tree" style="height:380px;overflow-y:auto;">
+        <!-- 权限树将动态加载 -->
+    </div>
+</div>
+
 <!-- 查询工具栏 -->
 <div id="role-search-toolbar" style="padding:5px;height:auto;">
     <div style="margin-bottom:5px;">
@@ -144,12 +170,13 @@
             // 操作列
             field: 'operate',
             title: '操作',
-            width: 80,
+            width: 120,
             align: 'center',
             formatter: function(value, row, index) {
-                var editBtn = '<a href="javascript:void(0)" title="编辑" class="easyui-linkbutton" data-options="iconCls:\'icon-edit\',plain:true" style="margin:0 2px;" onclick="openEditDialogById(' + row.id + ')"></a>';
-                var deleteBtn = '<a href="javascript:void(0)" title="删除" class="easyui-linkbutton" data-options="iconCls:\'icon-remove\',plain:true" style="margin:0 2px;" onclick="deleteRole(' + row.id + ', \'' + row.roleName + '\')"></a>';
-                return editBtn + deleteBtn;
+                var editBtn = '<span class="l-btn l-btn-small l-btn-plain" style="margin:0 2px;cursor:pointer;" onclick="openEditDialogById(' + row.id + ')" title="编辑"><span class="l-btn-left l-btn-icon-left"><span class="l-btn-text l-btn-empty">&nbsp;</span><span class="l-btn-icon icon-edit">&nbsp;</span></span></span>';
+                var deleteBtn = '<span class="l-btn l-btn-small l-btn-plain" style="margin:0 2px;cursor:pointer;" onclick="deleteRole(' + row.id + ', \'' + row.roleName + '\')" title="删除"><span class="l-btn-left l-btn-icon-left"><span class="l-btn-text l-btn-empty">&nbsp;</span><span class="l-btn-icon icon-remove">&nbsp;</span></span></span>';
+                var permBtn = '<span class="l-btn l-btn-small l-btn-plain" style="margin:0 2px;cursor:pointer;" onclick="openPermissionDialog(' + row.id + ', \'' + row.roleName + '\')" title="分配权限"><span class="l-btn-left l-btn-icon-left"><span class="l-btn-text l-btn-empty">&nbsp;</span><span class="l-btn-icon icon-key">&nbsp;</span></span></span>';
+                return editBtn + deleteBtn + permBtn;
             }
         }
     ];
@@ -398,6 +425,159 @@
     }
 
     /**
+     * 打开分配权限对话框
+     * @param {number} roleId - 角色ID
+     * @param {string} roleName - 角色名称
+     */
+    function openPermissionDialog(roleId, roleName) {
+        $('#permission-role-id').val(roleId);
+        $('#permission-role-name').text('为角色「' + roleName + '」分配权限');
+        $('#permission-dialog').dialog({ title: '分配权限', closed: false });
+
+        // 初始化权限树
+        initPermissionTree(roleId);
+    }
+
+    /**
+     * 初始化权限树
+     * @param {number} roleId - 角色ID
+     */
+    function initPermissionTree(roleId) {
+        // 先销毁旧的树
+        if ($('#permission-tree').data('tree')) {
+            $('#permission-tree').tree('destroy');
+        }
+
+        // 加载所有权限和角色已有权限
+        $.when(
+            $.ajax({ url: '/api/permission/tree', type: 'GET' }),
+            $.ajax({ url: '/api/role/' + roleId + '/permissions', type: 'GET' })
+        ).done(function(permRes, rolePermRes) {
+            console.log('权限树接口返回:', permRes[0]);
+            console.log('角色权限接口返回:', rolePermRes[0]);
+
+            var permissionTree = permRes[0].data || [];
+            var rolePermissions = rolePermRes[0].data || [];
+            var rolePermIds = rolePermissions.map(function(p) { return p.id; });
+
+            console.log('权限树数据:', permissionTree);
+            console.log('角色权限ID列表:', rolePermIds);
+
+            // 转换树数据并设置选中状态
+            var treeData = convertTreeData(permissionTree, rolePermIds);
+
+            console.log('转换后的树数据:', treeData);
+
+            // 初始化树
+            $('#permission-tree').tree({
+                data: treeData,
+                checkbox: true,
+                cascadeCheck: true,
+                lines: true,
+                animate: true
+            });
+
+            // 展开所有节点
+            $('#permission-tree').tree('expandAll');
+        }).fail(function(xhr, status, error) {
+            console.error('加载权限数据失败:', status, error);
+            console.error('权限接口响应:', xhr.responseText);
+            $.messager.show({
+                title: '错误',
+                msg: '加载权限数据失败: ' + status,
+                timeout: 3000,
+                showType: 'slide'
+            });
+        });
+    }
+
+    /**
+     * 转换权限树数据（递归设置选中状态）
+     * @param {Array} treeData - 权限树数据
+     * @param {Array} checkedIds - 已选中的权限ID列表
+     * @returns {Array} 转换后的树形数据
+     */
+    function convertTreeData(treeData, checkedIds) {
+        if (!treeData || treeData.length === 0) {
+            return [];
+        }
+        return treeData.map(function(node) {
+            var converted = {
+                id: String(node.id),
+                text: node.permissionName + ' (' + node.permissionCode + ')',
+                checked: checkedIds.indexOf(node.id) >= 0
+            };
+
+            // 递归处理子节点（只有有子节点时才添加 children 属性）
+            if (node.children && node.children.length > 0) {
+                converted.children = convertTreeData(node.children, checkedIds);
+            }
+
+            return converted;
+        });
+    }
+
+    /**
+     * 保存角色权限分配
+     */
+    function saveRolePermissions() {
+        var roleId = $('#permission-role-id').val();
+        if (!roleId) {
+            $.messager.show({
+                title: '错误',
+                msg: '角色ID不能为空',
+                timeout: 3000,
+                showType: 'slide'
+            });
+            return;
+        }
+
+        // 获取选中的权限节点
+        var checkedNodes = $('#permission-tree').tree('getChecked');
+        var permissionIds = checkedNodes.map(function(node) {
+            return node.id;
+        });
+
+        // 发送保存请求
+        $.ajax({
+            url: '/api/role/' + roleId + '/permissions',
+            type: 'POST',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(permissionIds),
+            success: function(res) {
+                if (res.code === 200) {
+                    $.messager.show({
+                        title: '提示',
+                        msg: res.message,
+                        timeout: 2000,
+                        showType: 'slide'
+                    });
+                    $('#permission-dialog').dialog('close');
+                } else {
+                    $.messager.show({
+                        title: '错误',
+                        msg: res.message,
+                        timeout: 3000,
+                        showType: 'slide'
+                    });
+                }
+            },
+            error: function(xhr) {
+                var message = '保存失败！';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                }
+                $.messager.show({
+                    title: '错误',
+                    msg: message,
+                    timeout: 3000,
+                    showType: 'slide'
+                });
+            }
+        });
+    }
+
+    /**
      * 页面初始化
      * 在DOM加载完成后初始化DataGrid
      */
@@ -432,9 +612,9 @@
             columns: [roleColumns],
             // 工具栏配置
             toolbar: roleToolbar,
-            // 数据加载完成后解析操作列的按钮
+            // 数据加载完成后的回调
             onLoadSuccess: function(data) {
-                $('#role-dg').datagrid('getPanel').find('.easyui-linkbutton').linkbutton();
+                // 操作列按钮已使用原生样式，无需额外初始化
             }
         });
     });

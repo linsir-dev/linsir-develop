@@ -3,6 +3,7 @@ package com.linsir.security.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.linsir.security.entity.Permission;
 import com.linsir.security.entity.Role;
 import com.linsir.security.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -177,6 +178,69 @@ public class RoleController {
         } else {
             result.put("code", 500);
             result.put("message", "批量删除失败");
+        }
+
+        return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 获取角色的权限列表
+     */
+    @GetMapping("/{roleId}/permissions")
+    public ResponseEntity<Map<String, Object>> getRolePermissions(@PathVariable("roleId") Long roleId) {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            // 查询角色是否存在
+            Role role = roleService.getById(roleId);
+            if (role == null) {
+                result.put("code", 404);
+                result.put("message", "角色不存在");
+                return ResponseEntity.ok(result);
+            }
+
+            // 调用 Service 获取角色权限列表
+            List<Permission> permissions = roleService.getRolePermissions(roleId);
+
+            result.put("code", 200);
+            result.put("message", "查询成功");
+            result.put("data", permissions);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("code", 500);
+            result.put("message", "查询失败: " + e.getMessage());
+            result.put("data", null);
+        }
+
+        return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 给角色分配权限
+     */
+    @PostMapping("/{roleId}/permissions")
+    public ResponseEntity<Map<String, Object>> assignPermissions(
+            @PathVariable("roleId") Long roleId,
+            @RequestBody List<Long> permissionIds) {
+        Map<String, Object> result = new HashMap<>();
+
+        // 查询角色是否存在
+        Role role = roleService.getById(roleId);
+        if (role == null) {
+            result.put("code", 404);
+            result.put("message", "角色不存在");
+            return ResponseEntity.ok(result);
+        }
+
+        try {
+            // 调用 Service 分配权限
+            roleService.assignPermissions(roleId, permissionIds);
+
+            result.put("code", 200);
+            result.put("message", "权限分配成功");
+        } catch (Exception e) {
+            result.put("code", 500);
+            result.put("message", "权限分配失败: " + e.getMessage());
         }
 
         return ResponseEntity.ok(result);
