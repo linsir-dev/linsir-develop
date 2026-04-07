@@ -7,28 +7,7 @@
         background: #f0f2f5;
     }
 
-    .welcome-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 30px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .welcome-card h1 {
-        font-size: 28px;
-        margin-bottom: 10px;
-        margin-top: 0;
-    }
-
-    .welcome-card p {
-        font-size: 14px;
-        opacity: 0.9;
-        margin: 5px 0;
-    }
-
-    .user-info-card {
+    .method-card {
         background: white;
         padding: 20px;
         border-radius: 8px;
@@ -36,7 +15,7 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    .user-info-card h3 {
+    .method-card h3 {
         margin-top: 0;
         color: #333;
         border-bottom: 2px solid #667eea;
@@ -44,185 +23,163 @@
         margin-bottom: 15px;
     }
 
-    .statistics-row {
-        margin-bottom: 20px;
-    }
-
-    .stat-card {
-        background: white;
-        padding: 25px;
-        border-radius: 8px;
+    .method-card .loading {
         text-align: center;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        transition: transform 0.3s;
-    }
-
-    .stat-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .stat-card .icon {
-        font-size: 40px;
-        margin-bottom: 10px;
-    }
-
-    .stat-card .number {
-        font-size: 32px;
-        font-weight: bold;
-        color: #667eea;
-        margin: 10px 0;
-    }
-
-    .stat-card .label {
-        font-size: 14px;
-        color: #666;
-    }
-
-    .quick-access {
-        background: white;
         padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        color: #999;
     }
 
-    .quick-access h3 {
-        margin-top: 0;
-        color: #333;
-        margin-bottom: 15px;
+    .method-card .error {
+        text-align: center;
+        padding: 20px;
+        color: #ff4d4f;
     }
 
-    .quick-link {
+    .user-info-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .user-info-table td {
+        padding: 10px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .user-info-table td:first-child {
+        width: 120px;
+        color: #666;
+        font-weight: bold;
+    }
+
+    .user-info-table tr:nth-child(even) {
+        background: #f8f9fa;
+    }
+
+    .authority-tag {
         display: inline-block;
-        padding: 10px 20px;
-        margin: 5px;
-        background: #f0f2f5;
-        border-radius: 4px;
-        text-decoration: none;
-        color: #333;
-        transition: all 0.3s;
-    }
-
-    .quick-link:hover {
         background: #667eea;
         color: white;
+        padding: 4px 12px;
+        border-radius: 4px;
+        margin: 2px;
+        font-size: 12px;
+    }
+
+    .success-status {
+        color: #52c41a;
+        font-weight: bold;
+    }
+
+    .error-status {
+        color: #ff4d4f;
+        font-weight: bold;
     }
 </style>
 
 <div class="dashboard-container">
-    <!-- 欢迎卡片 -->
-    <div class="welcome-card">
-        <h1>欢迎使用后台管理系统</h1>
-        <p>尊敬的管理员，您好！这是您的管理控制台。</p>
-        <p>当前时间：<span id="home-current-time"></span></p>
-    </div>
-
-    <!-- 用户信息卡片 -->
-    <div class="user-info-card">
-        <h3>👤 当前用户信息</h3>
-        <div id="home-user-info-content">
-            <table style="width: 100%; border-collapse: collapse;">
-                <tr>
-                    <td style="padding: 10px; width: 120px; color: #666; font-weight: bold;">用户名：</td>
-                    <td style="padding: 10px;"><span id="home-info-username" style="color: #333; font-size: 16px;">-</span></td>
-                </tr>
-                <tr style="background: #f8f9fa;">
-                    <td style="padding: 10px; color: #666; font-weight: bold;">认证状态：</td>
-                    <td style="padding: 10px;"><span id="home-info-authenticated" style="color: #333;">-</span></td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; color: #666; font-weight: bold;">认证类型：</td>
-                    <td style="padding: 10px;"><span id="home-info-auth-type" style="color: #333;">-</span></td>
-                </tr>
-                <tr style="background: #f8f9fa;">
-                    <td style="padding: 10px; color: #666; font-weight: bold; vertical-align: top;">角色权限：</td>
-                    <td style="padding: 10px;"><span id="home-info-authorities" style="color: #333;">-</span></td>
-                </tr>
-            </table>
+    <!-- 方法 1: 使用 SecurityContextHolder -->
+    <div class="method-card">
+        <h3>方法 1: 使用 SecurityContextHolder</h3>
+        <div id="method1-content" class="loading">
+            加载中...
         </div>
     </div>
 
-    <!-- 统计卡片 -->
-    <div class="statistics-row">
-        <table style="width: 100%;">
-            <tr>
-                <td style="width: 25%;">
-                    <div class="stat-card">
-                        <div class="icon">👥</div>
-                        <div class="number">1,234</div>
-                        <div class="label">用户总数</div>
-                    </div>
-                </td>
-                <td style="width: 25%;">
-                    <div class="stat-card">
-                        <div class="icon">📝</div>
-                        <div class="number">56</div>
-                        <div class="label">待办事项</div>
-                    </div>
-                </td>
-                <td style="width: 25%;">
-                    <div class="stat-card">
-                        <div class="icon">📊</div>
-                        <div class="number">8,901</div>
-                        <div class="label">订单数量</div>
-                    </div>
-                </td>
-                <td style="width: 25%;">
-                    <div class="stat-card">
-                        <div class="icon">💰</div>
-                        <div class="number">¥123,456</div>
-                        <div class="label">销售总额</div>
-                    </div>
-                </td>
-            </tr>
-        </table>
+    <!-- 方法 2: 使用 @AuthenticationPrincipal 注解 -->
+    <div class="method-card">
+        <h3>方法 2: 使用 @AuthenticationPrincipal 注解</h3>
+        <div id="method2-content" class="loading">
+            加载中...
+        </div>
     </div>
 
-    <!-- 快捷访问 -->
-    <div class="quick-access">
-        <h3>🚀 快捷访问</h3>
-        <a href="javascript:void(0)" class="quick-link" onclick="parent.addTab('用户管理', '/manager/user/list', 'icon-user')">用户管理</a>
-        <a href="javascript:void(0)" class="quick-link">角色管理</a>
-        <a href="javascript:void(0)" class="quick-link">权限设置</a>
-        <a href="javascript:void(0)" class="quick-link">系统日志</a>
-        <a href="javascript:void(0)" class="quick-link">系统设置</a>
+
+
+    <!-- 方法 4: 注入 Authentication 对象 -->
+    <div class="method-card">
+        <h3>方法 4: 注入 Authentication 对象</h3>
+        <div id="method4-content" class="loading">
+            加载中...
+        </div>
     </div>
 </div>
 
 <script>
-    // 显示当前时间
-    function updateHomeTime() {
-        var now = new Date();
-        var timeStr = now.getFullYear() + '-' +
-                     (now.getMonth() + 1).toString().padStart(2, '0') + '-' +
-                     now.getDate().toString().padStart(2, '0') + ' ' +
-                     now.getHours().toString().padStart(2, '0') + ':' +
-                     now.getMinutes().toString().padStart(2, '0') + ':' +
-                     now.getSeconds().toString().padStart(2, '0');
-        $('#home-current-time').text(timeStr);
+    // 显示当前用户信息 - 方法 1
+    function loadUserInfoMethod1() {
+        $.getJSON("/api/user/current/info1", function(data) {
+            var content = $('#method1-content');
+            if (data.code === 200) {
+                var userData = data.data;
+                var html = '<table class="user-info-table">';
+                html += '<tr><td>用户名：</td><td>' + userData.username + '</td></tr>';
+                html += '<tr><td>认证状态：</td><td><span class="success-status">✓ 已认证</span></td></tr>';
+                html += '</table>';
+                content.html(html);
+            } else {
+                content.html('<div class="error">' + data.message + '</div>');
+            }
+        }).fail(function() {
+            $('#method1-content').html('<div class="error">获取失败</div>');
+        });
     }
 
-    updateHomeTime();
-    setInterval(updateHomeTime, 1000);
-
-    // 获取当前用户信息
-    $.getJSON("/api/security-context/get-current-user", function(data) {
-        if (data.authenticated && data.username) {
-            // 用户信息卡片显示详细信息
-            $("#home-info-username").text(data.username);
-            $("#home-info-authenticated").html('<span style="color: #52c41a; font-weight: bold;">✓ 已认证</span>');
-            $("#home-info-auth-type").text(data.authenticationClass || '未知');
-
-            // 显示权限列表
-            if (data.authorities && data.authorities.length > 0) {
-                var authHtml = data.authorities.map(function(auth) {
-                    return '<span style="display: inline-block; background: #667eea; color: white; padding: 4px 12px; border-radius: 4px; margin: 2px; font-size: 12px;">' + auth + '</span>';
-                }).join('');
-                $("#home-info-authorities").html(authHtml);
+    // 显示当前用户信息 - 方法 2
+    function loadUserInfoMethod2() {
+        $.getJSON("/api/user/current/info2", function(data) {
+            var content = $('#method2-content');
+            if (data.code === 200) {
+                var userData = data.data;
+                var html = '<table class="user-info-table">';
+                html += '<tr><td>用户名：</td><td>' + userData.username + '</td></tr>';
+                html += '<tr><td>认证状态：</td><td><span class="success-status">✓ 已认证</span></td></tr>';
+                if (userData.authorities && userData.authorities.length > 0) {
+                    var authHtml = userData.authorities.map(function(auth) {
+                        return '<span class="authority-tag">' + auth.authority + '</span>';
+                    }).join('');
+                    html += '<tr><td>权限：</td><td>' + authHtml + '</td></tr>';
+                }
+                html += '</table>';
+                content.html(html);
             } else {
-                $("#home-info-authorities").html('<span style="color: #999;">暂无权限</span>');
+                content.html('<div class="error">' + data.message + '</div>');
             }
-        } else {
-            $("#home-info-authenticated").html('<span style="color: #ff4d4f; font-weight: bold;">✗ 未认证</span>');
-        }
+        }).fail(function() {
+            $('#method2-content').html('<div class="error">获取失败</div>');
+        });
+    }
+
+
+
+    // 显示当前用户信息 - 方法 4
+    function loadUserInfoMethod4() {
+        $.getJSON("/api/user/current/info4", function(data) {
+            var content = $('#method4-content');
+            if (data.code === 200) {
+                var userData = data.data;
+                var html = '<table class="user-info-table">';
+                html += '<tr><td>用户名：</td><td>' + userData.username + '</td></tr>';
+                html += '<tr><td>认证状态：</td><td><span class="success-status">✓ 已认证</span></td></tr>';
+                if (userData.authorities && userData.authorities.length > 0) {
+                    var authHtml = userData.authorities.map(function(auth) {
+                        return '<span class="authority-tag">' + auth.authority + '</span>';
+                    }).join('');
+                    html += '<tr><td>权限：</td><td>' + authHtml + '</td></tr>';
+                }
+                html += '</table>';
+                content.html(html);
+            } else {
+                content.html('<div class="error">' + data.message + '</div>');
+            }
+        }).fail(function() {
+            $('#method4-content').html('<div class="error">获取失败</div>');
+        });
+    }
+
+    // 页面加载时获取所有用户信息
+    $(function() {
+        loadUserInfoMethod1();
+        loadUserInfoMethod2();
+        loadUserInfoMethod4();
     });
 </script>

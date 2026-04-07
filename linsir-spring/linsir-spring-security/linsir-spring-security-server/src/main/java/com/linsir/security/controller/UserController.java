@@ -8,6 +8,10 @@ import com.linsir.security.entity.User;
 import com.linsir.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -259,6 +263,92 @@ public class UserController {
             } else {
                 result.put("code", 500);
                 result.put("message", "密码修改失败");
+            }
+        } catch (Exception e) {
+            result.put("code", 500);
+            result.put("message", e.getMessage());
+        }
+
+        return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 获取当前用户信息 - 使用 SecurityContextHolder
+     */
+    @GetMapping("/current/info1")
+    public ResponseEntity<Map<String, Object>> getCurrentUserInfo1() {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.isAuthenticated()) {
+                String username = authentication.getName();
+                result.put("code", 200);
+                result.put("message", "获取成功");
+                result.put("data", Map.of(
+                        "username", username,
+                        "authentication", authentication
+                ));
+            } else {
+                result.put("code", 401);
+                result.put("message", "用户未认证");
+            }
+        } catch (Exception e) {
+            result.put("code", 500);
+            result.put("message", e.getMessage());
+        }
+
+        return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 获取当前用户信息 - 使用 @AuthenticationPrincipal 注解
+     */
+    @GetMapping("/current/info2")
+    public ResponseEntity<Map<String, Object>> getCurrentUserInfo2(@AuthenticationPrincipal UserDetails userDetails) {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            if (userDetails != null) {
+                result.put("code", 200);
+                result.put("message", "获取成功");
+                result.put("data", Map.of(
+                        "username", userDetails.getUsername(),
+                        "authorities", userDetails.getAuthorities()
+                ));
+            } else {
+                result.put("code", 401);
+                result.put("message", "用户未认证");
+            }
+        } catch (Exception e) {
+            result.put("code", 500);
+            result.put("message", e.getMessage());
+        }
+
+        return ResponseEntity.ok(result);
+    }
+
+
+
+    /**
+     * 获取当前用户信息 - 注入 Authentication 对象
+     */
+    @GetMapping("/current/info4")
+    public ResponseEntity<Map<String, Object>> getCurrentUserInfo4(Authentication authentication) {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            if (authentication != null && authentication.isAuthenticated()) {
+                String username = authentication.getName();
+                result.put("code", 200);
+                result.put("message", "获取成功");
+                result.put("data", Map.of(
+                        "username", username,
+                        "authorities", authentication.getAuthorities()
+                ));
+            } else {
+                result.put("code", 401);
+                result.put("message", "用户未认证");
             }
         } catch (Exception e) {
             result.put("code", 500);
