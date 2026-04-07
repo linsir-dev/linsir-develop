@@ -165,7 +165,8 @@ INSERT INTO `sys_permission` (`permission_code`, `permission_name`, `resource_ty
 ('api:permission:create', '创建权限接口', 'api', '/api/permission/create', 'POST', 10, 2),
 ('api:permission:update', '更新权限接口', 'api', '/api/permission/update', 'PUT', 10, 3),
 ('api:permission:delete', '删除权限接口', 'api', '/api/permission/delete', 'DELETE', 10, 4),
-('api:permission:menu', '菜单列表接口', 'api', '/api/permission/menu/list', 'GET', 10, 5);
+('api:permission:menu', '菜单列表接口', 'api', '/api/permission/menu/list', 'GET', 10, 5),
+('api:permission:tree', '权限树接口', 'api', '/api/permission/tree', 'GET', 10, 6);
 
 -- 4. 初始化管理员用户（密码：admin123）
 -- 密码使用 BCrypt 加密：$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z5EO
@@ -182,10 +183,10 @@ INSERT INTO `sys_user_role` (`user_id`, `role_id`) VALUES
 
 -- 6. 初始化角色权限关联（ROLE_ADMIN 拥有所有权限）
 INSERT INTO `sys_role_permission` (`role_id`, `permission_id`) VALUES
--- ROLE_ADMIN 拥有所有权限（1-28）
+-- ROLE_ADMIN 拥有所有权限（1-29）
 (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10),
 (1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18), (1, 19), (1, 20),
-(1, 21), (1, 22), (1, 23), (1, 24), (1, 25), (1, 26), (1, 27), (1, 28),
+(1, 21), (1, 22), (1, 23), (1, 24), (1, 25), (1, 26), (1, 27), (1, 28), (1, 29),
 
 -- ROLE_USER 拥有部分权限（系统首页、用户列表、角色列表、权限列表）
 (2, 2),  -- 系统首页
