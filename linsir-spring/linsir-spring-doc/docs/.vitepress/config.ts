@@ -31,6 +31,7 @@ export default withMermaid({
       { text: 'spring-tx', link: '/spring-tx/' },
       { text: 'spring-web', link: '/spring-web/' },
       { text: 'spring-webmvc', link: '/spring-webmvc/' },
+      { text: 'spring-security', link: '/spring-security/' },
     ],
     sidebar: {
       '/guide/': [
@@ -179,6 +180,38 @@ export default withMermaid({
           text: 'spring-webmvc',
           items: [
             { text: '概述', link: '/spring-webmvc/' },
+          ]
+        }
+      ],
+      '/spring-security/': [
+        {
+          text: 'spring-security',
+          items: [
+            { text: '概述', link: '/spring-security/' },
+            {
+              text: '架构设计',
+              collapsed: false,
+              items: [
+                { text: '1. 认证概述', link: '/spring-security/01-architecture/01-authentication-overview' },
+                { text: '2. SecurityContextHolder', link: '/spring-security/01-architecture/02-security-context-holder' },
+                { text: '3. Authentication', link: '/spring-security/01-architecture/03-authentication' },
+                { text: '4. AuthenticationManager', link: '/spring-security/01-architecture/04-authentication-manager' },
+                { text: '5. 认证流程', link: '/spring-security/01-architecture/05-authentication-flow' },
+                { text: '6. DaoAuthenticationProvider', link: '/spring-security/01-architecture/06-dao-authentication-provider' },
+                { text: '7. 认证事件', link: '/spring-security/01-architecture/07-authentication-events' },
+                { text: '8. 授权架构', link: '/spring-security/01-architecture/08-authorization-architecture' },
+              ]
+            },
+            {
+              text: '实现指南',
+              collapsed: false,
+              items: [
+                { text: '1. GrantedAuthority 指南', link: '/spring-security/02-implementation/01-granted-authority-guide' },
+                { text: '2. AuthorizationManager 工厂指南', link: '/spring-security/02-implementation/02-authorization-manager-factory-guide' },
+                { text: '3. AuthorizationManager 配置选项', link: '/spring-security/02-implementation/03-authorization-manager-factory-config-options' },
+                { text: '4. RBAC 授权方案', link: '/spring-security/02-implementation/04-rbac-authorization-scheme' },
+              ]
+            }
           ]
         }
       ],
