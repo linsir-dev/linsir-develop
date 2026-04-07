@@ -157,6 +157,8 @@ INSERT INTO `sys_permission` (`permission_code`, `permission_name`, `resource_ty
 ('api:role:create', '创建角色接口', 'api', '/api/role/create', 'POST', 9, 2),
 ('api:role:update', '更新角色接口', 'api', '/api/role/update', 'PUT', 9, 3),
 ('api:role:delete', '删除角色接口', 'api', '/api/role/delete', 'DELETE', 9, 4),
+('api:role:permissions', '获取角色权限接口', 'api', '/api/role/*/permissions', 'GET', 9, 5),
+('api:role:assign:permissions', '分配角色权限接口', 'api', '/api/role/*/permissions', 'POST', 9, 6),
 
 -- 权限接口权限（parent_id 指向权限列表菜单 10）
 ('api:permission:list', '权限列表接口', 'api', '/api/permission/list', 'GET', 10, 1),
@@ -180,10 +182,10 @@ INSERT INTO `sys_user_role` (`user_id`, `role_id`) VALUES
 
 -- 6. 初始化角色权限关联（ROLE_ADMIN 拥有所有权限）
 INSERT INTO `sys_role_permission` (`role_id`, `permission_id`) VALUES
--- ROLE_ADMIN 拥有所有权限（1-26）
+-- ROLE_ADMIN 拥有所有权限（1-28）
 (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10),
 (1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18), (1, 19), (1, 20),
-(1, 21), (1, 22), (1, 23), (1, 24), (1, 25), (1, 26),
+(1, 21), (1, 22), (1, 23), (1, 24), (1, 25), (1, 26), (1, 27), (1, 28),
 
 -- ROLE_USER 拥有部分权限（系统首页、用户列表、角色列表、权限列表）
 (2, 2),  -- 系统首页
