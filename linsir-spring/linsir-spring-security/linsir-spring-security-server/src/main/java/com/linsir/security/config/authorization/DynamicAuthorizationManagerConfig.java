@@ -148,9 +148,9 @@ public class DynamicAuthorizationManagerConfig {
             return requestUri.matches(regex);
         }
 
-        // 前缀匹配
-        // /api/user 匹配 /api/user, /api/user/1, /api/user/list
-        if (requestUri.startsWith(pattern)) {
+        // 前缀匹配（仅当 pattern 以 / 结尾时）
+        // /api/user/ 匹配 /api/user/1, /api/user/list
+        if (pattern.endsWith("/") && requestUri.startsWith(pattern)) {
             return true;
         }
 
