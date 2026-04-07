@@ -148,25 +148,49 @@ INSERT INTO `sys_permission` (`permission_code`, `permission_name`, `resource_ty
 INSERT INTO `sys_permission` (`permission_code`, `permission_name`, `resource_type`, `url`, `method`, `parent_id`, `sort_order`) VALUES
 -- 用户接口权限（parent_id 指向用户列表菜单 5）
 ('api:user:list', '用户列表接口', 'api', '/api/user/list', 'GET', 5, 1),
-('api:user:create', '创建用户接口', 'api', '/api/user/create', 'POST', 5, 2),
-('api:user:update', '更新用户接口', 'api', '/api/user/update', 'PUT', 5, 3),
-('api:user:delete', '删除用户接口', 'api', '/api/user/delete', 'DELETE', 5, 4),
+('api:user:detail', '用户详情接口', 'api', '/api/user/*', 'GET', 5, 2),
+('api:user:create', '创建用户接口', 'api', '/api/user/create', 'POST', 5, 3),
+('api:user:update', '更新用户接口', 'api', '/api/user/update/*', 'PUT', 5, 4),
+('api:user:delete', '删除用户接口', 'api', '/api/user/delete/*', 'DELETE', 5, 5),
+('api:user:delete:batch', '批量删除用户接口', 'api', '/api/user/delete/batch', 'DELETE', 5, 6),
+('api:user:roles', '获取用户角色接口', 'api', '/api/user/*/roles', 'GET', 5, 7),
+('api:user:assign:roles', '分配用户角色接口', 'api', '/api/user/*/roles', 'POST', 5, 8),
+('api:user:update:password', '修改用户密码接口', 'api', '/api/user/update/password/*', 'PUT', 5, 9),
+('api:user:current:info1', '获取当前用户信息1', 'api', '/api/user/current/info1', 'GET', 5, 10),
+('api:user:current:info2', '获取当前用户信息2', 'api', '/api/user/current/info2', 'GET', 5, 11),
+('api:user:current:info3', '获取当前用户信息3', 'api', '/api/user/current/info3', 'GET', 5, 12),
+('api:user:current:info4', '获取当前用户信息4', 'api', '/api/user/current/info4', 'GET', 5, 13),
 
 -- 角色接口权限（parent_id 指向角色列表菜单 9）
 ('api:role:list', '角色列表接口', 'api', '/api/role/list', 'GET', 9, 1),
-('api:role:create', '创建角色接口', 'api', '/api/role/create', 'POST', 9, 2),
-('api:role:update', '更新角色接口', 'api', '/api/role/update', 'PUT', 9, 3),
-('api:role:delete', '删除角色接口', 'api', '/api/role/delete', 'DELETE', 9, 4),
-('api:role:permissions', '获取角色权限接口', 'api', '/api/role/*/permissions', 'GET', 9, 5),
-('api:role:assign:permissions', '分配角色权限接口', 'api', '/api/role/*/permissions', 'POST', 9, 6),
+('api:role:detail', '角色详情接口', 'api', '/api/role/*', 'GET', 9, 2),
+('api:role:create', '创建角色接口', 'api', '/api/role/create', 'POST', 9, 3),
+('api:role:update', '更新角色接口', 'api', '/api/role/update/*', 'PUT', 9, 4),
+('api:role:delete', '删除角色接口', 'api', '/api/role/delete/*', 'DELETE', 9, 5),
+('api:role:delete:batch', '批量删除角色接口', 'api', '/api/role/delete/batch', 'DELETE', 9, 6),
+('api:role:permissions', '获取角色权限接口', 'api', '/api/role/*/permissions', 'GET', 9, 7),
+('api:role:assign:permissions', '分配角色权限接口', 'api', '/api/role/*/permissions', 'POST', 9, 8),
 
 -- 权限接口权限（parent_id 指向权限列表菜单 10）
 ('api:permission:list', '权限列表接口', 'api', '/api/permission/list', 'GET', 10, 1),
-('api:permission:create', '创建权限接口', 'api', '/api/permission/create', 'POST', 10, 2),
-('api:permission:update', '更新权限接口', 'api', '/api/permission/update', 'PUT', 10, 3),
-('api:permission:delete', '删除权限接口', 'api', '/api/permission/delete', 'DELETE', 10, 4),
-('api:permission:menu', '菜单列表接口', 'api', '/api/permission/menu/list', 'GET', 10, 5),
-('api:permission:tree', '权限树接口', 'api', '/api/permission/tree', 'GET', 10, 6);
+('api:permission:detail', '权限详情接口', 'api', '/api/permission/*', 'GET', 10, 2),
+('api:permission:create', '创建权限接口', 'api', '/api/permission/create', 'POST', 10, 3),
+('api:permission:update', '更新权限接口', 'api', '/api/permission/update/*', 'PUT', 10, 4),
+('api:permission:delete', '删除权限接口', 'api', '/api/permission/delete/*', 'DELETE', 10, 5),
+('api:permission:all', '查询所有权限接口', 'api', '/api/permission/all', 'GET', 10, 6),
+('api:permission:tree', '权限树接口', 'api', '/api/permission/tree', 'GET', 10, 7),
+('api:permission:parent:options', '权限父选项接口', 'api', '/api/permission/parent-options', 'GET', 10, 8),
+('api:permission:menu:list', '菜单列表接口', 'api', '/api/permission/menu/list', 'GET', 10, 9),
+
+-- 后台管理接口权限（parent_id 指向系统管理菜单 1）
+('api:manager:index', '后台首页', 'api', '/manager', 'GET', 1, 1),
+('api:manager:nav:data', '导航菜单数据', 'api', '/manager/nav-data', 'GET', 1, 2),
+
+-- SecurityContext 测试接口权限（parent_id 指向系统管理菜单 1）
+('api:security:context:create', '创建认证对象', 'api', '/api/security-context/create-authentication', 'POST', 1, 3),
+('api:security:context:get', '获取当前用户', 'api', '/api/security-context/get-current-user', 'GET', 1, 4),
+('api:security:context:clear', '清除认证信息', 'api', '/api/security-context/clear-authentication', 'POST', 1, 5),
+('api:security:context:check', '检查认证状态', 'api', '/api/security-context/check-authentication', 'GET', 1, 6);
 
 -- 4. 初始化管理员用户（密码：admin123）
 -- 密码使用 BCrypt 加密：$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z5EO
@@ -183,20 +207,33 @@ INSERT INTO `sys_user_role` (`user_id`, `role_id`) VALUES
 
 -- 6. 初始化角色权限关联（ROLE_ADMIN 拥有所有权限）
 INSERT INTO `sys_role_permission` (`role_id`, `permission_id`) VALUES
--- ROLE_ADMIN 拥有所有权限（1-29）
+-- ROLE_ADMIN 拥有所有权限（1-47）
 (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10),
 (1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18), (1, 19), (1, 20),
-(1, 21), (1, 22), (1, 23), (1, 24), (1, 25), (1, 26), (1, 27), (1, 28), (1, 29),
+(1, 21), (1, 22), (1, 23), (1, 24), (1, 25), (1, 26), (1, 27), (1, 28), (1, 29), (1, 30),
+(1, 31), (1, 32), (1, 33), (1, 34), (1, 35), (1, 36), (1, 37), (1, 38), (1, 39), (1, 40),
+(1, 41), (1, 42), (1, 43), (1, 44), (1, 45), (1, 46), (1, 47),
 
--- ROLE_USER 拥有部分权限（系统首页、用户列表、角色列表、权限列表）
+-- ROLE_USER 拥有基本权限（系统首页、用户列表、角色列表、权限列表）
+(2, 1),  -- 系统管理
 (2, 2),  -- 系统首页
+(2, 4),  -- 用户管理
 (2, 5),  -- 用户列表
+(2, 8),  -- 角色权限
 (2, 9),  -- 角色列表
 (2, 10), -- 权限列表
+-- 基本接口权限
+(2, 15), (2, 16), (2, 28), (2, 29), (2, 36), (2, 42), (2, 45), (2, 46),
 
 -- ROLE_TEST 拥有测试权限（系统首页、用户管理相关）
+(3, 1),  -- 系统管理
 (3, 2),  -- 系统首页
-(3, 5), (3, 6), (3, 7); -- 用户列表、添加用户、角色分配
+(3, 4),  -- 用户管理
+(3, 5),  -- 用户列表
+(3, 6),  -- 添加用户
+(3, 7),  -- 角色分配
+-- 测试接口权限
+(3, 15), (3, 16), (3, 17), (3, 18), (3, 21), (3, 22), (3, 28), (3, 42), (3, 45), (3, 46);
 
 -- ========================================================
 -- 添加外键约束（可选，根据实际需求决定是否启用）
