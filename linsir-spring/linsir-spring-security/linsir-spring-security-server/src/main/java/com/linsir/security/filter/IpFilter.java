@@ -29,20 +29,15 @@ public class IpFilter extends OncePerRequestFilter {
      * 白名单 IP 列表
      * 如果设置，只允许这些 IP 访问
      */
-    private final Set<String> whiteList = new HashSet<>(Arrays.asList(
-            // 示例：允许本地访问
-            "127.0.0.1",
-            "0:0:0:0:0:0:0:1",  // IPv6 localhost
-            "localhost"
-    ));
+    private final Set<String> whiteList = new HashSet<>();
 
     /**
      * 黑名单 IP 列表
      * 如果设置，禁止这些 IP 访问
      */
     private final Set<String> blackList = new HashSet<>(Arrays.asList(
-            // 示例：禁止某些 IP
-            // "192.168.1.100"
+            // 禁止 192.168.1.3 访问
+            "192.168.1.3"
     ));
 
     /**
