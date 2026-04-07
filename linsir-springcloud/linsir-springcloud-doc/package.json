@@ -1,0 +1,22 @@
+{
+  "name": "linsir-springcloud-doc",
+  "version": "1.0.0",
+  "description": "Linsir Spring Cloud 官方文档",
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "keywords": [
+    "spring-cloud",
+    "microservices",
+    "documentation",
+    "vitepress"
+  ],
+  "author": "linsir",
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "^1.0.0"
+  }
+}
