@@ -8,10 +8,12 @@ import com.linsir.security.handler.CustomLoginSuccessHandler;
 import com.linsir.security.handler.CustomLogoutSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -37,19 +39,22 @@ public class SecurityConfig {
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final IpFilter ipFilter;
+    private final AuthorizationManager<RequestAuthorizationContext> dynamicAuthorizationManager;
 
     public SecurityConfig(CustomLoginSuccessHandler loginSuccessHandler,
                          CustomLoginFailureHandler loginFailureHandler,
                          CustomLogoutSuccessHandler logoutSuccessHandler,
                          CustomAuthenticationEntryPoint authenticationEntryPoint,
                          CustomAccessDeniedHandler accessDeniedHandler,
-                         IpFilter ipFilter) {
+                         IpFilter ipFilter,
+                         AuthorizationManager<RequestAuthorizationContext> dynamicAuthorizationManager) {
         this.loginSuccessHandler = loginSuccessHandler;
         this.loginFailureHandler = loginFailureHandler;
         this.logoutSuccessHandler = logoutSuccessHandler;
         this.authenticationEntryPoint = authenticationEntryPoint;
         this.accessDeniedHandler = accessDeniedHandler;
         this.ipFilter = ipFilter;
+        this.dynamicAuthorizationManager = dynamicAuthorizationManager;
     }
 
     @Bean
@@ -80,8 +85,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/user/update/password/**").permitAll()
                 // 允许匿名访问页面
                 .requestMatchers("/", "/index", "/login", "/error", "/easyui-demo").permitAll()
-                // 其他请求需要认证
-                .anyRequest().authenticated()
+                // 其他请求使用动态授权（基于 RBAC 模型）
+                .anyRequest().access(dynamicAuthorizationManager)
             )
             // 异常处理配置
             .exceptionHandling(exception -> exception
