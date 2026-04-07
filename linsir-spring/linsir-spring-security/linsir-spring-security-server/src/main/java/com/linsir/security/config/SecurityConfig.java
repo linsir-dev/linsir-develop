@@ -81,10 +81,16 @@ public class SecurityConfig {
                 .requestMatchers("/api/index", "/api/hello-page", "/api/security-context-page").permitAll()
                 // 允许已认证用户访问 SecurityContext 接口
                 .requestMatchers("/api/security-context/**").authenticated()
+                // 允许已认证用户访问权限树接口（临时放行，用于前端权限分配功能）
+                .requestMatchers("/api/permission/tree").authenticated()
+                // 允许已认证用户访问角色权限接口（临时放行，用于前端角色赋权功能）
+                .requestMatchers("/api/role/*/permissions").authenticated()
                 // 允许匿名访问修改密码接口
                 .requestMatchers("/api/user/update/password/**").permitAll()
                 // 允许匿名访问页面
                 .requestMatchers("/", "/index", "/login", "/error", "/easyui-demo").permitAll()
+                // 允许已认证用户访问管理后台页面
+                .requestMatchers("/manager/**").authenticated()
                 // 其他请求使用动态授权（基于 RBAC 模型）
                 .anyRequest().access(dynamicAuthorizationManager)
             )
