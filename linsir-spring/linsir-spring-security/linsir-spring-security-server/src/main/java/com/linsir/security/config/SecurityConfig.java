@@ -1,5 +1,7 @@
 package com.linsir.security.config;
 
+import com.linsir.security.handler.CustomAccessDeniedHandler;
+import com.linsir.security.handler.CustomAuthenticationEntryPoint;
 import com.linsir.security.handler.CustomLoginFailureHandler;
 import com.linsir.security.handler.CustomLoginSuccessHandler;
 import com.linsir.security.handler.CustomLogoutSuccessHandler;
@@ -30,13 +32,19 @@ public class SecurityConfig {
     private final CustomLoginSuccessHandler loginSuccessHandler;
     private final CustomLoginFailureHandler loginFailureHandler;
     private final CustomLogoutSuccessHandler logoutSuccessHandler;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
 
     public SecurityConfig(CustomLoginSuccessHandler loginSuccessHandler,
                          CustomLoginFailureHandler loginFailureHandler,
-                         CustomLogoutSuccessHandler logoutSuccessHandler) {
+                         CustomLogoutSuccessHandler logoutSuccessHandler,
+                         CustomAuthenticationEntryPoint authenticationEntryPoint,
+                         CustomAccessDeniedHandler accessDeniedHandler) {
         this.loginSuccessHandler = loginSuccessHandler;
         this.loginFailureHandler = loginFailureHandler;
         this.logoutSuccessHandler = logoutSuccessHandler;
+        this.authenticationEntryPoint = authenticationEntryPoint;
+        this.accessDeniedHandler = accessDeniedHandler;
     }
 
     @Bean
@@ -68,11 +76,12 @@ public class SecurityConfig {
                 // 其他请求需要认证
                 .anyRequest().authenticated()
             )
-            // 未认证时重定向到登录页面
+            // 异常处理配置
             .exceptionHandling(exception -> exception
-                .authenticationEntryPoint((request, response, authException) -> {
-                    response.sendRedirect("/");
-                })
+                // 未认证时返回 JSON 错误信息
+                .authenticationEntryPoint(authenticationEntryPoint)
+                // 未授权时返回 JSON 错误信息
+                .accessDeniedHandler(accessDeniedHandler)
             )
             // Session 管理配置
             .sessionManagement(session -> session
