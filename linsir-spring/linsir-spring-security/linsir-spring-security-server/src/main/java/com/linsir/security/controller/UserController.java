@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linsir.security.entity.Role;
 import com.linsir.security.entity.User;
 import com.linsir.security.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -329,6 +330,34 @@ public class UserController {
     }
 
 
+
+    /**
+     * 获取当前用户信息 - 使用 HttpServletRequest
+     */
+    @GetMapping("/current/info3")
+    public ResponseEntity<Map<String, Object>> getCurrentUserInfo3(HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            Authentication authentication = (Authentication) request.getUserPrincipal();
+            if (authentication != null && authentication.isAuthenticated()) {
+                String username = authentication.getName();
+                result.put("code", 200);
+                result.put("message", "获取成功");
+                result.put("data", Map.of(
+                        "username", username
+                ));
+            } else {
+                result.put("code", 401);
+                result.put("message", "用户未认证");
+            }
+        } catch (Exception e) {
+            result.put("code", 500);
+            result.put("message", e.getMessage());
+        }
+
+        return ResponseEntity.ok(result);
+    }
 
     /**
      * 获取当前用户信息 - 注入 Authentication 对象

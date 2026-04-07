@@ -93,7 +93,13 @@
         </div>
     </div>
 
-
+    <!-- 方法 3: 使用 HttpServletRequest -->
+    <div class="method-card">
+        <h3>方法 3: 使用 HttpServletRequest</h3>
+        <div id="method3-content" class="loading">
+            加载中...
+        </div>
+    </div>
 
     <!-- 方法 4: 注入 Authentication 对象 -->
     <div class="method-card">
@@ -149,7 +155,24 @@
         });
     }
 
-
+    // 显示当前用户信息 - 方法 3
+    function loadUserInfoMethod3() {
+        $.getJSON("/api/user/current/info3", function(data) {
+            var content = $('#method3-content');
+            if (data.code === 200) {
+                var userData = data.data;
+                var html = '<table class="user-info-table">';
+                html += '<tr><td>用户名：</td><td>' + userData.username + '</td></tr>';
+                html += '<tr><td>认证状态：</td><td><span class="success-status">✓ 已认证</span></td></tr>';
+                html += '</table>';
+                content.html(html);
+            } else {
+                content.html('<div class="error">' + data.message + '</div>');
+            }
+        }).fail(function() {
+            $('#method3-content').html('<div class="error">获取失败</div>');
+        });
+    }
 
     // 显示当前用户信息 - 方法 4
     function loadUserInfoMethod4() {
@@ -180,6 +203,7 @@
     $(function() {
         loadUserInfoMethod1();
         loadUserInfoMethod2();
+        loadUserInfoMethod3();
         loadUserInfoMethod4();
     });
 </script>
