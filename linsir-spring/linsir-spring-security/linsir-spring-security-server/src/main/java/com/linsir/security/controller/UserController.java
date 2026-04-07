@@ -96,7 +96,7 @@ public class UserController {
         Map<String, Object> result = new HashMap<>();
 
         try {
-            boolean success = userService.save(user);
+            boolean success = userService.createUser(user);
             if (success) {
                 result.put("code", 200);
                 result.put("message", "创建成功");
@@ -230,6 +230,39 @@ public class UserController {
         } catch (Exception e) {
             result.put("code", 500);
             result.put("message", "角色分配失败: " + e.getMessage());
+        }
+
+        return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 修改用户密码
+     */
+    @PutMapping("/update/password/{id}")
+    public ResponseEntity<Map<String, Object>> updatePassword(
+            @PathVariable("id") Long id,
+            @RequestBody Map<String, String> request) {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            String password = request.get("password");
+            if (password == null || password.isEmpty()) {
+                result.put("code", 400);
+                result.put("message", "密码不能为空");
+                return ResponseEntity.ok(result);
+            }
+
+            boolean success = userService.updatePassword(id, password);
+            if (success) {
+                result.put("code", 200);
+                result.put("message", "密码修改成功");
+            } else {
+                result.put("code", 500);
+                result.put("message", "密码修改失败");
+            }
+        } catch (Exception e) {
+            result.put("code", 500);
+            result.put("message", e.getMessage());
         }
 
         return ResponseEntity.ok(result);

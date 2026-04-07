@@ -61,6 +61,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/index", "/api/hello-page", "/api/security-context-page").permitAll()
                 // 允许已认证用户访问 SecurityContext 接口
                 .requestMatchers("/api/security-context/**").authenticated()
+                // 允许匿名访问修改密码接口
+                .requestMatchers("/api/user/update/password/**").permitAll()
                 // 允许匿名访问页面
                 .requestMatchers("/", "/index", "/login", "/error", "/easyui-demo").permitAll()
                 // 其他请求需要认证

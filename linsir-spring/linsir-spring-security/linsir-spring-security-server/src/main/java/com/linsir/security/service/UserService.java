@@ -1,6 +1,7 @@
 package com.linsir.security.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.linsir.security.entity.Permission;
 import com.linsir.security.entity.Role;
 import com.linsir.security.entity.User;
 
@@ -30,4 +31,37 @@ public interface UserService extends IService<User> {
      * @param roleIds 角色ID列表
      */
     void assignRoles(Long userId, List<Long> roleIds);
+
+    /**
+     * 获取用户的权限列表（通过角色关联）
+     *
+     * @param userId 用户ID
+     * @return 权限列表
+     */
+    List<Permission> getUserPermissions(Long userId);
+
+    /**
+     * 根据用户名获取用户
+     *
+     * @param username 用户名
+     * @return 用户对象
+     */
+    User getUserByUsername(String username);
+
+    /**
+     * 创建用户
+     *
+     * @param user 用户对象
+     * @return 是否创建成功
+     */
+    boolean createUser(User user);
+
+    /**
+     * 修改用户密码
+     *
+     * @param userId   用户ID
+     * @param password 新密码
+     * @return 是否修改成功
+     */
+    boolean updatePassword(Long userId, String password);
 }

@@ -1,29 +1,31 @@
 package com.linsir.security.service;
 
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
+import com.linsir.security.entity.User;
+import com.linsir.security.entity.Role;
+import com.linsir.security.entity.Permission;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * 自定义 UserDetailsService 实现
  * 用于从数据库或其他数据源加载用户信息
  * 
- * 测试账号说明：
- * - admin: 正常用户，密码 admin123
- * - user: 正常用户，密码 user123
- * - locked: 账户被锁定，密码 locked123
- * - disabled: 账户被禁用，密码 disabled123
- * - expired: 账户已过期，密码 expired123
- * - credentials_expired: 密码已过期，密码 creds123
- *
  * @author linsir
  * @version 1.0.0
  */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 根据用户名加载用户信息
@@ -34,77 +36,43 @@ public class CustomUserDetailsService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // 模拟从数据库查询用户
-        // 实际应用中应该从数据库查询
+        // 从数据库查询用户
+        // 注意：数据库中存储的是加密后的密码，不需要解密
+        // Spring Security 会在认证时自动处理密码验证
+        User user = userService.getUserByUsername(username);
         
-        // 1. 先判断用户是否存在，定义用户是否存在标志
-        boolean userExists = false;
-        
-        // 2. 检查用户名是否在已知用户列表中
-        if ("admin".equals(username) || "user".equals(username) || 
-            "locked".equals(username) || "disabled".equals(username) || 
-            "expired".equals(username) || "credentials_expired".equals(username)) {
-            userExists = true;
-        }
-        
-        // 3. 如果用户不存在，直接抛出异常
-        if (!userExists) {
+        // 如果用户不存在，抛出异常
+        if (user == null) {
             throw new UsernameNotFoundException("用户不存在：" + username);
         }
         
-        // 4. 用户存在，返回对应的用户信息（包括各种状态）
-        // 正常用户
-        if ("admin".equals(username)) {
-            return User.builder()
-                    .username("admin")
-                    .password("{noop}admin123") // {noop} 表示明文密码，实际生产环境应使用 {bcrypt} 加密
-                    .roles("ADMIN", "USER")
-                    .build();
-        } else if ("user".equals(username)) {
-            return User.builder()
-                    .username("user")
-                    .password("{noop}user123") // {noop} 表示明文密码
-                    .roles("USER")
-                    .build();
-        }
-        // 账户被锁定的用户
-        else if ("locked".equals(username)) {
-            return User.builder()
-                    .username("locked")
-                    .password("{noop}locked123")
-                    .roles("USER")
-                    .accountLocked(true) // 账户锁定
-                    .build();
-        }
-        // 账户被禁用的用户
-        else if ("disabled".equals(username)) {
-            return User.builder()
-                    .username("disabled")
-                    .password("{noop}disabled123")
-                    .roles("USER")
-                    .disabled(true) // 账户禁用
-                    .build();
-        }
-        // 账户已过期的用户
-        else if ("expired".equals(username)) {
-            return User.builder()
-                    .username("expired")
-                    .password("{noop}expired123")
-                    .roles("USER")
-                    .accountExpired(true) // 账户过期
-                    .build();
-        }
-        // 密码已过期的用户
-        else if ("credentials_expired".equals(username)) {
-            return User.builder()
-                    .username("credentials_expired")
-                    .password("{noop}creds123")
-                    .roles("USER")
-                    .credentialsExpired(true) // 密码过期
-                    .build();
+        // 获取用户的角色列表
+        List<Role> roles = userService.getUserRoles(user.getId());
+        
+        // 将角色列表转换为角色名称数组
+        String[] roleNames = roles.stream()
+                .map(Role::getRoleName)
+                .toArray(String[]::new);
+        
+        // 获取用户的权限列表
+        List<Permission> permissions = userService.getUserPermissions(user.getId());
+        
+        // 构建权限列表
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        
+        // 添加功能权限
+        for (Permission permission : permissions) {
+            authorities.add(new SimpleGrantedAuthority(permission.getPermissionCode()));
         }
         
-        // 理论上不会到这里，因为前面已经判断过用户是否存在
-        throw new UsernameNotFoundException("用户不存在：" + username);
+        // 构建 UserDetails 对象
+        // 注意：直接使用数据库中存储的加密密码
+        // Spring Security 会在认证时使用相同的 PasswordEncoder 来验证密码
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getUsername())
+                .password(user.getPassword()) // 直接使用加密后的密码
+                .roles(roleNames)
+                .authorities(authorities)
+                .build();
     }
 }
