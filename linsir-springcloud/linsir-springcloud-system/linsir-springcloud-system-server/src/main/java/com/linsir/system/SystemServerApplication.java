@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author linsir
  * @version 1.0.0
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.linsir.system")
 public class SystemServerApplication {
 
     public static void main(String[] args) {
