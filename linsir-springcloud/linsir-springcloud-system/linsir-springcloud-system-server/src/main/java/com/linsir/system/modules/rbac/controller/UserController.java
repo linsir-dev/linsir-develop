@@ -2,11 +2,14 @@ package com.linsir.system.modules.rbac.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.linsir.system.modules.rbac.entity.Permission;
+import com.linsir.system.modules.rbac.entity.Role;
 import com.linsir.system.modules.rbac.entity.User;
 import com.linsir.system.modules.rbac.service.UserRoleService;
 import com.linsir.system.modules.rbac.service.UserService;
 import com.linsir.system.core.result.CommonResult;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +29,7 @@ public class UserController {
 
     private final UserService userService;
     private final UserRoleService userRoleService;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 分页查询用户列表（支持查询条件）
@@ -63,9 +67,15 @@ public class UserController {
 
     /**
      * 新增用户
+     * 密码会自动使用 BCrypt 加密
      */
     @PostMapping("/save")
     public CommonResult<Boolean> save(@RequestBody User user) {
+        // 对密码进行 BCrypt 加密
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            String encodedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
+        }
         return success(userService.save(user));
     }
 
@@ -99,5 +109,37 @@ public class UserController {
     @PostMapping("/{userId}/roles")
     public CommonResult<Boolean> assignRoles(@PathVariable Long userId, @RequestBody List<Long> roleIds) {
         return success(userRoleService.assignRoles(userId, roleIds));
+    }
+
+    /**
+     * 根据用户ID查询角色列表（RBAC）
+     */
+    @GetMapping("/{userId}/roleList")
+    public CommonResult<List<Role>> getRolesByUserId(@PathVariable Long userId) {
+        return success(userService.getRolesByUserId(userId));
+    }
+
+    /**
+     * 根据用户ID查询角色编码列表（RBAC）
+     */
+    @GetMapping("/{userId}/roleCodes")
+    public CommonResult<List<String>> getRoleCodesByUserId(@PathVariable Long userId) {
+        return success(userService.getRoleCodesByUserId(userId));
+    }
+
+    /**
+     * 根据用户ID查询权限列表（RBAC）
+     */
+    @GetMapping("/{userId}/permissionList")
+    public CommonResult<List<Permission>> getPermissionsByUserId(@PathVariable Long userId) {
+        return success(userService.getPermissionsByUserId(userId));
+    }
+
+    /**
+     * 根据用户ID查询权限标识列表（RBAC）
+     */
+    @GetMapping("/{userId}/permissionCodes")
+    public CommonResult<List<String>> getPermissionCodesByUserId(@PathVariable Long userId) {
+        return success(userService.getPermissionCodesByUserId(userId));
     }
 }

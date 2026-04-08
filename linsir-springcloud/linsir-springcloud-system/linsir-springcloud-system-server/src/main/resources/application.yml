@@ -5,6 +5,11 @@ spring:
   application:
     name: linsir-springcloud-system-server
 
+  # 禁用 DevTools 自动重启
+  devtools:
+    restart:
+      enabled: false
+
   # 数据源配置 - Druid
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
